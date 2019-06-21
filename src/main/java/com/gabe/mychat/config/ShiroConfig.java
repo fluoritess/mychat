@@ -50,7 +50,7 @@ public class ShiroConfig {
         //设置安全管理
         shiroFilter.setSecurityManager(securityManager);
         shiroFilter.setLoginUrl("/");
-        shiroFilter.setSuccessUrl("/houtai");
+        shiroFilter.setSuccessUrl("/");
         shiroFilter.setUnauthorizedUrl("/");
         //自定义拦截器
         Map<String,Filter> filterMap=new LinkedHashMap<>();
@@ -60,13 +60,14 @@ public class ShiroConfig {
          authc:  ${adminPath}/login = authc 表示需要认证(登录)才能使用，没有参数*/
         //设置拦截器放行路径
         Map<String,String> filterUrl=new LinkedHashMap<>();
-        filterUrl.put("/register.action","anon");
-        filterUrl.put("/sendCode.action","anon");
-        filterUrl.put("/login.action","anon");
+        filterUrl.put("/register","anon");
+        filterUrl.put("/sendCode","anon");
+        filterUrl.put("/login","anon");
+        filterUrl.put("/imgCode","anon");
     /*    filterUrl.put("/Login.html","anon");*/
-        filterUrl.put("/loginOut.action","logout");
+        filterUrl.put("/loginOut","logout");
         //设置拦截目录
-        filterUrl.put("/**/*.action","loginFilter,authc");
+        filterUrl.put("/**/*","loginFilter,authc");
         filterUrl.put("/houtai.html","loginFilter,authc");
 
         shiroFilter.setFilterChainDefinitionMap(filterUrl);

@@ -20,7 +20,7 @@ public class ShiroLoginFilter extends AdviceFilter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         user sysUser = (user) httpServletRequest.getSession().getAttribute("user");//重session中拿user
-        if (null == sysUser && !StringUtils.contains(httpServletRequest.getRequestURI(), "/login.action")) {
+        if (null == sysUser && !StringUtils.contains(httpServletRequest.getRequestURI(), "/login")) {
             String requestedWith = httpServletRequest.getHeader("X-Request-With");
             if (StringUtils.isNotEmpty(requestedWith) && StringUtils.equals(requestedWith, "XMLHttpRequest")) {//如果是ajax返回指定数据
                 Map<String,Object> map = new HashMap<>();
