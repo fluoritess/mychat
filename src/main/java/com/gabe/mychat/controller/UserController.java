@@ -88,7 +88,7 @@ public class UserController {
         session.setAttribute("id",ShiroUtils.getUserEntity().getUserId());
         Map<String,Object> msg=new HashMap<>();
         msg.put("code","0");
-        msg.put("name",ShiroUtils.getUserEntity().getPassword());
+        msg.put("id",ShiroUtils.getUserEntity().getUserId());
         return R.ok().put("data",msg);
     }
 
@@ -107,6 +107,7 @@ public class UserController {
         String text = producer.createText();
         //生成图片验证码
         BufferedImage image = producer.createImage(text);
+
         //保存到shiro session（注意：如果没有securityManager配置，则暂时无法工作，测试时先注释掉）
         ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, text);
         //转base64

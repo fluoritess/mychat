@@ -10,7 +10,7 @@ import org.springframework.web.filter.CorsFilter;
 /**
  * @author wsw
  * @Package com.gabe.mychat.config
- * @Description:
+ * @Description:跨域配置
  * @date 2019年6月21日 14:20:09
  */
 @Configuration

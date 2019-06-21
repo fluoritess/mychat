@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * @author wsw
  * @Package com.gabe.mychat.config
- * @Description:
+ * @Description:验证码配置
  * @date 2019年6月21日 15:20:58
  */
 @Configuration
