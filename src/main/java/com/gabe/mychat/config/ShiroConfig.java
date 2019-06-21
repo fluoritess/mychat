@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * @author wsw
  * @Package com.gabe.mychat.config
- * @Description:
+ * @Description:shiro配置
  * @date 2019年6月21日 15:21:19
  */
 @Configuration

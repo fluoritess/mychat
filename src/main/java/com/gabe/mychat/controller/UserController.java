@@ -105,6 +105,7 @@ public class UserController {
         System.out.print("获取验证码");
         //生成文字验证码
         String text = producer.createText();
+        System.out.print("验证码是:"+text);
         //生成图片验证码
         BufferedImage image = producer.createImage(text);
 
