@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gabe.mychat.mapper.broadcastMapper" >
+  <resultMap id="BaseResultMap" type="com.gabe.mychat.pojo.broadcast" >
+    <constructor >
+      <idArg column="broadcast_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="broadcast_content" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="broadcast_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    broadcast_id, broadcast_content, broadcast_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gabe.mychat.pojo.broadcastExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from broadcast
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from broadcast
+    where broadcast_id = #{broadcastId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from broadcast
+    where broadcast_id = #{broadcastId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.gabe.mychat.pojo.broadcastExample" >
+    delete from broadcast
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.gabe.mychat.pojo.broadcast" >
+    insert into broadcast (broadcast_id, broadcast_content, broadcast_time
+      )
+    values (#{broadcastId,jdbcType=INTEGER}, #{broadcastContent,jdbcType=VARCHAR}, #{broadcastTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.gabe.mychat.pojo.broadcast" >
+    insert into broadcast
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="broadcastId != null" >
+        broadcast_id,
+      </if>
+      <if test="broadcastContent != null" >
+        broadcast_content,
+      </if>
+      <if test="broadcastTime != null" >
+        broadcast_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="broadcastId != null" >
+        #{broadcastId,jdbcType=INTEGER},
+      </if>
+      <if test="broadcastContent != null" >
+        #{broadcastContent,jdbcType=VARCHAR},
+      </if>
+      <if test="broadcastTime != null" >
+        #{broadcastTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.gabe.mychat.pojo.broadcastExample" resultType="java.lang.Integer" >
+    select count(*) from broadcast
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update broadcast
+    <set >
+      <if test="record.broadcastId != null" >
+        broadcast_id = #{record.broadcastId,jdbcType=INTEGER},
+      </if>
+      <if test="record.broadcastContent != null" >
+        broadcast_content = #{record.broadcastContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.broadcastTime != null" >
+        broadcast_time = #{record.broadcastTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update broadcast
+    set broadcast_id = #{record.broadcastId,jdbcType=INTEGER},
+      broadcast_content = #{record.broadcastContent,jdbcType=VARCHAR},
+      broadcast_time = #{record.broadcastTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gabe.mychat.pojo.broadcast" >
+    update broadcast
+    <set >
+      <if test="broadcastContent != null" >
+        broadcast_content = #{broadcastContent,jdbcType=VARCHAR},
+      </if>
+      <if test="broadcastTime != null" >
+        broadcast_time = #{broadcastTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where broadcast_id = #{broadcastId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gabe.mychat.pojo.broadcast" >
+    update broadcast
+    set broadcast_content = #{broadcastContent,jdbcType=VARCHAR},
+      broadcast_time = #{broadcastTime,jdbcType=TIMESTAMP}
+    where broadcast_id = #{broadcastId,jdbcType=INTEGER}
+  </update>
+</mapper>
