@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -23,11 +24,17 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * @author wsw
+ * @Package com.gabe.mychat.controller
+ * @Description:
+ * @date 2019年6月21日 15:21:34
+ */
 @Controller
 public class UserController {
     @Autowired
@@ -59,10 +66,10 @@ public class UserController {
         String username=map.get("username");
         String password=map.get("password");
         String code=map.get("code");
- /*       String kaptcha= ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+        String kaptcha= ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
         if(!kaptcha.equalsIgnoreCase(code)){
             return R.error("验证码不正确");
-        }*/
+        }
       //认证异常处理
         try {
             Subject subject= ShiroUtils.getSubject();
@@ -85,25 +92,35 @@ public class UserController {
         return R.ok().put("data",msg);
     }
 
-/*    *
+    /*
      * 生成图形验证码
      * @param response
      * @throws ServletException
-     * @throws IOException*/
-
-    @ArchivesLog(operationName = "生成验证码",operationType = "用户基本操作")
-    @GetMapping("/imgCode")
-    public void captcha(HttpServletResponse response)throws ServletException, IOException {
-        response.setHeader("Cache-Control", "no-store, no-cache");
-        response.setContentType("image/jpeg");
+     * @throws IOException
+     * */
+    @ResponseBody
+    @ArchivesLog(operationName = "获取验证码",operationType = "用户基本操作")
+    @RequestMapping("/imgCode" )
+    public R code(){
+        System.out.print("获取验证码");
         //生成文字验证码
         String text = producer.createText();
         //生成图片验证码
         BufferedImage image = producer.createImage(text);
         //保存到shiro session（注意：如果没有securityManager配置，则暂时无法工作，测试时先注释掉）
         ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, text);
-        ServletOutputStream out = response.getOutputStream();
-        ImageIO.write(image, "jpg", out);
-        out.flush();
+        //转base64
+        BASE64Encoder encoder = new BASE64Encoder();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();//io流
+        try {
+            ImageIO.write(image, "png", baos);//写入流中
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        byte[] bytes = baos.toByteArray();//转换成字节
+        String png_base64 =  encoder.encodeBuffer(bytes).trim();//转换成base64串
+        //删除 \r\n
+        png_base64 = "data:image/jpeg;base64,"+png_base64.replaceAll("\n", "").replaceAll("\r", "");
+        return R.ok().put("data",png_base64);
     }
 }

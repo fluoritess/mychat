@@ -9,8 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Properties;
 
 /**
- * Created by helen on 2018/3/6
- * 生成验证码配置
+ * @author wsw
+ * @Package com.gabe.mychat.config
+ * @Description:
+ * @date 2019年6月21日 15:20:58
  */
 @Configuration
 public class KaptchaConfig {

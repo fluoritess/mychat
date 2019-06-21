@@ -9,7 +9,7 @@ import org.springframework.web.filter.CorsFilter;
 
 /**
  * @author wsw
- * @Package com.gabe.mychat
+ * @Package com.gabe.mychat.config
  * @Description:
  * @date 2019年6月21日 14:20:09
  */
