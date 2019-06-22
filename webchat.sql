@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2019-06-22 15:41:48
+Date: 2019-06-22 16:57:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -53,16 +53,19 @@ CREATE TABLE `broadcast` (
 DROP TABLE IF EXISTS `friends`;
 CREATE TABLE `friends` (
   `user_id` varchar(32) NOT NULL,
-  `friend_id` int(11) NOT NULL,
+  `friend_id` varchar(32) NOT NULL,
   `add_time` datetime NOT NULL,
-  KEY `friend_id` (`friend_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `friend_id` (`friend_id`),
+  CONSTRAINT `friends_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `friends_ibfk_2` FOREIGN KEY (`friend_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of friends
 -- ----------------------------
+INSERT INTO `friends` VALUES ('123456789101', '123456789102', '2019-06-22 16:55:03');
+INSERT INTO `friends` VALUES ('123456789103', '123456789101', '2019-06-22 16:55:16');
 
 -- ----------------------------
 -- Table structure for `message`
@@ -86,7 +89,7 @@ CREATE TABLE `message` (
 -- ----------------------------
 -- Records of message
 -- ----------------------------
-INSERT INTO `message` VALUES ('21161432051', 'aaa', '3', '2', '1');
+INSERT INTO `message` VALUES ('21161432051', 'aaa', '3', '123456789102', '123456789101');
 
 -- ----------------------------
 -- Table structure for `message_type`
@@ -170,5 +173,6 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'sss', 'shan', null, null, '123');
-INSERT INTO `user` VALUES ('2', 'xxx', 'wen', null, null, '123');
+INSERT INTO `user` VALUES ('123456789101', 'sss', 'shan', null, null, '123');
+INSERT INTO `user` VALUES ('123456789102', 'xxx', 'wen', null, null, '123');
+INSERT INTO `user` VALUES ('123456789103', 'mmm', '12345678910w', null, null, '123');

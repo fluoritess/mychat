@@ -71,7 +71,7 @@ public class ShiroConfig {
         filterUrl.put("/imgCode","anon");
     /*    filterUrl.put("/Login.html","anon");*/
         filterUrl.put("/loginOut","logout");
-       /* filterUrl.put("/selectUserByNickName","anon");*/
+        filterUrl.put("/selectUserByNickName","anon");
 
         //设置拦截目录
         filterUrl.put("/**/*","loginFilter,authc");

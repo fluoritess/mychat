@@ -7,10 +7,13 @@ public class normalUser {
 
     private String address;
 
-    public normalUser(String userId, String gender, String address) {
+    private Integer age;
+
+    public normalUser(String userId, String gender, String address, Integer age) {
         this.userId = userId;
         this.gender = gender;
         this.address = address;
+        this.age = age;
     }
 
     public normalUser() {
@@ -39,5 +42,13 @@ public class normalUser {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 }

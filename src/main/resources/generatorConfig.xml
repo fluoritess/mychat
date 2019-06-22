@@ -67,7 +67,7 @@
         </javaClientGenerator>
 
 
-        <table tableName="admin" domainObjectName="admin"
+ <!--       <table tableName="admin" domainObjectName="admin"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
@@ -76,13 +76,13 @@
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
-        </table>
-        <table tableName="friends" domainObjectName="friends"
+        </table>-->
+      <!--  <table tableName="friends" domainObjectName="friends"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
-        </table>
-        <table tableName="message" domainObjectName="message"
+        </table>-->
+   <!--     <table tableName="message" domainObjectName="message"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
@@ -92,11 +92,7 @@
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
         </table>
-        <table tableName="normal_user" domainObjectName="normalUser"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
-        </table>
+
         <table tableName="sercurity_log" domainObjectName="sercurityLog"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
@@ -111,7 +107,11 @@
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
+        </table>-->
+        <table tableName="normal_user" domainObjectName="normalUser"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
         </table>
-
     </context>
 </generatorConfiguration>

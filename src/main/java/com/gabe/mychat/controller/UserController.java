@@ -1,13 +1,12 @@
 package com.gabe.mychat.controller;
 
+import com.gabe.mychat.mapper.normalUserUtilMapper;
 import com.gabe.mychat.mapper.systemMapper;
 import com.gabe.mychat.mapper.userMapper;
 import com.gabe.mychat.mapper.userUtilMapper;
+import com.gabe.mychat.pojo.normalUser;
 import com.gabe.mychat.pojo.user;
-import com.gabe.mychat.util.ArchivesLog;
-import com.gabe.mychat.util.NumberUtil;
-import com.gabe.mychat.util.R;
-import com.gabe.mychat.util.ShiroUtils;
+import com.gabe.mychat.util.*;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import org.apache.shiro.authc.*;
@@ -42,6 +41,8 @@ public class UserController {
     private Producer producer;
     @Autowired
     private userUtilMapper userUtilMapper;
+    @Autowired
+    private normalUserUtilMapper normalUserUtilMapper;
     /**
      * 认证异常
      * <p>
@@ -132,24 +133,29 @@ public class UserController {
     public Map<String,Object> selectUserByNickName(@RequestBody Map<String,Object> reMap) {
                //接收参数
                 String nickname=(String)reMap.get("nickname");
-                //判断长度是否是12位，如果不是则为昵称
+                //判断长度是否是12位，如果不是则为昵称查询
                 if(nickname.length()!=12){
                     user user=userUtilMapper.selectUserByNickName(nickname);
-                    return R.ok().put("data",user);
+                    normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
+                    Map map=new HashMap();
+                    map= UserUtil.completeUser(user,normalUser);
+                    return R.ok().put("data",map);
                 }else {
-                   /* //长度为12且为数字，则是id查询
-                    if(NumberUtil.getNumberLenth(Long.parseLong(nickname))==12){
-                        user user=userMapper.selectByPrimaryKey(nickname);
-                        return  R.ok().put("data",user);
-                    }*/
                     //长度为12且不全为数字，则是昵称查询
                     if(NumberUtil.getNumberFromString(nickname).length()!=12){
                         user user=userUtilMapper.selectUserByNickName(nickname);
-                        return R.ok().put("data",user);
+                        normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
+                        Map map=new HashMap();
+                        map= UserUtil.completeUser(user,normalUser);
+                        return R.ok().put("data",map);
                     }
+                    //长度为12且为数字，则是id查询
                     else {
                         user user=userMapper.selectByPrimaryKey(nickname);
-                        return  R.ok().put("data",user);
+                        normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
+                        Map map=new HashMap();
+                        map= UserUtil.completeUser(user,normalUser);
+                        return R.ok().put("data",map);
                     }
                 }
     }

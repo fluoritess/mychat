@@ -13,6 +13,7 @@ public class UserServiceImpl implements UserService {
     userUtilMapper userUtilMapper;
     @Autowired
     userMapper userMapper;
+
     @Override
     public user selectUserByNickName(String nickname) {
         return userUtilMapper.selectUserByNickName(nickname);

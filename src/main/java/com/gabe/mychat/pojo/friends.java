@@ -5,11 +5,11 @@ import java.util.Date;
 public class friends {
     private String userId;
 
-    private Integer friendId;
+    private String friendId;
 
     private Date addTime;
 
-    public friends(String userId, Integer friendId, Date addTime) {
+    public friends(String userId, String friendId, Date addTime) {
         this.userId = userId;
         this.friendId = friendId;
         this.addTime = addTime;
@@ -27,12 +27,12 @@ public class friends {
         this.userId = userId == null ? null : userId.trim();
     }
 
-    public Integer getFriendId() {
+    public String getFriendId() {
         return friendId;
     }
 
-    public void setFriendId(Integer friendId) {
-        this.friendId = friendId;
+    public void setFriendId(String friendId) {
+        this.friendId = friendId == null ? null : friendId.trim();
     }
 
     public Date getAddTime() {

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.gabe.mychat.pojo.friends" >
     <constructor >
       <arg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="friend_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="friend_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="add_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
@@ -93,7 +93,7 @@
   <insert id="insert" parameterType="com.gabe.mychat.pojo.friends" >
     insert into friends (user_id, friend_id, add_time
       )
-    values (#{userId,jdbcType=VARCHAR}, #{friendId,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}
+    values (#{userId,jdbcType=VARCHAR}, #{friendId,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.gabe.mychat.pojo.friends" >
@@ -114,7 +114,7 @@
         #{userId,jdbcType=VARCHAR},
       </if>
       <if test="friendId != null" >
-        #{friendId,jdbcType=INTEGER},
+        #{friendId,jdbcType=VARCHAR},
       </if>
       <if test="addTime != null" >
         #{addTime,jdbcType=TIMESTAMP},
@@ -134,7 +134,7 @@
         user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
       <if test="record.friendId != null" >
-        friend_id = #{record.friendId,jdbcType=INTEGER},
+        friend_id = #{record.friendId,jdbcType=VARCHAR},
       </if>
       <if test="record.addTime != null" >
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
@@ -147,7 +147,7 @@
   <update id="updateByExample" parameterType="map" >
     update friends
     set user_id = #{record.userId,jdbcType=VARCHAR},
-      friend_id = #{record.friendId,jdbcType=INTEGER},
+      friend_id = #{record.friendId,jdbcType=VARCHAR},
       add_time = #{record.addTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
