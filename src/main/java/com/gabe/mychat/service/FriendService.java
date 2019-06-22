@@ -17,4 +17,5 @@ public interface FriendService {
         List<friends> selectFriendById(String userid);
         //获取到好友的id，昵称，头像
         List<Map> getFriendsInfo( List<friends> list);
+
 }

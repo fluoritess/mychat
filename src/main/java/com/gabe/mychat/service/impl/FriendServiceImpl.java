@@ -6,6 +6,7 @@ import com.gabe.mychat.mapper.userMapper;
 import com.gabe.mychat.pojo.friends;
 import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.service.FriendService;
+import com.gabe.mychat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ public class FriendServiceImpl implements FriendService {
     friendsUtilsMapper friendsUtilsMapper;
     @Autowired
     userMapper userMapper;
+    @Autowired
+    UserService UserService;
     @Override
     public  List<friends> selectFriendById(String userid) {
         List<friends> list=friendsUtilsMapper.selectByUserId(userid);
@@ -38,4 +41,5 @@ public class FriendServiceImpl implements FriendService {
         }
         return list1;
     }
+
 }
