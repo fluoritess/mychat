@@ -133,14 +133,14 @@ public class UserController {
     public Map<String,Object> selectUserByNickName(@RequestBody Map<String,Object> reMap) {
                //接收参数
                 String nickname=(String)reMap.get("nickname");
-                //判断长度是否是12位，如果不是则为昵称查询
+        /*        //判断长度是否是12位，如果不是则为昵称查询
                 if(nickname.length()!=12){
                     user user=userUtilMapper.selectUserByNickName(nickname);
                     normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
                     Map map=new HashMap();
                     map= UserUtil.completeUser(user,normalUser);
                     return R.ok().put("data",map);
-                }else {
+                }else {*/
                     //长度为12且不全为数字，则是昵称查询
                     if(NumberUtil.getNumberFromString(nickname).length()!=12){
                         user user=userUtilMapper.selectUserByNickName(nickname);
@@ -157,6 +157,6 @@ public class UserController {
                         map= UserUtil.completeUser(user,normalUser);
                         return R.ok().put("data",map);
                     }
-                }
+             /*   }*/
     }
 }

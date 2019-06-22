@@ -1,6 +1,10 @@
 package com.gabe.mychat.service;
 
+import com.gabe.mychat.pojo.friends;
 import com.gabe.mychat.pojo.user;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author wsw
@@ -10,5 +14,7 @@ import com.gabe.mychat.pojo.user;
  */
 public interface FriendService {
         //根据id查询好友
-        user selectFriendById();
+        List<friends> selectFriendById(String userid);
+        //获取到好友的id，昵称，头像
+        List<Map> getFriendsInfo( List<friends> list);
 }
