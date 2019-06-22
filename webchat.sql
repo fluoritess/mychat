@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2019-06-22 16:57:03
+Date: 2019-06-22 21:32:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -66,6 +66,8 @@ CREATE TABLE `friends` (
 -- ----------------------------
 INSERT INTO `friends` VALUES ('123456789101', '123456789102', '2019-06-22 16:55:03');
 INSERT INTO `friends` VALUES ('123456789103', '123456789101', '2019-06-22 16:55:16');
+INSERT INTO `friends` VALUES ('123456789102', '123456789101', '2019-06-22 20:48:14');
+INSERT INTO `friends` VALUES ('123456789101', '123456789103', '2019-06-22 20:49:05');
 
 -- ----------------------------
 -- Table structure for `message`
@@ -116,6 +118,7 @@ CREATE TABLE `normal_user` (
   `user_id` varchar(32) NOT NULL,
   `gender` varchar(16) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
   KEY `user_id` (`user_id`),
   CONSTRAINT `normal_user_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -123,6 +126,8 @@ CREATE TABLE `normal_user` (
 -- ----------------------------
 -- Records of normal_user
 -- ----------------------------
+INSERT INTO `normal_user` VALUES ('123456789102', 's', 'dsadasdasdsa', '321');
+INSERT INTO `normal_user` VALUES ('123456789103', 'm', 'dsadasd', null);
 
 -- ----------------------------
 -- Table structure for `sercurity_log`
