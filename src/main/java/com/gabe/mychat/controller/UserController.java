@@ -2,7 +2,10 @@ package com.gabe.mychat.controller;
 
 import com.gabe.mychat.mapper.systemMapper;
 import com.gabe.mychat.mapper.userMapper;
+import com.gabe.mychat.mapper.userUtilMapper;
+import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.util.ArchivesLog;
+import com.gabe.mychat.util.NumberUtil;
 import com.gabe.mychat.util.R;
 import com.gabe.mychat.util.ShiroUtils;
 import com.google.code.kaptcha.Constants;
@@ -32,11 +35,13 @@ import java.util.Map;
 @Controller
 public class UserController {
     @Autowired
-    com.gabe.mychat.mapper.userMapper userMapper;
+    private userMapper userMapper;
     @Autowired
-    com.gabe.mychat.mapper.systemMapper systemMapper;
+    private systemMapper systemMapper;
     @Autowired
     private Producer producer;
+    @Autowired
+    private userUtilMapper userUtilMapper;
     /**
      * 认证异常
      * <p>
@@ -88,10 +93,7 @@ public class UserController {
 
     /*
      * 生成图形验证码
-     * @param response
-     * @throws ServletException
-     * @throws IOException
-     * */
+     */
     @ResponseBody
     @ArchivesLog(operationName = "获取验证码",operationType = "用户基本操作")
     @RequestMapping("/imgCode" )
@@ -118,5 +120,37 @@ public class UserController {
         //删除 \r\n
         png_base64 = "data:image/jpeg;base64,"+png_base64.replaceAll("\n", "").replaceAll("\r", "");
         return R.ok().put("data",png_base64);
+    }
+    /**
+     * 查询信息
+     * @param reMap
+     * @return
+     */
+    @ResponseBody
+    @ArchivesLog(operationType = "查询信息", operationName = "根据用户昵称或id查询用户")
+    @RequestMapping(value = "/selectUserByNickName")
+    public Map<String,Object> selectUserByNickName(@RequestBody Map<String,Object> reMap) {
+               //接收参数
+                String nickname=(String)reMap.get("nickname");
+                //判断长度是否是12位，如果不是则为昵称
+                if(nickname.length()!=12){
+                    user user=userUtilMapper.selectUserByNickName(nickname);
+                    return R.ok().put("data",user);
+                }else {
+                   /* //长度为12且为数字，则是id查询
+                    if(NumberUtil.getNumberLenth(Long.parseLong(nickname))==12){
+                        user user=userMapper.selectByPrimaryKey(nickname);
+                        return  R.ok().put("data",user);
+                    }*/
+                    //长度为12且不全为数字，则是昵称查询
+                    if(NumberUtil.getNumberFromString(nickname).length()!=12){
+                        user user=userUtilMapper.selectUserByNickName(nickname);
+                        return R.ok().put("data",user);
+                    }
+                    else {
+                        user user=userMapper.selectByPrimaryKey(nickname);
+                        return  R.ok().put("data",user);
+                    }
+                }
     }
 }
