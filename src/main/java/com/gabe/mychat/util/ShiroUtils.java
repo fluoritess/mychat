@@ -23,7 +23,7 @@ public class ShiroUtils {
         return (user)SecurityUtils.getSubject().getPrincipal();
     }
 
-    public static Integer getUserId() {
+    public static String getUserId() {
         return getUserEntity().getUserId();
     }
 

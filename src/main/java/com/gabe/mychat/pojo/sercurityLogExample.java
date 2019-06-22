@@ -115,52 +115,62 @@ public class sercurityLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andLogIdEqualTo(Integer value) {
+        public Criteria andLogIdEqualTo(String value) {
             addCriterion("log_id =", value, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLogIdNotEqualTo(Integer value) {
+        public Criteria andLogIdNotEqualTo(String value) {
             addCriterion("log_id <>", value, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLogIdGreaterThan(Integer value) {
+        public Criteria andLogIdGreaterThan(String value) {
             addCriterion("log_id >", value, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLogIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andLogIdGreaterThanOrEqualTo(String value) {
             addCriterion("log_id >=", value, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLogIdLessThan(Integer value) {
+        public Criteria andLogIdLessThan(String value) {
             addCriterion("log_id <", value, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLogIdLessThanOrEqualTo(Integer value) {
+        public Criteria andLogIdLessThanOrEqualTo(String value) {
             addCriterion("log_id <=", value, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLogIdIn(List<Integer> values) {
+        public Criteria andLogIdLike(String value) {
+            addCriterion("log_id like", value, "logId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogIdNotLike(String value) {
+            addCriterion("log_id not like", value, "logId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogIdIn(List<String> values) {
             addCriterion("log_id in", values, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLogIdNotIn(List<Integer> values) {
+        public Criteria andLogIdNotIn(List<String> values) {
             addCriterion("log_id not in", values, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLogIdBetween(Integer value1, Integer value2) {
+        public Criteria andLogIdBetween(String value1, String value2) {
             addCriterion("log_id between", value1, value2, "logId");
             return (Criteria) this;
         }
 
-        public Criteria andLogIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andLogIdNotBetween(String value1, String value2) {
             addCriterion("log_id not between", value1, value2, "logId");
             return (Criteria) this;
         }
@@ -175,52 +185,62 @@ public class sercurityLogExample {
             return (Criteria) this;
         }
 
-        public Criteria andUserIdEqualTo(Integer value) {
+        public Criteria andUserIdEqualTo(String value) {
             addCriterion("user_id =", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotEqualTo(Integer value) {
+        public Criteria andUserIdNotEqualTo(String value) {
             addCriterion("user_id <>", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdGreaterThan(Integer value) {
+        public Criteria andUserIdGreaterThan(String value) {
             addCriterion("user_id >", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andUserIdGreaterThanOrEqualTo(String value) {
             addCriterion("user_id >=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLessThan(Integer value) {
+        public Criteria andUserIdLessThan(String value) {
             addCriterion("user_id <", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLessThanOrEqualTo(Integer value) {
+        public Criteria andUserIdLessThanOrEqualTo(String value) {
             addCriterion("user_id <=", value, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIn(List<Integer> values) {
+        public Criteria andUserIdLike(String value) {
+            addCriterion("user_id like", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotLike(String value) {
+            addCriterion("user_id not like", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIn(List<String> values) {
             addCriterion("user_id in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotIn(List<Integer> values) {
+        public Criteria andUserIdNotIn(List<String> values) {
             addCriterion("user_id not in", values, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdBetween(Integer value1, Integer value2) {
+        public Criteria andUserIdBetween(String value1, String value2) {
             addCriterion("user_id between", value1, value2, "userId");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andUserIdNotBetween(String value1, String value2) {
             addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }

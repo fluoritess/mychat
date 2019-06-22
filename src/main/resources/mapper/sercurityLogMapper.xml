@@ -3,8 +3,8 @@
 <mapper namespace="com.gabe.mychat.mapper.sercurityLogMapper" >
   <resultMap id="BaseResultMap" type="com.gabe.mychat.pojo.sercurityLog" >
     <constructor >
-      <idArg column="log_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="log_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="login_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="login_address" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
@@ -85,15 +85,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from sercurity_log
-    where log_id = #{logId,jdbcType=INTEGER}
+    where log_id = #{logId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from sercurity_log
-    where log_id = #{logId,jdbcType=INTEGER}
+    where log_id = #{logId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.gabe.mychat.pojo.sercurityLogExample" >
     delete from sercurity_log
@@ -104,7 +104,7 @@
   <insert id="insert" parameterType="com.gabe.mychat.pojo.sercurityLog" >
     insert into sercurity_log (log_id, user_id, login_time, 
       login_address)
-    values (#{logId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{loginTime,jdbcType=TIMESTAMP}, 
+    values (#{logId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, 
       #{loginAddress,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.gabe.mychat.pojo.sercurityLog" >
@@ -125,10 +125,10 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="logId != null" >
-        #{logId,jdbcType=INTEGER},
+        #{logId,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
+        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="loginTime != null" >
         #{loginTime,jdbcType=TIMESTAMP},
@@ -148,10 +148,10 @@
     update sercurity_log
     <set >
       <if test="record.logId != null" >
-        log_id = #{record.logId,jdbcType=INTEGER},
+        log_id = #{record.logId,jdbcType=VARCHAR},
       </if>
       <if test="record.userId != null" >
-        user_id = #{record.userId,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
       <if test="record.loginTime != null" >
         login_time = #{record.loginTime,jdbcType=TIMESTAMP},
@@ -166,8 +166,8 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update sercurity_log
-    set log_id = #{record.logId,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
+    set log_id = #{record.logId,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
       login_time = #{record.loginTime,jdbcType=TIMESTAMP},
       login_address = #{record.loginAddress,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -178,7 +178,7 @@
     update sercurity_log
     <set >
       <if test="userId != null" >
-        user_id = #{userId,jdbcType=INTEGER},
+        user_id = #{userId,jdbcType=VARCHAR},
       </if>
       <if test="loginTime != null" >
         login_time = #{loginTime,jdbcType=TIMESTAMP},
@@ -187,13 +187,13 @@
         login_address = #{loginAddress,jdbcType=VARCHAR},
       </if>
     </set>
-    where log_id = #{logId,jdbcType=INTEGER}
+    where log_id = #{logId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gabe.mychat.pojo.sercurityLog" >
     update sercurity_log
-    set user_id = #{userId,jdbcType=INTEGER},
+    set user_id = #{userId,jdbcType=VARCHAR},
       login_time = #{loginTime,jdbcType=TIMESTAMP},
       login_address = #{loginAddress,jdbcType=VARCHAR}
-    where log_id = #{logId,jdbcType=INTEGER}
+    where log_id = #{logId,jdbcType=VARCHAR}
   </update>
 </mapper>

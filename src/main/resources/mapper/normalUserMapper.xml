@@ -3,7 +3,7 @@
 <mapper namespace="com.gabe.mychat.mapper.normalUserMapper" >
   <resultMap id="BaseResultMap" type="com.gabe.mychat.pojo.normalUser" >
     <constructor >
-      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="gender" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="address" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
@@ -93,7 +93,7 @@
   <insert id="insert" parameterType="com.gabe.mychat.pojo.normalUser" >
     insert into normal_user (user_id, gender, address
       )
-    values (#{userId,jdbcType=INTEGER}, #{gender,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}
+    values (#{userId,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.gabe.mychat.pojo.normalUser" >
@@ -111,7 +111,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
+        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="gender != null" >
         #{gender,jdbcType=VARCHAR},
@@ -131,7 +131,7 @@
     update normal_user
     <set >
       <if test="record.userId != null" >
-        user_id = #{record.userId,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
       <if test="record.gender != null" >
         gender = #{record.gender,jdbcType=VARCHAR},
@@ -146,7 +146,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update normal_user
-    set user_id = #{record.userId,jdbcType=INTEGER},
+    set user_id = #{record.userId,jdbcType=VARCHAR},
       gender = #{record.gender,jdbcType=VARCHAR},
       address = #{record.address,jdbcType=VARCHAR}
     <if test="_parameter != null" >

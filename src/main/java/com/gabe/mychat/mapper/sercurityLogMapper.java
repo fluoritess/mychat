@@ -10,7 +10,7 @@ public interface sercurityLogMapper {
 
     int deleteByExample(sercurityLogExample example);
 
-    int deleteByPrimaryKey(Integer logId);
+    int deleteByPrimaryKey(String logId);
 
     int insert(sercurityLog record);
 
@@ -18,7 +18,7 @@ public interface sercurityLogMapper {
 
     List<sercurityLog> selectByExample(sercurityLogExample example);
 
-    sercurityLog selectByPrimaryKey(Integer logId);
+    sercurityLog selectByPrimaryKey(String logId);
 
     int updateByExampleSelective(@Param("record") sercurityLog record, @Param("example") sercurityLogExample example);
 

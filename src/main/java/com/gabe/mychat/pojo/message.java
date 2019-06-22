@@ -1,17 +1,17 @@
 package com.gabe.mychat.pojo;
 
 public class message {
-    private Integer messageId;
+    private String messageId;
 
     private String content;
 
     private Integer messageType;
 
-    private Integer receiverId;
+    private String receiverId;
 
-    private Integer senderId;
+    private String senderId;
 
-    public message(Integer messageId, String content, Integer messageType, Integer receiverId, Integer senderId) {
+    public message(String messageId, String content, Integer messageType, String receiverId, String senderId) {
         this.messageId = messageId;
         this.content = content;
         this.messageType = messageType;
@@ -23,12 +23,12 @@ public class message {
         super();
     }
 
-    public Integer getMessageId() {
+    public String getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(Integer messageId) {
-        this.messageId = messageId;
+    public void setMessageId(String messageId) {
+        this.messageId = messageId == null ? null : messageId.trim();
     }
 
     public String getContent() {
@@ -47,19 +47,19 @@ public class message {
         this.messageType = messageType;
     }
 
-    public Integer getReceiverId() {
+    public String getReceiverId() {
         return receiverId;
     }
 
-    public void setReceiverId(Integer receiverId) {
-        this.receiverId = receiverId;
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId == null ? null : receiverId.trim();
     }
 
-    public Integer getSenderId() {
+    public String getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(Integer senderId) {
-        this.senderId = senderId;
+    public void setSenderId(String senderId) {
+        this.senderId = senderId == null ? null : senderId.trim();
     }
 }

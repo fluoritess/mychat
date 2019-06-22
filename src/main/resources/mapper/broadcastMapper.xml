@@ -3,9 +3,10 @@
 <mapper namespace="com.gabe.mychat.mapper.broadcastMapper" >
   <resultMap id="BaseResultMap" type="com.gabe.mychat.pojo.broadcast" >
     <constructor >
-      <idArg column="broadcast_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="broadcast_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="broadcast_content" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="broadcast_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    broadcast_id, broadcast_content, broadcast_time
+    broadcast_id, broadcast_content, broadcast_time, user_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gabe.mychat.pojo.broadcastExample" >
     select
@@ -84,15 +85,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from broadcast
-    where broadcast_id = #{broadcastId,jdbcType=INTEGER}
+    where broadcast_id = #{broadcastId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from broadcast
-    where broadcast_id = #{broadcastId,jdbcType=INTEGER}
+    where broadcast_id = #{broadcastId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.gabe.mychat.pojo.broadcastExample" >
     delete from broadcast
@@ -101,10 +102,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.gabe.mychat.pojo.broadcast" >
-    insert into broadcast (broadcast_id, broadcast_content, broadcast_time
-      )
-    values (#{broadcastId,jdbcType=INTEGER}, #{broadcastContent,jdbcType=VARCHAR}, #{broadcastTime,jdbcType=TIMESTAMP}
-      )
+    insert into broadcast (broadcast_id, broadcast_content, broadcast_time, 
+      user_id)
+    values (#{broadcastId,jdbcType=VARCHAR}, #{broadcastContent,jdbcType=VARCHAR}, #{broadcastTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.gabe.mychat.pojo.broadcast" >
     insert into broadcast
@@ -118,16 +119,22 @@
       <if test="broadcastTime != null" >
         broadcast_time,
       </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="broadcastId != null" >
-        #{broadcastId,jdbcType=INTEGER},
+        #{broadcastId,jdbcType=VARCHAR},
       </if>
       <if test="broadcastContent != null" >
         #{broadcastContent,jdbcType=VARCHAR},
       </if>
       <if test="broadcastTime != null" >
         #{broadcastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -141,13 +148,16 @@
     update broadcast
     <set >
       <if test="record.broadcastId != null" >
-        broadcast_id = #{record.broadcastId,jdbcType=INTEGER},
+        broadcast_id = #{record.broadcastId,jdbcType=VARCHAR},
       </if>
       <if test="record.broadcastContent != null" >
         broadcast_content = #{record.broadcastContent,jdbcType=VARCHAR},
       </if>
       <if test="record.broadcastTime != null" >
         broadcast_time = #{record.broadcastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -156,9 +166,10 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update broadcast
-    set broadcast_id = #{record.broadcastId,jdbcType=INTEGER},
+    set broadcast_id = #{record.broadcastId,jdbcType=VARCHAR},
       broadcast_content = #{record.broadcastContent,jdbcType=VARCHAR},
-      broadcast_time = #{record.broadcastTime,jdbcType=TIMESTAMP}
+      broadcast_time = #{record.broadcastTime,jdbcType=TIMESTAMP},
+      user_id = #{record.userId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -172,13 +183,17 @@
       <if test="broadcastTime != null" >
         broadcast_time = #{broadcastTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
     </set>
-    where broadcast_id = #{broadcastId,jdbcType=INTEGER}
+    where broadcast_id = #{broadcastId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gabe.mychat.pojo.broadcast" >
     update broadcast
     set broadcast_content = #{broadcastContent,jdbcType=VARCHAR},
-      broadcast_time = #{broadcastTime,jdbcType=TIMESTAMP}
-    where broadcast_id = #{broadcastId,jdbcType=INTEGER}
+      broadcast_time = #{broadcastTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where broadcast_id = #{broadcastId,jdbcType=VARCHAR}
   </update>
 </mapper>

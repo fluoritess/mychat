@@ -3,7 +3,7 @@
 <mapper namespace="com.gabe.mychat.mapper.friendsMapper" >
   <resultMap id="BaseResultMap" type="com.gabe.mychat.pojo.friends" >
     <constructor >
-      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="friend_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="add_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
@@ -93,7 +93,7 @@
   <insert id="insert" parameterType="com.gabe.mychat.pojo.friends" >
     insert into friends (user_id, friend_id, add_time
       )
-    values (#{userId,jdbcType=INTEGER}, #{friendId,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}
+    values (#{userId,jdbcType=VARCHAR}, #{friendId,jdbcType=INTEGER}, #{addTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.gabe.mychat.pojo.friends" >
@@ -111,7 +111,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
+        #{userId,jdbcType=VARCHAR},
       </if>
       <if test="friendId != null" >
         #{friendId,jdbcType=INTEGER},
@@ -131,7 +131,7 @@
     update friends
     <set >
       <if test="record.userId != null" >
-        user_id = #{record.userId,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
       <if test="record.friendId != null" >
         friend_id = #{record.friendId,jdbcType=INTEGER},
@@ -146,7 +146,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update friends
-    set user_id = #{record.userId,jdbcType=INTEGER},
+    set user_id = #{record.userId,jdbcType=VARCHAR},
       friend_id = #{record.friendId,jdbcType=INTEGER},
       add_time = #{record.addTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >

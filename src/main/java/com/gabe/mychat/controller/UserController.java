@@ -2,7 +2,6 @@ package com.gabe.mychat.controller;
 
 import com.gabe.mychat.mapper.systemMapper;
 import com.gabe.mychat.mapper.userMapper;
-import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.util.ArchivesLog;
 import com.gabe.mychat.util.R;
 import com.gabe.mychat.util.ShiroUtils;
@@ -12,22 +11,17 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 /**
  * @author wsw
@@ -38,9 +32,9 @@ import java.util.Map;
 @Controller
 public class UserController {
     @Autowired
-    userMapper userMapper;
+    com.gabe.mychat.mapper.userMapper userMapper;
     @Autowired
-    systemMapper systemMapper;
+    com.gabe.mychat.mapper.systemMapper systemMapper;
     @Autowired
     private Producer producer;
     /**

@@ -6,14 +6,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 @Mapper
 public interface systemMapper {
     int countByExample(systemExample example);
 
     int deleteByExample(systemExample example);
 
-    int deleteByPrimaryKey(Integer systemId);
+    int deleteByPrimaryKey(String systemId);
 
     int insert(system record);
 
@@ -21,7 +20,7 @@ public interface systemMapper {
 
     List<system> selectByExample(systemExample example);
 
-    system selectByPrimaryKey(Integer systemId);
+    system selectByPrimaryKey(String systemId);
 
     int updateByExampleSelective(@Param("record") system record, @Param("example") systemExample example);
 

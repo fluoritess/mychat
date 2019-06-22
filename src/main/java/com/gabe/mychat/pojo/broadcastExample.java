@@ -115,52 +115,62 @@ public class broadcastExample {
             return (Criteria) this;
         }
 
-        public Criteria andBroadcastIdEqualTo(Integer value) {
+        public Criteria andBroadcastIdEqualTo(String value) {
             addCriterion("broadcast_id =", value, "broadcastId");
             return (Criteria) this;
         }
 
-        public Criteria andBroadcastIdNotEqualTo(Integer value) {
+        public Criteria andBroadcastIdNotEqualTo(String value) {
             addCriterion("broadcast_id <>", value, "broadcastId");
             return (Criteria) this;
         }
 
-        public Criteria andBroadcastIdGreaterThan(Integer value) {
+        public Criteria andBroadcastIdGreaterThan(String value) {
             addCriterion("broadcast_id >", value, "broadcastId");
             return (Criteria) this;
         }
 
-        public Criteria andBroadcastIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andBroadcastIdGreaterThanOrEqualTo(String value) {
             addCriterion("broadcast_id >=", value, "broadcastId");
             return (Criteria) this;
         }
 
-        public Criteria andBroadcastIdLessThan(Integer value) {
+        public Criteria andBroadcastIdLessThan(String value) {
             addCriterion("broadcast_id <", value, "broadcastId");
             return (Criteria) this;
         }
 
-        public Criteria andBroadcastIdLessThanOrEqualTo(Integer value) {
+        public Criteria andBroadcastIdLessThanOrEqualTo(String value) {
             addCriterion("broadcast_id <=", value, "broadcastId");
             return (Criteria) this;
         }
 
-        public Criteria andBroadcastIdIn(List<Integer> values) {
+        public Criteria andBroadcastIdLike(String value) {
+            addCriterion("broadcast_id like", value, "broadcastId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBroadcastIdNotLike(String value) {
+            addCriterion("broadcast_id not like", value, "broadcastId");
+            return (Criteria) this;
+        }
+
+        public Criteria andBroadcastIdIn(List<String> values) {
             addCriterion("broadcast_id in", values, "broadcastId");
             return (Criteria) this;
         }
 
-        public Criteria andBroadcastIdNotIn(List<Integer> values) {
+        public Criteria andBroadcastIdNotIn(List<String> values) {
             addCriterion("broadcast_id not in", values, "broadcastId");
             return (Criteria) this;
         }
 
-        public Criteria andBroadcastIdBetween(Integer value1, Integer value2) {
+        public Criteria andBroadcastIdBetween(String value1, String value2) {
             addCriterion("broadcast_id between", value1, value2, "broadcastId");
             return (Criteria) this;
         }
 
-        public Criteria andBroadcastIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andBroadcastIdNotBetween(String value1, String value2) {
             addCriterion("broadcast_id not between", value1, value2, "broadcastId");
             return (Criteria) this;
         }
@@ -292,6 +302,76 @@ public class broadcastExample {
 
         public Criteria andBroadcastTimeNotBetween(Date value1, Date value2) {
             addCriterion("broadcast_time not between", value1, value2, "broadcastTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIsNull() {
+            addCriterion("user_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIsNotNull() {
+            addCriterion("user_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdEqualTo(String value) {
+            addCriterion("user_id =", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotEqualTo(String value) {
+            addCriterion("user_id <>", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdGreaterThan(String value) {
+            addCriterion("user_id >", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdGreaterThanOrEqualTo(String value) {
+            addCriterion("user_id >=", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdLessThan(String value) {
+            addCriterion("user_id <", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdLessThanOrEqualTo(String value) {
+            addCriterion("user_id <=", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdLike(String value) {
+            addCriterion("user_id like", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotLike(String value) {
+            addCriterion("user_id not like", value, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdIn(List<String> values) {
+            addCriterion("user_id in", values, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotIn(List<String> values) {
+            addCriterion("user_id not in", values, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdBetween(String value1, String value2) {
+            addCriterion("user_id between", value1, value2, "userId");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserIdNotBetween(String value1, String value2) {
+            addCriterion("user_id not between", value1, value2, "userId");
             return (Criteria) this;
         }
     }

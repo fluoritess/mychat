@@ -3,11 +3,11 @@
 <mapper namespace="com.gabe.mychat.mapper.messageMapper" >
   <resultMap id="BaseResultMap" type="com.gabe.mychat.pojo.message" >
     <constructor >
-      <idArg column="message_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="message_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="message_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="receiver_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="sender_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="receiver_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sender_id" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -86,15 +86,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from message
-    where message_id = #{messageId,jdbcType=INTEGER}
+    where message_id = #{messageId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from message
-    where message_id = #{messageId,jdbcType=INTEGER}
+    where message_id = #{messageId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.gabe.mychat.pojo.messageExample" >
     delete from message
@@ -105,8 +105,8 @@
   <insert id="insert" parameterType="com.gabe.mychat.pojo.message" >
     insert into message (message_id, content, message_type, 
       receiver_id, sender_id)
-    values (#{messageId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{messageType,jdbcType=INTEGER}, 
-      #{receiverId,jdbcType=INTEGER}, #{senderId,jdbcType=INTEGER})
+    values (#{messageId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{messageType,jdbcType=INTEGER}, 
+      #{receiverId,jdbcType=VARCHAR}, #{senderId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.gabe.mychat.pojo.message" >
     insert into message
@@ -129,7 +129,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="messageId != null" >
-        #{messageId,jdbcType=INTEGER},
+        #{messageId,jdbcType=VARCHAR},
       </if>
       <if test="content != null" >
         #{content,jdbcType=VARCHAR},
@@ -138,10 +138,10 @@
         #{messageType,jdbcType=INTEGER},
       </if>
       <if test="receiverId != null" >
-        #{receiverId,jdbcType=INTEGER},
+        #{receiverId,jdbcType=VARCHAR},
       </if>
       <if test="senderId != null" >
-        #{senderId,jdbcType=INTEGER},
+        #{senderId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -155,7 +155,7 @@
     update message
     <set >
       <if test="record.messageId != null" >
-        message_id = #{record.messageId,jdbcType=INTEGER},
+        message_id = #{record.messageId,jdbcType=VARCHAR},
       </if>
       <if test="record.content != null" >
         content = #{record.content,jdbcType=VARCHAR},
@@ -164,10 +164,10 @@
         message_type = #{record.messageType,jdbcType=INTEGER},
       </if>
       <if test="record.receiverId != null" >
-        receiver_id = #{record.receiverId,jdbcType=INTEGER},
+        receiver_id = #{record.receiverId,jdbcType=VARCHAR},
       </if>
       <if test="record.senderId != null" >
-        sender_id = #{record.senderId,jdbcType=INTEGER},
+        sender_id = #{record.senderId,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -176,11 +176,11 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update message
-    set message_id = #{record.messageId,jdbcType=INTEGER},
+    set message_id = #{record.messageId,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
       message_type = #{record.messageType,jdbcType=INTEGER},
-      receiver_id = #{record.receiverId,jdbcType=INTEGER},
-      sender_id = #{record.senderId,jdbcType=INTEGER}
+      receiver_id = #{record.receiverId,jdbcType=VARCHAR},
+      sender_id = #{record.senderId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -195,20 +195,20 @@
         message_type = #{messageType,jdbcType=INTEGER},
       </if>
       <if test="receiverId != null" >
-        receiver_id = #{receiverId,jdbcType=INTEGER},
+        receiver_id = #{receiverId,jdbcType=VARCHAR},
       </if>
       <if test="senderId != null" >
-        sender_id = #{senderId,jdbcType=INTEGER},
+        sender_id = #{senderId,jdbcType=VARCHAR},
       </if>
     </set>
-    where message_id = #{messageId,jdbcType=INTEGER}
+    where message_id = #{messageId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gabe.mychat.pojo.message" >
     update message
     set content = #{content,jdbcType=VARCHAR},
       message_type = #{messageType,jdbcType=INTEGER},
-      receiver_id = #{receiverId,jdbcType=INTEGER},
-      sender_id = #{senderId,jdbcType=INTEGER}
-    where message_id = #{messageId,jdbcType=INTEGER}
+      receiver_id = #{receiverId,jdbcType=VARCHAR},
+      sender_id = #{senderId,jdbcType=VARCHAR}
+    where message_id = #{messageId,jdbcType=VARCHAR}
   </update>
 </mapper>

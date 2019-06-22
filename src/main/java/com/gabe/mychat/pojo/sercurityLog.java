@@ -3,15 +3,15 @@ package com.gabe.mychat.pojo;
 import java.util.Date;
 
 public class sercurityLog {
-    private Integer logId;
+    private String logId;
 
-    private Integer userId;
+    private String userId;
 
     private Date loginTime;
 
     private String loginAddress;
 
-    public sercurityLog(Integer logId, Integer userId, Date loginTime, String loginAddress) {
+    public sercurityLog(String logId, String userId, Date loginTime, String loginAddress) {
         this.logId = logId;
         this.userId = userId;
         this.loginTime = loginTime;
@@ -22,20 +22,20 @@ public class sercurityLog {
         super();
     }
 
-    public Integer getLogId() {
+    public String getLogId() {
         return logId;
     }
 
-    public void setLogId(Integer logId) {
-        this.logId = logId;
+    public void setLogId(String logId) {
+        this.logId = logId == null ? null : logId.trim();
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public Date getLoginTime() {

@@ -3,13 +3,13 @@ package com.gabe.mychat.pojo;
 import java.util.Date;
 
 public class friends {
-    private Integer userId;
+    private String userId;
 
     private Integer friendId;
 
     private Date addTime;
 
-    public friends(Integer userId, Integer friendId, Date addTime) {
+    public friends(String userId, Integer friendId, Date addTime) {
         this.userId = userId;
         this.friendId = friendId;
         this.addTime = addTime;
@@ -19,12 +19,12 @@ public class friends {
         super();
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public Integer getFriendId() {

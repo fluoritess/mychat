@@ -10,7 +10,7 @@ public interface broadcastMapper {
 
     int deleteByExample(broadcastExample example);
 
-    int deleteByPrimaryKey(Integer broadcastId);
+    int deleteByPrimaryKey(String broadcastId);
 
     int insert(broadcast record);
 
@@ -18,7 +18,7 @@ public interface broadcastMapper {
 
     List<broadcast> selectByExample(broadcastExample example);
 
-    broadcast selectByPrimaryKey(Integer broadcastId);
+    broadcast selectByPrimaryKey(String broadcastId);
 
     int updateByExampleSelective(@Param("record") broadcast record, @Param("example") broadcastExample example);
 

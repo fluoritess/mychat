@@ -3,28 +3,31 @@ package com.gabe.mychat.pojo;
 import java.util.Date;
 
 public class broadcast {
-    private Integer broadcastId;
+    private String broadcastId;
 
     private String broadcastContent;
 
     private Date broadcastTime;
 
-    public broadcast(Integer broadcastId, String broadcastContent, Date broadcastTime) {
+    private String userId;
+
+    public broadcast(String broadcastId, String broadcastContent, Date broadcastTime, String userId) {
         this.broadcastId = broadcastId;
         this.broadcastContent = broadcastContent;
         this.broadcastTime = broadcastTime;
+        this.userId = userId;
     }
 
     public broadcast() {
         super();
     }
 
-    public Integer getBroadcastId() {
+    public String getBroadcastId() {
         return broadcastId;
     }
 
-    public void setBroadcastId(Integer broadcastId) {
-        this.broadcastId = broadcastId;
+    public void setBroadcastId(String broadcastId) {
+        this.broadcastId = broadcastId == null ? null : broadcastId.trim();
     }
 
     public String getBroadcastContent() {
@@ -41,5 +44,13 @@ public class broadcast {
 
     public void setBroadcastTime(Date broadcastTime) {
         this.broadcastTime = broadcastTime;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 }

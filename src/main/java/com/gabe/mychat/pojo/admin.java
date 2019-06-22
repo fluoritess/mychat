@@ -1,9 +1,9 @@
 package com.gabe.mychat.pojo;
 
 public class admin {
-    private Integer userId;
+    private String userId;
 
-    public admin(Integer userId) {
+    public admin(String userId) {
         this.userId = userId;
     }
 
@@ -11,11 +11,11 @@ public class admin {
         super();
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 }

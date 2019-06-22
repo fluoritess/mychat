@@ -28,13 +28,14 @@ public class MsgController {
     @ArchivesLog(operationName = "添加好友",operationType = "互动操作")
     @RequestMapping("/addfriend")
     public R addFriend(@RequestBody Map<String, Object> map , HttpSession session){
-        int user_id=(int)session.getAttribute("id");
-        int friend_id=(int)map.get("adduserid");
+        String user_id=(String)session.getAttribute("id");
+        String friend_id=(String)map.get("adduserid");
         String msg=(String)map.get("msg");
         int message_type=3;
         Date date=new Date();
         long date_time=date.getTime();
-        int message_id=(int)date_time;
+        int date_time_int=(int)date_time;
+        String message_id=date_time_int+ user_id;
         message message=new message(message_id,msg,message_type,friend_id,user_id);
         int i=msgService.addFriendMsg(message);
         if(i!=1){

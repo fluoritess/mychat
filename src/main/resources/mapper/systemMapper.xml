@@ -3,7 +3,7 @@
 <mapper namespace="com.gabe.mychat.mapper.systemMapper" >
   <resultMap id="BaseResultMap" type="com.gabe.mychat.pojo.system" >
     <constructor >
-      <idArg column="system_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <idArg column="system_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="salt" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
@@ -83,15 +83,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from system
-    where system_id = #{systemId,jdbcType=INTEGER}
+    where system_id = #{systemId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from system
-    where system_id = #{systemId,jdbcType=INTEGER}
+    where system_id = #{systemId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.gabe.mychat.pojo.systemExample" >
     delete from system
@@ -101,7 +101,7 @@
   </delete>
   <insert id="insert" parameterType="com.gabe.mychat.pojo.system" >
     insert into system (system_id, salt)
-    values (#{systemId,jdbcType=INTEGER}, #{salt,jdbcType=VARCHAR})
+    values (#{systemId,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.gabe.mychat.pojo.system" >
     insert into system
@@ -115,7 +115,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="systemId != null" >
-        #{systemId,jdbcType=INTEGER},
+        #{systemId,jdbcType=VARCHAR},
       </if>
       <if test="salt != null" >
         #{salt,jdbcType=VARCHAR},
@@ -132,7 +132,7 @@
     update system
     <set >
       <if test="record.systemId != null" >
-        system_id = #{record.systemId,jdbcType=INTEGER},
+        system_id = #{record.systemId,jdbcType=VARCHAR},
       </if>
       <if test="record.salt != null" >
         salt = #{record.salt,jdbcType=VARCHAR},
@@ -144,7 +144,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update system
-    set system_id = #{record.systemId,jdbcType=INTEGER},
+    set system_id = #{record.systemId,jdbcType=VARCHAR},
       salt = #{record.salt,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -157,11 +157,11 @@
         salt = #{salt,jdbcType=VARCHAR},
       </if>
     </set>
-    where system_id = #{systemId,jdbcType=INTEGER}
+    where system_id = #{systemId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gabe.mychat.pojo.system" >
     update system
     set salt = #{salt,jdbcType=VARCHAR}
-    where system_id = #{systemId,jdbcType=INTEGER}
+    where system_id = #{systemId,jdbcType=VARCHAR}
   </update>
 </mapper>

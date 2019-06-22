@@ -6,14 +6,13 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 @Mapper
 public interface messageMapper {
     int countByExample(messageExample example);
 
     int deleteByExample(messageExample example);
 
-    int deleteByPrimaryKey(Integer messageId);
+    int deleteByPrimaryKey(String messageId);
 
     int insert(message record);
 
@@ -21,7 +20,7 @@ public interface messageMapper {
 
     List<message> selectByExample(messageExample example);
 
-    message selectByPrimaryKey(Integer messageId);
+    message selectByPrimaryKey(String messageId);
 
     int updateByExampleSelective(@Param("record") message record, @Param("example") messageExample example);
 

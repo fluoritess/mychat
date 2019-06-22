@@ -114,52 +114,62 @@ public class systemExample {
             return (Criteria) this;
         }
 
-        public Criteria andSystemIdEqualTo(Integer value) {
+        public Criteria andSystemIdEqualTo(String value) {
             addCriterion("system_id =", value, "systemId");
             return (Criteria) this;
         }
 
-        public Criteria andSystemIdNotEqualTo(Integer value) {
+        public Criteria andSystemIdNotEqualTo(String value) {
             addCriterion("system_id <>", value, "systemId");
             return (Criteria) this;
         }
 
-        public Criteria andSystemIdGreaterThan(Integer value) {
+        public Criteria andSystemIdGreaterThan(String value) {
             addCriterion("system_id >", value, "systemId");
             return (Criteria) this;
         }
 
-        public Criteria andSystemIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andSystemIdGreaterThanOrEqualTo(String value) {
             addCriterion("system_id >=", value, "systemId");
             return (Criteria) this;
         }
 
-        public Criteria andSystemIdLessThan(Integer value) {
+        public Criteria andSystemIdLessThan(String value) {
             addCriterion("system_id <", value, "systemId");
             return (Criteria) this;
         }
 
-        public Criteria andSystemIdLessThanOrEqualTo(Integer value) {
+        public Criteria andSystemIdLessThanOrEqualTo(String value) {
             addCriterion("system_id <=", value, "systemId");
             return (Criteria) this;
         }
 
-        public Criteria andSystemIdIn(List<Integer> values) {
+        public Criteria andSystemIdLike(String value) {
+            addCriterion("system_id like", value, "systemId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSystemIdNotLike(String value) {
+            addCriterion("system_id not like", value, "systemId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSystemIdIn(List<String> values) {
             addCriterion("system_id in", values, "systemId");
             return (Criteria) this;
         }
 
-        public Criteria andSystemIdNotIn(List<Integer> values) {
+        public Criteria andSystemIdNotIn(List<String> values) {
             addCriterion("system_id not in", values, "systemId");
             return (Criteria) this;
         }
 
-        public Criteria andSystemIdBetween(Integer value1, Integer value2) {
+        public Criteria andSystemIdBetween(String value1, String value2) {
             addCriterion("system_id between", value1, value2, "systemId");
             return (Criteria) this;
         }
 
-        public Criteria andSystemIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andSystemIdNotBetween(String value1, String value2) {
             addCriterion("system_id not between", value1, value2, "systemId");
             return (Criteria) this;
         }

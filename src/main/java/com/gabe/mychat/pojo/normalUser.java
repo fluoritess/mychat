@@ -1,13 +1,13 @@
 package com.gabe.mychat.pojo;
 
 public class normalUser {
-    private Integer userId;
+    private String userId;
 
     private String gender;
 
     private String address;
 
-    public normalUser(Integer userId, String gender, String address) {
+    public normalUser(String userId, String gender, String address) {
         this.userId = userId;
         this.gender = gender;
         this.address = address;
@@ -17,12 +17,12 @@ public class normalUser {
         super();
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public String getGender() {

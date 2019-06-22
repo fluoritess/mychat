@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MsgServiceImpl implements MsgService {
     @Autowired
-    messageMapper messageMapper;
+    com.gabe.mychat.mapper.messageMapper messageMapper;
     @Override
     public int addFriendMsg(message message) {
         return messageMapper.insert(message);

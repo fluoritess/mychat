@@ -1,11 +1,11 @@
 package com.gabe.mychat.pojo;
 
 public class system {
-    private Integer systemId;
+    private String systemId;
 
     private String salt;
 
-    public system(Integer systemId, String salt) {
+    public system(String systemId, String salt) {
         this.systemId = systemId;
         this.salt = salt;
     }
@@ -14,12 +14,12 @@ public class system {
         super();
     }
 
-    public Integer getSystemId() {
+    public String getSystemId() {
         return systemId;
     }
 
-    public void setSystemId(Integer systemId) {
-        this.systemId = systemId;
+    public void setSystemId(String systemId) {
+        this.systemId = systemId == null ? null : systemId.trim();
     }
 
     public String getSalt() {

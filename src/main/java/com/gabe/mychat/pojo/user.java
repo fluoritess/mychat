@@ -1,7 +1,7 @@
 package com.gabe.mychat.pojo;
 
 public class user {
-    private Integer userId;
+    private String userId;
 
     private String name;
 
@@ -13,7 +13,7 @@ public class user {
 
     private String password;
 
-    public user(Integer userId, String name, String nickname, String imgurl, String tel, String password) {
+    public user(String userId, String name, String nickname, String imgurl, String tel, String password) {
         this.userId = userId;
         this.name = name;
         this.nickname = nickname;
@@ -26,12 +26,12 @@ public class user {
         super();
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 
     public String getName() {
