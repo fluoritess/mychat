@@ -9,10 +9,7 @@ import com.gabe.mychat.pojo.normalUser;
 import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.service.FriendService;
 import com.gabe.mychat.service.MsgService;
-import com.gabe.mychat.util.ArchivesLog;
-import com.gabe.mychat.util.NumberUtil;
-import com.gabe.mychat.util.R;
-import com.gabe.mychat.util.UserUtil;
+import com.gabe.mychat.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,24 +40,12 @@ public class FriendController {
      * @return
      */
     @ResponseBody
-    @ArchivesLog(operationName = "查询好友信息",operationType = "查询操作")
+    @ArchivesLog(operationName = "查询全部好友信息",operationType = "查询操作")
     @RequestMapping("/selectFriendInfo")
     public R addFriend(@RequestBody Map<String, Object> reMap , HttpSession session){
-         String nickname=(String) reMap.get("nickname");
-        //长度为12且不全为数字，则是昵称查询
-        if(NumberUtil.getNumberFromString(nickname).length()!=12){
-            user user= userUtilMapper.selectUserByNickName(nickname);
-            String user_id=user.getUserId();
-            List<friends> list=friendService.selectFriendById(user_id);
-            List<Map> list1=friendService.getFriendsInfo(list);
-            return R.ok().put("data",list1);
-        }
-        //长度为12且为数字，则是id查询
-        else {
-            List<friends> list=friendService.selectFriendById(nickname);
-            List<Map> list1=friendService.getFriendsInfo(list);
-            return R.ok().put("data",list1);
-        }
-
+         String id=(String)session.getAttribute("id");
+         List<friends> list=friendService.selectFriendById(id);
+         List<Map> list1=friendService.getFriendsInfo(list);
+         return R.ok().put("data",list1);
     }
 }

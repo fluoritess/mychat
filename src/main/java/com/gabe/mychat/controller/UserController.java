@@ -132,7 +132,7 @@ public class UserController {
     @RequestMapping(value = "/selectUserByNickName")
     public Map<String,Object> selectUserByNickName(@RequestBody Map<String,Object> reMap) {
                //接收参数
-                String nickname=(String)reMap.get("nickname");
+                String nickname=(String)reMap.get("value");
         /*        //判断长度是否是12位，如果不是则为昵称查询
                 if(nickname.length()!=12){
                     user user=userUtilMapper.selectUserByNickName(nickname);
