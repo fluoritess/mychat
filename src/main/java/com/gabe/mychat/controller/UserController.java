@@ -70,6 +70,7 @@ public class UserController {
         if(!kaptcha.equalsIgnoreCase(code)){
             return R.error("验证码不正确");
         }
+
       //认证异常处理
         try {
             Subject subject= ShiroUtils.getSubject();
