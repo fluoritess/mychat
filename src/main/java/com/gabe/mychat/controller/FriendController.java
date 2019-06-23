@@ -1,23 +1,27 @@
 package com.gabe.mychat.controller;
 
         import com.gabe.mychat.mapper.normalUserUtilMapper;
-        import com.gabe.mychat.mapper.userMapper;
-        import com.gabe.mychat.mapper.userUtilMapper;
-        import com.gabe.mychat.pojo.friends;
-        import com.gabe.mychat.pojo.message;
-        import com.gabe.mychat.pojo.normalUser;
-        import com.gabe.mychat.pojo.user;
-        import com.gabe.mychat.service.FriendService;
-        import com.gabe.mychat.service.MsgService;
-        import com.gabe.mychat.util.*;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.stereotype.Controller;
-        import org.springframework.web.bind.annotation.RequestBody;
-        import org.springframework.web.bind.annotation.RequestMapping;
-        import org.springframework.web.bind.annotation.ResponseBody;
+import com.gabe.mychat.mapper.userMapper;
+import com.gabe.mychat.mapper.userUtilMapper;
+import com.gabe.mychat.pojo.friends;
+import com.gabe.mychat.pojo.normalUser;
+import com.gabe.mychat.pojo.user;
+import com.gabe.mychat.service.FriendService;
+import com.gabe.mychat.util.ArchivesLog;
+import com.gabe.mychat.util.NumberUtil;
+import com.gabe.mychat.util.R;
+import com.gabe.mychat.util.UserUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-        import javax.servlet.http.HttpSession;
-        import java.util.*;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author wsw
