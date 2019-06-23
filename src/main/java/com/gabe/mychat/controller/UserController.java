@@ -123,6 +123,54 @@ public class UserController {
         png_base64 = "data:image/jpeg;base64,"+png_base64.replaceAll("\n", "").replaceAll("\r", "");
         return R.ok().put("data",png_base64);
     }
+
+    /**
+     * 获取手机验证码
+     *
+     * @param map data
+     * @return R
+     */
+    @ResponseBody
+    @ArchivesLog(operationName = "获取手机验证码", operationType = "用户基本操作")
+    @RequestMapping("/telCode")
+    public R getTelCode(@RequestBody Map<String, String> map) {
+        StringBuilder code = new StringBuilder();
+        for (int i = 0; i < 4; i++) {
+            code.append(Math.round(Math.random() * 10));
+        }
+        return R.ok().put("data", code);
+    }
+
+    /**
+     * 用户注册
+     * @param map 注册数据
+     * @param session session
+     * @return R
+     */
+    @ResponseBody
+    @ArchivesLog(operationName = "注册", operationType = "用户基本操作")
+    @RequestMapping("/register")
+    public R register(@RequestBody Map<String, String> map, HttpSession session) {
+        System.out.println("进入注册...");
+        String tel = map.get("tel");
+        String code = map.get("code");
+        String username = map.get("username");
+        String pass = map.get("pass");
+        String password = map.get("password");
+        String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+        if (!kaptcha.equalsIgnoreCase(code)) {
+            return R.error("验证码不正确");
+        }
+        if(NumberUtil.getNumberFromString(map.get("tel")).length() != 12){
+
+        }
+        Map<String, Object> msg = new HashMap<>();
+        msg.put("code", "0");
+        msg.put("id", ShiroUtils.getUserEntity().getUserId());
+        return R.ok().put("data", msg);
+    }
+
+
     /**
      * 查询信息
      * @param reMap
