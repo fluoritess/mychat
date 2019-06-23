@@ -25,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  * @author wsw
  * @Package com.gabe.mychat.controller
@@ -43,6 +44,7 @@ public class UserController {
     private userUtilMapper userUtilMapper;
     @Autowired
     private normalUserUtilMapper normalUserUtilMapper;
+
     /**
      * 认证异常
      * <p>
@@ -59,50 +61,50 @@ public class UserController {
      * org.apache.shiro.authc.AuthenticationException       上面异常的父类
      */
     @ResponseBody
-    @ArchivesLog(operationName = "登录",operationType = "用户基本操作")
-    @RequestMapping("/login" )
-    public R login(@RequestBody Map<String,String> map, HttpSession session){
+    @ArchivesLog(operationName = "登录", operationType = "用户基本操作")
+    @RequestMapping("/login")
+    public R login(@RequestBody Map<String, String> map, HttpSession session) {
         System.out.println("进入登录...");
-        String username=map.get("username");
-        String password=map.get("password");
-        String code=map.get("code");
-        String kaptcha= ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
-        if(!kaptcha.equalsIgnoreCase(code)){
+        String username = map.get("username");
+        String password = map.get("password");
+        String code = map.get("code");
+        String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+        if (!kaptcha.equalsIgnoreCase(code)) {
             return R.error("验证码不正确");
         }
-      //认证异常处理
+        //认证异常处理
         try {
-            Subject subject= ShiroUtils.getSubject();
-            UsernamePasswordToken token=new UsernamePasswordToken(username,password);
+            Subject subject = ShiroUtils.getSubject();
+            UsernamePasswordToken token = new UsernamePasswordToken(username, password);
             subject.login(token);
         } catch (UnknownAccountException e) {//错误的账号
             return R.error(e.getMessage());
-        }catch (IncorrectCredentialsException e) {//错误的凭证
+        } catch (IncorrectCredentialsException e) {//错误的凭证
             return R.error(e.getMessage());
-        }catch (LockedAccountException e) {//锁定的账号
+        } catch (LockedAccountException e) {//锁定的账号
             return R.error(e.getMessage());
-        }catch (AuthenticationException e) {//以上的父类
+        } catch (AuthenticationException e) {//以上的父类
             return R.error("账户验证失败");
         }
-        session.setAttribute("user",ShiroUtils.getUserEntity());
-        session.setAttribute("id",ShiroUtils.getUserEntity().getUserId());
-        Map<String,Object> msg=new HashMap<>();
-        msg.put("code","0");
-        msg.put("id",ShiroUtils.getUserEntity().getUserId());
-        return R.ok().put("data",msg);
+        session.setAttribute("user", ShiroUtils.getUserEntity());
+        session.setAttribute("id", ShiroUtils.getUserEntity().getUserId());
+        Map<String, Object> msg = new HashMap<>();
+        msg.put("code", "0");
+        msg.put("id", ShiroUtils.getUserEntity().getUserId());
+        return R.ok().put("data", msg);
     }
 
     /*
      * 生成图形验证码
      */
     @ResponseBody
-    @ArchivesLog(operationName = "获取验证码",operationType = "用户基本操作")
-    @RequestMapping("/imgCode" )
-    public R code(){
+    @ArchivesLog(operationName = "获取验证码", operationType = "用户基本操作")
+    @RequestMapping("/imgCode")
+    public R code() {
         System.out.print("获取验证码");
         //生成文字验证码
         String text = producer.createText();
-        System.out.print("验证码是:"+text);
+        System.out.print("验证码是:" + text);
         //生成图片验证码
         BufferedImage image = producer.createImage(text);
 
@@ -117,22 +119,71 @@ public class UserController {
             e.printStackTrace();
         }
         byte[] bytes = baos.toByteArray();//转换成字节
-        String png_base64 =  encoder.encodeBuffer(bytes).trim();//转换成base64串
+        String png_base64 = encoder.encodeBuffer(bytes).trim();//转换成base64串
         //删除 \r\n
-        png_base64 = "data:image/jpeg;base64,"+png_base64.replaceAll("\n", "").replaceAll("\r", "");
-        return R.ok().put("data",png_base64);
+        png_base64 = "data:image/jpeg;base64," + png_base64.replaceAll("\n", "").replaceAll("\r", "");
+        return R.ok().put("data", png_base64);
     }
+
+    /**
+     * 获取手机验证码
+     *
+     * @param map data
+     * @return R
+     */
+    @ResponseBody
+    @ArchivesLog(operationName = "获取手机验证码", operationType = "用户基本操作")
+    @RequestMapping("/telCode")
+    public R getTelCode(@RequestBody Map<String, String> map) {
+        StringBuilder code = new StringBuilder();
+        for (int i = 0; i < 4; i++) {
+            code.append(Math.round(Math.random() * 10));
+        }
+        return R.ok().put("data", code);
+    }
+
+    /**
+     * 用户注册
+     * @param map 注册数据
+     * @param session session
+     * @return R
+     */
+    @ResponseBody
+    @ArchivesLog(operationName = "注册", operationType = "用户基本操作")
+    @RequestMapping("/register")
+    public R register(@RequestBody Map<String, String> map, HttpSession session) {
+        System.out.println("进入注册...");
+        String tel = map.get("tel");
+        String code = map.get("code");
+        String username = map.get("username");
+        String pass = map.get("pass");
+        String password = map.get("password");
+        String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+        if (!kaptcha.equalsIgnoreCase(code)) {
+            return R.error("验证码不正确");
+        }
+        if(NumberUtil.getNumberFromString(map.get("tel")).length() != 12){
+
+        }
+        Map<String, Object> msg = new HashMap<>();
+        msg.put("code", "0");
+        msg.put("id", ShiroUtils.getUserEntity().getUserId());
+        return R.ok().put("data", msg);
+    }
+
+
     /**
      * 查询信息
+     *
      * @param reMap
      * @return
      */
     @ResponseBody
     @ArchivesLog(operationType = "查询信息", operationName = "根据用户昵称或id查询用户")
     @RequestMapping(value = "/selectUserByNickName")
-    public Map<String,Object> selectUserByNickName(@RequestBody Map<String,Object> reMap) {
-               //接收参数
-                String nickname=(String)reMap.get("nickname");
+    public Map<String, Object> selectUserByNickName(@RequestBody Map<String, Object> reMap) {
+        //接收参数
+        String nickname = (String) reMap.get("nickname");
         /*        //判断长度是否是12位，如果不是则为昵称查询
                 if(nickname.length()!=12){
                     user user=userUtilMapper.selectUserByNickName(nickname);
@@ -141,22 +192,22 @@ public class UserController {
                     map= UserUtil.completeUser(user,normalUser);
                     return R.ok().put("data",map);
                 }else {*/
-                    //长度为12且不全为数字，则是昵称查询
-                    if(NumberUtil.getNumberFromString(nickname).length()!=12){
-                        user user=userUtilMapper.selectUserByNickName(nickname);
-                        normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
-                        Map map=new HashMap();
-                        map= UserUtil.completeUser(user,normalUser);
-                        return R.ok().put("data",map);
-                    }
-                    //长度为12且为数字，则是id查询
-                    else {
-                        user user=userMapper.selectByPrimaryKey(nickname);
-                        normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
-                        Map map=new HashMap();
-                        map= UserUtil.completeUser(user,normalUser);
-                        return R.ok().put("data",map);
-                    }
-             /*   }*/
+        //长度为12且不全为数字，则是昵称查询
+        if (NumberUtil.getNumberFromString(nickname).length() != 12) {
+            user user = userUtilMapper.selectUserByNickName(nickname);
+            normalUser normalUser = normalUserUtilMapper.selectUserById(user.getUserId());
+            Map map = new HashMap();
+            map = UserUtil.completeUser(user, normalUser);
+            return R.ok().put("data", map);
+        }
+        //长度为12且为数字，则是id查询
+        else {
+            user user = userMapper.selectByPrimaryKey(nickname);
+            normalUser normalUser = normalUserUtilMapper.selectUserById(user.getUserId());
+            Map map = new HashMap();
+            map = UserUtil.completeUser(user, normalUser);
+            return R.ok().put("data", map);
+        }
+        /*   }*/
     }
 }
