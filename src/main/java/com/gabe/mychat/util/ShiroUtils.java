@@ -47,6 +47,7 @@ public class ShiroUtils {
         Object kaptcha = getSessionAttribute(key);
         if(kaptcha == null){
            System.out.print("验证码已失效");
+           return null;
         }
         getSession().removeAttribute(key);
         return kaptcha.toString();

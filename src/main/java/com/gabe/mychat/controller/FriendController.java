@@ -63,7 +63,7 @@ public class FriendController {
         String id=(String)session.getAttribute("id");
         String nickname=(String)reMap.get("value");
         if(id.equals("")||id.equals(null)||nickname.equals(null)||nickname.equals("")){
-            return R.error("查询错误");
+            return R.error("无数据");
         }
         List list_=new ArrayList();
         //长度为12且不全为数字，则是昵称查询
@@ -108,6 +108,6 @@ public class FriendController {
                 }
             }
         }
-        return  R.error("查询出错");
+        return  R.error("无数据");
     }
 }

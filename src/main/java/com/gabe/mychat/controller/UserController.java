@@ -89,11 +89,12 @@ public class UserController {
         session.setAttribute("user",ShiroUtils.getUserEntity());
         session.setAttribute("id",ShiroUtils.getUserEntity().getUserId());
         Map<String,Object> msg=new HashMap<>();
-        msg.put("code","0");
-        msg.put("id",ShiroUtils.getUserEntity().getUserId());
-        msg.put("nickname",ShiroUtils.getUserEntity().getNickname());
-        msg.put("imgurl",ShiroUtils.getUserEntity().getImgurl());
-        return R.ok().put("data",msg);
+        user user=ShiroUtils.getUserEntity();
+        normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
+        Map map1=new HashMap();
+        map1=UserUtil.completeUser(user,normalUser);
+        map1.remove("password");
+        return R.ok().put("data",map1);
     }
 
     /*
