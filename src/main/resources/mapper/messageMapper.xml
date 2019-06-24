@@ -8,6 +8,8 @@
       <arg column="message_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="receiver_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="sender_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="send_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -69,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    message_id, content, message_type, receiver_id, sender_id
+    message_id, content, message_type, receiver_id, sender_id, status, send_date
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.gabe.mychat.pojo.messageExample" >
     select
@@ -104,9 +106,11 @@
   </delete>
   <insert id="insert" parameterType="com.gabe.mychat.pojo.message" >
     insert into message (message_id, content, message_type, 
-      receiver_id, sender_id)
+      receiver_id, sender_id, status, 
+      send_date)
     values (#{messageId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{messageType,jdbcType=INTEGER}, 
-      #{receiverId,jdbcType=VARCHAR}, #{senderId,jdbcType=VARCHAR})
+      #{receiverId,jdbcType=VARCHAR}, #{senderId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{sendDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.gabe.mychat.pojo.message" >
     insert into message
@@ -126,6 +130,12 @@
       <if test="senderId != null" >
         sender_id,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="sendDate != null" >
+        send_date,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="messageId != null" >
@@ -142,6 +152,12 @@
       </if>
       <if test="senderId != null" >
         #{senderId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sendDate != null" >
+        #{sendDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -169,6 +185,12 @@
       <if test="record.senderId != null" >
         sender_id = #{record.senderId,jdbcType=VARCHAR},
       </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendDate != null" >
+        send_date = #{record.sendDate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -180,7 +202,9 @@
       content = #{record.content,jdbcType=VARCHAR},
       message_type = #{record.messageType,jdbcType=INTEGER},
       receiver_id = #{record.receiverId,jdbcType=VARCHAR},
-      sender_id = #{record.senderId,jdbcType=VARCHAR}
+      sender_id = #{record.senderId,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      send_date = #{record.sendDate,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -200,6 +224,12 @@
       <if test="senderId != null" >
         sender_id = #{senderId,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sendDate != null" >
+        send_date = #{sendDate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where message_id = #{messageId,jdbcType=VARCHAR}
   </update>
@@ -208,7 +238,9 @@
     set content = #{content,jdbcType=VARCHAR},
       message_type = #{messageType,jdbcType=INTEGER},
       receiver_id = #{receiverId,jdbcType=VARCHAR},
-      sender_id = #{senderId,jdbcType=VARCHAR}
+      sender_id = #{senderId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      send_date = #{sendDate,jdbcType=TIMESTAMP}
     where message_id = #{messageId,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -1,6 +1,7 @@
 package com.gabe.mychat.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class messageExample {
@@ -441,6 +442,126 @@ public class messageExample {
 
         public Criteria andSenderIdNotBetween(String value1, String value2) {
             addCriterion("sender_id not between", value1, value2, "senderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Integer value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Integer value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Integer value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Integer value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Integer> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Integer> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("status not between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendDateIsNull() {
+            addCriterion("send_date is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendDateIsNotNull() {
+            addCriterion("send_date is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendDateEqualTo(Date value) {
+            addCriterion("send_date =", value, "sendDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendDateNotEqualTo(Date value) {
+            addCriterion("send_date <>", value, "sendDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendDateGreaterThan(Date value) {
+            addCriterion("send_date >", value, "sendDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendDateGreaterThanOrEqualTo(Date value) {
+            addCriterion("send_date >=", value, "sendDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendDateLessThan(Date value) {
+            addCriterion("send_date <", value, "sendDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendDateLessThanOrEqualTo(Date value) {
+            addCriterion("send_date <=", value, "sendDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendDateIn(List<Date> values) {
+            addCriterion("send_date in", values, "sendDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendDateNotIn(List<Date> values) {
+            addCriterion("send_date not in", values, "sendDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendDateBetween(Date value1, Date value2) {
+            addCriterion("send_date between", value1, value2, "sendDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andSendDateNotBetween(Date value1, Date value2) {
+            addCriterion("send_date not between", value1, value2, "sendDate");
             return (Criteria) this;
         }
     }

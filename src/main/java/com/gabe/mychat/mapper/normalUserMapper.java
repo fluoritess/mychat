@@ -3,8 +3,11 @@ package com.gabe.mychat.mapper;
 import com.gabe.mychat.pojo.normalUser;
 import com.gabe.mychat.pojo.normalUserExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface normalUserMapper {
     int countByExample(normalUserExample example);
 

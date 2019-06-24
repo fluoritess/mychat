@@ -3,10 +3,8 @@ package com.gabe.mychat.mapper;
 import com.gabe.mychat.pojo.message;
 import com.gabe.mychat.pojo.messageExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-@Mapper
+
 public interface messageMapper {
     int countByExample(messageExample example);
 

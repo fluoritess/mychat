@@ -1,5 +1,7 @@
 package com.gabe.mychat.pojo;
 
+import java.util.Date;
+
 public class message {
     private String messageId;
 
@@ -11,12 +13,18 @@ public class message {
 
     private String senderId;
 
-    public message(String messageId, String content, Integer messageType, String receiverId, String senderId) {
+    private Integer status;
+
+    private Date sendDate;
+
+    public message(String messageId, String content, Integer messageType, String receiverId, String senderId, Integer status, Date sendDate) {
         this.messageId = messageId;
         this.content = content;
         this.messageType = messageType;
         this.receiverId = receiverId;
         this.senderId = senderId;
+        this.status = status;
+        this.sendDate = sendDate;
     }
 
     public message() {
@@ -61,5 +69,21 @@ public class message {
 
     public void setSenderId(String senderId) {
         this.senderId = senderId == null ? null : senderId.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getSendDate() {
+        return sendDate;
+    }
+
+    public void setSendDate(Date sendDate) {
+        this.sendDate = sendDate;
     }
 }

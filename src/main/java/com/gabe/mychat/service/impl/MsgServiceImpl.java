@@ -1,6 +1,5 @@
 package com.gabe.mychat.service.impl;
 
-import com.gabe.mychat.mapper.messageMapper;
 import com.gabe.mychat.pojo.message;
 import com.gabe.mychat.service.MsgService;
 import org.springframework.beans.factory.annotation.Autowired;
