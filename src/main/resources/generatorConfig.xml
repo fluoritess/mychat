@@ -82,7 +82,7 @@
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
         </table>-->
-   <!--     <table tableName="message" domainObjectName="message"
+   <!--     <table tableName="content" domainObjectName="content"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
