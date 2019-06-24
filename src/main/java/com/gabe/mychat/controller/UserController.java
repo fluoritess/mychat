@@ -1,10 +1,8 @@
 package com.gabe.mychat.controller;
 
-import com.gabe.mychat.mapper.normalUserUtilMapper;
-import com.gabe.mychat.mapper.systemMapper;
-import com.gabe.mychat.mapper.userMapper;
-import com.gabe.mychat.mapper.userUtilMapper;
+import com.gabe.mychat.mapper.*;
 import com.gabe.mychat.pojo.normalUser;
+import com.gabe.mychat.pojo.normalUserExample;
 import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.util.*;
 import com.google.code.kaptcha.Constants;
@@ -46,6 +44,8 @@ public class UserController {
     private userUtilMapper userUtilMapper;
     @Autowired
     private normalUserUtilMapper normalUserUtilMapper;
+    @Autowired
+    private normalUserMapper normalUserMapper;
     /**
      * 认证异常
      * <p>
@@ -178,6 +178,11 @@ public class UserController {
                     }
              /*   }*/
     }
+    /**
+     * 更新信息
+     * @param file
+     * @return
+     */
     @ResponseBody
     @ArchivesLog(operationName = "更改头像",operationType = "用户基本操作")
     @RequestMapping("/updateImg" )
@@ -210,10 +215,42 @@ public class UserController {
             return R.error("上传失败");
         }
     }
+    /**
+     * 查询信息
+     * @param
+     * @return
+     */
     @ResponseBody
     @ArchivesLog(operationName = "获取用户信息",operationType = "用户基本操作")
     @RequestMapping("/getUserInfo" )
     public R updateImg(HttpSession session){
         return R.ok().put("data",session.getAttribute("user"));
+    }
+    /**
+     * 更新信息
+     * @param reMap
+     * @return
+     */
+    @ResponseBody
+    @ArchivesLog(operationName = "修改用户信息",operationType = "用户基本操作")
+    @RequestMapping("/updateUserInfo" )
+    public R updateUserInfo(@RequestBody Map<String,Object> reMap,HttpSession session){
+        String name=(String)reMap.get("name");
+        String nickname=(String)reMap.get("nickname");
+        int age=(int)reMap.get("age");
+        String address=(String)reMap.get("address");
+        user user=(user)session.getAttribute("user");
+        normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
+        user.setName(name);
+        user.setNickname(nickname);
+        normalUser.setAddress(address);
+        normalUser.setAge(age);
+        normalUserExample normalUserExample=new normalUserExample();
+        normalUserExample.Criteria  criteria=normalUserExample.createCriteria();
+        criteria.andUserIdEqualTo(user.getUserId());
+        userMapper.updateByPrimaryKeySelective(user);
+        normalUserMapper.updateByExampleSelective(normalUser,normalUserExample);
+        session.setAttribute("user",user);
+        return R.ok();
     }
 }
