@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gabe.mychat.mapper.messageUtilMapper" >
+    <resultMap id="BaseResultMap" type="com.gabe.mychat.pojo.message" >
+        <constructor >
+            <idArg column="message_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="message_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="receiver_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="sender_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="send_date" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List" >
+    message_id, content, message_type, receiver_id, sender_id, status, send_date
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from message
+        where message_id = #{messageId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByTime" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from message
+        where sender_id = #{senderId,jdbcType=VARCHAR} And receiver_id=#{receiverId,jdbcType=VARCHAR}And send_date ORDER BY send_date DESC LIMIT 10
+    </select>
+</mapper>

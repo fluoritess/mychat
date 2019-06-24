@@ -1,5 +1,6 @@
 package com.gabe.mychat.controller;
 
+import com.gabe.mychat.mapper.messageUtilMapper;
 import com.gabe.mychat.pojo.message;
 import com.gabe.mychat.service.MsgService;
 import com.gabe.mychat.util.ArchivesLog;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,6 +26,8 @@ import java.util.Map;
 public class MsgController {
     @Autowired
     MsgService msgService;
+    @Autowired
+    messageUtilMapper messageUtilMapper;
     @ResponseBody
     @ArchivesLog(operationName = "添加好友",operationType = "互动操作")
     @RequestMapping("/addfriend")
@@ -50,5 +54,20 @@ public class MsgController {
         }
 
     }
-
+    /**
+     * 查询信息
+     * @param file
+     * @return
+     */
+    @ResponseBody
+    @ArchivesLog(operationName = "查询当前用户与选择好友的最近20条记录",operationType = "查询操作")
+    @RequestMapping("/selectByTime")
+    public R selectByTime(@RequestBody Map<String, Object> map , HttpSession session){
+        String user_id=(String)session.getAttribute("id");
+        String friend_id=(String)session.getAttribute("userid");
+        List<message> list=messageUtilMapper.selectByTime(friend_id,user_id);
+        List<message> list_=messageUtilMapper.selectByTime(user_id,friend_id);
+        list.addAll(list_);
+        return R.ok().put("data",list);
+    }
 }
