@@ -1,7 +1,6 @@
 package com.gabe.mychat.config;
 
 
-import com.gabe.mychat.controller.FriendController;
 import com.gabe.mychat.shiro.ShiroLoginFilter;
 import com.gabe.mychat.shiro.ShiroUserRealm;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -77,6 +76,7 @@ public class ShiroConfig {
         filterUrl.put("/selectUserByNickName","anon");
         filterUrl.put("/selectFriendInfo","anon");
         filterUrl.put("/addfriend","anon");
+        filterUrl.put("/telCode","anon");
 
         //设置拦截目录
         filterUrl.put("/**/*","loginFilter,authc");
