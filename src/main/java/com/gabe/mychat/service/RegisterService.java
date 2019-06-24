@@ -12,6 +12,8 @@ import com.gabe.mychat.pojo.user;
  */
 public interface RegisterService {
 
+    public String sendTelCode(String tel);
+
     public boolean checkRegister(String tel);
 
     public int userRegister(user user);

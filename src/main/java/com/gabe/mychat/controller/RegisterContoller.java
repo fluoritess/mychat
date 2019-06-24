@@ -27,6 +27,9 @@ import java.util.Map;
 @Controller
 public class RegisterContoller {
 
+    @Autowired
+    private RegisterService registerService;
+
     /**
      * 获取手机验证码
      *
@@ -37,17 +40,29 @@ public class RegisterContoller {
     @ArchivesLog(operationName = "获取手机验证码", operationType = "用户基本操作")
     @RequestMapping("/telCode")
     public R getTelCode(@RequestBody Map<String, String> map) {
-        StringBuilder code = new StringBuilder();
-        for (int i = 0; i < 4; i++) {
-            code.append(Math.round(Math.random() * 10));
+        System.out.println("开始发送手机验证码");
+        String tel = map.get("tel");
+        System.out.println("手机号为：" + tel);
+        if (tel.length() != 11) {
+            return R.error("手机号格式不正确");
+        } else {
+            for (char c : tel.toCharArray()) {
+                if (!Character.isDigit(c)) {
+                    return R.error("手机号格式不正确");
+                }
+            }
         }
-        System.out.println("手机验证码为：" + code);
-        ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, code);
-        return R.ok().put("data", code);
+        if (!registerService.checkRegister(tel)) {
+            return R.error("该手机号已被注册");
+        }
+        String code = registerService.sendTelCode(tel);
+        if(code != null){
+            ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, code);
+            return R.ok();
+        }else {
+            return R.error("发送手机验证码失败");
+        }
     }
-
-    @Autowired
-    private RegisterService registerService;
 
     /**
      * 用户注册
@@ -71,11 +86,11 @@ public class RegisterContoller {
             return R.error("手机验证码不正确");
         }
         if (tel.length() != 11) {
-            return R.error("电话号码格式不正确");
+            return R.error("手机号格式不正确");
         } else {
             for (char c : tel.toCharArray()) {
                 if (!Character.isDigit(c)) {
-                    return R.error("电话号码格式不正确");
+                    return R.error("手机号格式不正确");
                 }
             }
         }
@@ -85,9 +100,12 @@ public class RegisterContoller {
         if (!registerService.checkRegister(tel)) {
             return R.error("该手机号已被注册");
         }
-        int userid = registerService.userRegister(new user(null, null, username, null, tel, password));
+        int res = registerService.userRegister(new user(null, null, username, null, tel, password));
         Map<String, Object> msg = new HashMap<>(2);
-        msg.put("userid", userid);
-        return R.ok().put("data", msg);
+        if(res != 0){
+            return R.ok();
+        }else {
+            return R.error("注册失败");
+        }
     }
 }
