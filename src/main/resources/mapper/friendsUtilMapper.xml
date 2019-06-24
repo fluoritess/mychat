@@ -18,5 +18,11 @@
         from friends
         where user_id = #{userId,jdbcType=VARCHAR}
     </select>
+<!--    <select id="selectByLimit" resultMap="BaseResultMap" parameterType="com.gabe.mychat.pojo.friendsExample" >
+        select
+        <include refid="Base_Column_List" />
+        from friends
+        where user_id = #{userId,jdbcType=VARCHAR} And collect_time ORDER BY collect_time DESC LIMIT 20
+    </select>-->
 
 </mapper>
