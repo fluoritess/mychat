@@ -100,10 +100,10 @@ public class UserController {
     @ArchivesLog(operationName = "获取验证码",operationType = "用户基本操作")
     @RequestMapping("/imgCode" )
     public R code(){
-        System.out.print("获取验证码");
+        System.out.println("获取验证码");
         //生成文字验证码
         String text = producer.createText();
-        System.out.print("验证码是:"+text);
+        System.out.println("验证码是:"+text);
         //生成图片验证码
         BufferedImage image = producer.createImage(text);
 
@@ -127,7 +127,7 @@ public class UserController {
     /**
      * 获取手机验证码
      *
-     * @param map data
+     * @param map data of tel
      * @return R
      */
     @ResponseBody
@@ -143,7 +143,7 @@ public class UserController {
 
     /**
      * 用户注册
-     * @param map 注册数据
+     * @param map data of tel. code, username, pass, password
      * @param session session
      * @return R
      */
@@ -161,8 +161,8 @@ public class UserController {
         if (!kaptcha.equalsIgnoreCase(code)) {
             return R.error("验证码不正确");
         }
-        if(NumberUtil.getNumberFromString(map.get("tel")).length() != 12){
-
+        if(NumberUtil.getNumberFromString(tel).length() != 11){
+            return R.error("电话号码格式不正确");
         }
         Map<String, Object> msg = new HashMap<>();
         msg.put("code", "0");
