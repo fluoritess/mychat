@@ -18,10 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+        import java.util.*;
 
 /**
  * @author wsw
@@ -48,7 +45,7 @@ public class FriendController {
     @ResponseBody
     @ArchivesLog(operationName = "查询全部好友信息",operationType = "查询操作")
     @RequestMapping("/selectFriendInfo")
-    public R selectFriendInfo(@RequestBody Map<String, Object> reMap , HttpSession session){
+    public R selectFriendInfo(HttpSession session){
         String id=(String)session.getAttribute("id");
         List<friends> list=friendService.selectFriendById(id);
         List<Map> list1=friendService.getFriendsInfo(list);
@@ -65,6 +62,10 @@ public class FriendController {
     public R selectFriendInfoById(@RequestBody Map<String, Object> reMap , HttpSession session){
         String id=(String)session.getAttribute("id");
         String nickname=(String)reMap.get("value");
+        if(id.equals("")||id.equals(null)||nickname.equals(null)||nickname.equals("")){
+            return R.error("查询错误");
+        }
+        List list_=new ArrayList();
         //长度为12且不全为数字，则是昵称查询
         if(NumberUtil.getNumberFromString(nickname).length()!=12){
             //获取好友的id
@@ -82,7 +83,8 @@ public class FriendController {
                     map.remove("gender");
                     map.remove("address");
                     map.remove("age");
-                    return R.ok().put("data",map);
+                    list_.add(map);
+                    return R.ok().put("data",list_);
                 }
             }
         }
@@ -101,7 +103,8 @@ public class FriendController {
                     map.remove("gender");
                     map.remove("address");
                     map.remove("age");
-                    return R.ok().put("data",map);
+                    list_.add(map);
+                    return R.ok().put("data",list_);
                 }
             }
         }

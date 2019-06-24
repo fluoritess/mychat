@@ -34,14 +34,21 @@ public class MsgController {
         int message_type=3;
         Date date=new Date();
         long date_time=date.getTime();
-        int date_time_int=(int)date_time;
-        String message_id=date_time_int+ user_id;
-        message message=new message(message_id,msg,message_type,friend_id,user_id);
-        int i=msgService.addFriendMsg(message);
-        if(i!=1){
-            return R.error("消息发送失败");
+      /*  int date_time_int=(int)date_time;*/
+        String message_id=date_time+ user_id;
+        int status=0;
+        message message=new message(message_id,msg,message_type,friend_id,user_id,status,date);
+        try {
+            int i=msgService.addFriendMsg(message);
+            if(i!=1){
+                return R.error("消息发送失败");
+            }
+            return R.ok("消息发送成功");
         }
-        return R.ok("消息发送成功");
+        catch (Exception e){
+            return  R.error(e.getMessage());
+        }
+
     }
 
 }

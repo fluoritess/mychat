@@ -69,6 +69,7 @@ public class ShiroConfig {
         filterUrl.put("/sendCode","anon");
         filterUrl.put("/login","anon");
         filterUrl.put("/imgCode","anon");
+        filterUrl.put("/img/*.png","anon");
     /*    filterUrl.put("/Login.html","anon");*/
         filterUrl.put("/loginOut","logout");
         //下面的是测试的时候放行

@@ -23,7 +23,9 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 /**
  * @author wsw
@@ -70,7 +72,6 @@ public class UserController {
         if(!kaptcha.equalsIgnoreCase(code)){
             return R.error("验证码不正确");
         }
-
       //认证异常处理
         try {
             Subject subject= ShiroUtils.getSubject();
@@ -90,6 +91,8 @@ public class UserController {
         Map<String,Object> msg=new HashMap<>();
         msg.put("code","0");
         msg.put("id",ShiroUtils.getUserEntity().getUserId());
+        msg.put("nickname",ShiroUtils.getUserEntity().getNickname());
+        msg.put("imgurl",ShiroUtils.getUserEntity().getImgurl());
         return R.ok().put("data",msg);
     }
 
@@ -135,6 +138,7 @@ public class UserController {
     public Map<String,Object> selectUserByNickName(@RequestBody Map<String,Object> reMap) {
                //接收参数
                 String nickname=(String)reMap.get("value");
+                List list=new ArrayList();
         /*        //判断长度是否是12位，如果不是则为昵称查询
                 if(nickname.length()!=12){
                     user user=userUtilMapper.selectUserByNickName(nickname);
@@ -149,7 +153,8 @@ public class UserController {
                         normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
                         Map map=new HashMap();
                         map= UserUtil.completeUser(user,normalUser);
-                        return R.ok().put("data",map);
+                        list.add(map);
+                        return R.ok().put("data",list);
                     }
                     //长度为12且为数字，则是id查询
                     else {
@@ -157,7 +162,8 @@ public class UserController {
                         normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
                         Map map=new HashMap();
                         map= UserUtil.completeUser(user,normalUser);
-                        return R.ok().put("data",map);
+                        list.add(map);
+                        return R.ok().put("data",list);
                     }
              /*   }*/
     }
