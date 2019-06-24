@@ -15,14 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -127,7 +128,16 @@ public class UserController {
         png_base64 = "data:image/jpeg;base64,"+png_base64.replaceAll("\n", "").replaceAll("\r", "");
         return R.ok().put("data",png_base64);
     }
-
+    @ResponseBody
+    @ArchivesLog(operationName = "登出",operationType = "用户基本操作")
+    @RequestMapping("/logout" )
+    public R logout(HttpSession session){
+        String id=(String)session.getAttribute("id");
+        System.out.println("账号"+id+"退出...");
+        session.removeAttribute("user");
+        session.removeAttribute("id");
+        return R.ok("退出成功");
+    }
     /**
      * 查询信息
      * @param reMap
@@ -167,5 +177,37 @@ public class UserController {
                         return R.ok().put("data",list);
                     }
              /*   }*/
+    }
+    @ResponseBody
+    @ArchivesLog(operationName = "更改头像",operationType = "用户基本操作")
+    @RequestMapping("/updateImg" )
+    public R updateImg(@RequestBody MultipartFile file,HttpSession session){
+        String id=(String)session.getAttribute("id");
+        if (!file.isEmpty()) {
+            try {
+                BufferedOutputStream out = new BufferedOutputStream(
+                        new FileOutputStream(new File("src/main/resources/static/img/"+id+".png"
+                              /*  file.getOriginalFilename()*/)));
+                System.out.println(file.getName());
+                String url="/img/"+id+".png";
+                user user=(user)session.getAttribute("user");
+                user.setImgurl(url);
+                userMapper.updateByPrimaryKeySelective(user);
+                user.setImgurl(url);
+                session.setAttribute("user",user);
+                out.write(file.getBytes());
+                out.flush();
+                out.close();
+                return R.ok("上传成功").put("data",url);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                return R.error("上传失败"+e.getMessage());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return R.error("上传失败"+e.getMessage());
+            }
+        } else {
+            return R.error("上传失败");
+        }
     }
 }
