@@ -1,5 +1,6 @@
 package com.gabe.mychat.controller;
 
+import com.gabe.mychat.pojo.normalUser;
 import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.service.RegisterService;
 import com.gabe.mychat.util.ArchivesLog;
@@ -100,9 +101,11 @@ public class RegisterContoller {
         if (!registerService.checkRegister(tel)) {
             return R.error("该手机号已被注册");
         }
-        int res = registerService.userRegister(new user(null, null, username, null, tel, password));
+        boolean res = registerService.userRegister(
+                new user(null, null, username, null, tel, password),
+                new normalUser(null, null, null, null));
         Map<String, Object> msg = new HashMap<>(2);
-        if(res != 0){
+        if(res){
             return R.ok();
         }else {
             return R.error("注册失败");
