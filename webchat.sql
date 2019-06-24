@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2019-06-22 21:32:19
+Date: 2019-06-24 16:06:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -66,8 +66,6 @@ CREATE TABLE `friends` (
 -- ----------------------------
 INSERT INTO `friends` VALUES ('123456789101', '123456789102', '2019-06-22 16:55:03');
 INSERT INTO `friends` VALUES ('123456789103', '123456789101', '2019-06-22 16:55:16');
-INSERT INTO `friends` VALUES ('123456789102', '123456789101', '2019-06-22 20:48:14');
-INSERT INTO `friends` VALUES ('123456789101', '123456789103', '2019-06-22 20:49:05');
 
 -- ----------------------------
 -- Table structure for `message`
@@ -79,6 +77,8 @@ CREATE TABLE `message` (
   `message_type` int(11) DEFAULT NULL,
   `receiver_id` varchar(32) NOT NULL,
   `sender_id` varchar(32) NOT NULL,
+  `status` int(11) DEFAULT NULL,
+  `send_date` datetime NOT NULL,
   PRIMARY KEY (`message_id`),
   KEY `message_type` (`message_type`),
   KEY `receiver_id` (`receiver_id`),
@@ -91,7 +91,10 @@ CREATE TABLE `message` (
 -- ----------------------------
 -- Records of message
 -- ----------------------------
-INSERT INTO `message` VALUES ('21161432051', 'aaa', '3', '123456789102', '123456789101');
+INSERT INTO `message` VALUES ('1561337915548123456789101', '我是', '3', '123456789102', '123456789101', null, '0000-00-00 00:00:00');
+INSERT INTO `message` VALUES ('1561341545756123456789101', '', '3', '123456789102', '123456789101', '0', '0000-00-00 00:00:00');
+INSERT INTO `message` VALUES ('1561342498065123456789101', 'aaa', '3', '123456789102', '123456789101', '0', '2019-06-24 02:14:58');
+INSERT INTO `message` VALUES ('21161432051', 'aaa', '3', '123456789102', '123456789101', null, '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for `message_type`
@@ -101,7 +104,7 @@ CREATE TABLE `message_type` (
   `messagae_type_id` int(11) NOT NULL AUTO_INCREMENT,
   `message_type` varchar(32) NOT NULL,
   PRIMARY KEY (`messagae_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of message_type
@@ -109,6 +112,7 @@ CREATE TABLE `message_type` (
 INSERT INTO `message_type` VALUES ('1', '对话消息');
 INSERT INTO `message_type` VALUES ('2', '系统消息');
 INSERT INTO `message_type` VALUES ('3', '好友消息');
+INSERT INTO `message_type` VALUES ('4', '未读消息');
 
 -- ----------------------------
 -- Table structure for `normal_user`
@@ -128,6 +132,7 @@ CREATE TABLE `normal_user` (
 -- ----------------------------
 INSERT INTO `normal_user` VALUES ('123456789102', 's', 'dsadasdasdsa', '321');
 INSERT INTO `normal_user` VALUES ('123456789103', 'm', 'dsadasd', null);
+INSERT INTO `normal_user` VALUES ('123456789101', 'ss', 'dsad', null);
 
 -- ----------------------------
 -- Table structure for `sercurity_log`
@@ -167,9 +172,9 @@ CREATE TABLE `system` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `user_id` varchar(32) NOT NULL,
-  `name` varchar(16) NOT NULL,
+  `name` varchar(16) DEFAULT NULL,
   `nickname` varchar(255) NOT NULL,
-  `imgurl` varchar(255) DEFAULT NULL,
+  `imgurl` varchar(255) DEFAULT '/img/user.png',
   `tel` varchar(16) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`)
@@ -178,6 +183,6 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('123456789101', 'sss', 'shan', null, null, '123');
-INSERT INTO `user` VALUES ('123456789102', 'xxx', 'wen', null, null, '123');
-INSERT INTO `user` VALUES ('123456789103', 'mmm', '12345678910w', null, null, '123');
+INSERT INTO `user` VALUES ('123456789101', 'sss', 'shan', '/img/user.png', null, '123');
+INSERT INTO `user` VALUES ('123456789102', 'xxx', 'wen', '/img/user.png', null, '123');
+INSERT INTO `user` VALUES ('123456789103', 'mmm', '12345678910w', '/img/user.png', null, '123');

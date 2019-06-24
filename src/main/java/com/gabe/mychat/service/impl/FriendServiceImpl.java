@@ -1,6 +1,5 @@
 package com.gabe.mychat.service.impl;
 
-import com.gabe.mychat.mapper.friendsMapper;
 import com.gabe.mychat.mapper.friendsUtilsMapper;
 import com.gabe.mychat.mapper.userMapper;
 import com.gabe.mychat.pojo.friends;
@@ -16,7 +15,7 @@ public class FriendServiceImpl implements FriendService {
     @Autowired
     friendsUtilsMapper friendsUtilsMapper;
     @Autowired
-    userMapper userMapper;
+    com.gabe.mychat.mapper.userMapper userMapper;
     @Autowired
     UserService UserService;
     @Override
