@@ -1,9 +1,12 @@
 package com.gabe.mychat.controller;
 
+import com.gabe.mychat.pojo.user;
+import com.gabe.mychat.service.RegisterService;
 import com.gabe.mychat.util.ArchivesLog;
 import com.gabe.mychat.util.R;
 import com.gabe.mychat.util.ShiroUtils;
 import com.google.code.kaptcha.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,12 +41,18 @@ public class RegisterContoller {
         for (int i = 0; i < 4; i++) {
             code.append(Math.round(Math.random() * 10));
         }
+        System.out.println("手机验证码为：" + code);
+        ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, code);
         return R.ok().put("data", code);
     }
 
+    @Autowired
+    private RegisterService registerService;
+
     /**
      * 用户注册
-     * @param map data of tel. code, username, pass, password
+     *
+     * @param map     data of tel. code, username, pass, password
      * @param session session
      * @return R
      */
@@ -58,21 +67,27 @@ public class RegisterContoller {
         String pass = map.get("pass");
         String password = map.get("password");
         String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
-        if (!kaptcha.equalsIgnoreCase(code)) {
-            return R.error("验证码不正确");
+        if (kaptcha == null || !kaptcha.equalsIgnoreCase(code)) {
+            return R.error("手机验证码不正确");
         }
-        if(tel.length() != 11){
+        if (tel.length() != 11) {
             return R.error("电话号码格式不正确");
-        }else{
-            for(char c : tel.toCharArray()){
-                if(!Character.isDigit(c)){
+        } else {
+            for (char c : tel.toCharArray()) {
+                if (!Character.isDigit(c)) {
                     return R.error("电话号码格式不正确");
                 }
             }
         }
-
-        Map<String, Object> msg = new HashMap<>();
-        msg.put("code", "0");
+        if (!pass.equals(password)) {
+            return R.error("两次输入密码不同");
+        }
+        if (!registerService.checkRegister(tel)) {
+            return R.error("该手机号已被注册");
+        }
+        int userid = registerService.userRegister(new user(null, null, username, null, tel, password));
+        Map<String, Object> msg = new HashMap<>(2);
+        msg.put("userid", userid);
         return R.ok().put("data", msg);
     }
 }
