@@ -12,7 +12,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     userUtilMapper userUtilMapper;
     @Autowired
-    userMapper userMapper;
+    com.gabe.mychat.mapper.userMapper userMapper;
 
     @Override
     public user selectUserByNickName(String nickname) {

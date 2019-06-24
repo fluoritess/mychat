@@ -36,7 +36,7 @@ import java.util.Map;
 @Controller
 public class UserController {
     @Autowired
-    private userMapper userMapper;
+    private com.gabe.mychat.mapper.userMapper userMapper;
     @Autowired
     private systemMapper systemMapper;
     @Autowired

@@ -1,8 +1,8 @@
 package com.gabe.mychat.controller;
 
         import com.gabe.mychat.mapper.normalUserUtilMapper;
-import com.gabe.mychat.mapper.userMapper;
-import com.gabe.mychat.mapper.userUtilMapper;
+        import com.gabe.mychat.mapper.userMapper;
+        import com.gabe.mychat.mapper.userUtilMapper;
 import com.gabe.mychat.pojo.friends;
 import com.gabe.mychat.pojo.normalUser;
 import com.gabe.mychat.pojo.user;
@@ -33,7 +33,7 @@ public class FriendController {
     @Autowired
     userUtilMapper userUtilMapper;
     @Autowired
-    userMapper userMapper;
+    com.gabe.mychat.mapper.userMapper userMapper;
     @Autowired
     normalUserUtilMapper normalUserUtilMapper;
 

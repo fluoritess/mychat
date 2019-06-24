@@ -3,10 +3,8 @@ package com.gabe.mychat.mapper;
 import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.pojo.userExample;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-@Mapper
+
 public interface userMapper {
     int countByExample(userExample example);
 

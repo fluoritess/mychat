@@ -1,7 +1,6 @@
 package com.gabe.mychat.service;
 
 import com.gabe.mychat.pojo.friends;
-import com.gabe.mychat.pojo.user;
 
 import java.util.List;
 import java.util.Map;
