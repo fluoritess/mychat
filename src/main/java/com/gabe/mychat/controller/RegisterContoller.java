@@ -1,7 +1,6 @@
 package com.gabe.mychat.controller;
 
 import com.gabe.mychat.util.ArchivesLog;
-import com.gabe.mychat.util.NumberUtil;
 import com.gabe.mychat.util.R;
 import com.gabe.mychat.util.ShiroUtils;
 import com.google.code.kaptcha.Constants;
@@ -61,10 +60,15 @@ public class RegisterContoller {
         String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
         if (!kaptcha.equalsIgnoreCase(code)) {
             return R.error("验证码不正确");
-        }else if(NumberUtil.getNumberFromString(tel).length() != 11){
+        }
+        if(tel.length() != 11){
             return R.error("电话号码格式不正确");
-        }else if() {
-
+        }else{
+            for(char c : tel.toCharArray()){
+                if(!Character.isDigit(c)){
+                    return R.error("电话号码格式不正确");
+                }
+            }
         }
 
         Map<String, Object> msg = new HashMap<>();

@@ -102,7 +102,7 @@ public class UserController {
     @ResponseBody
     @ArchivesLog(operationName = "获取验证码",operationType = "用户基本操作")
     @RequestMapping("/imgCode" )
-    public R code(){
+    public R imgCode(){
         System.out.println("获取验证码");
         //生成文字验证码
         String text = producer.createText();
