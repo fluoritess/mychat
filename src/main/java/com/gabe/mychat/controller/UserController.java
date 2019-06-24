@@ -1,6 +1,9 @@
 package com.gabe.mychat.controller;
 
-import com.gabe.mychat.mapper.*;
+import com.gabe.mychat.mapper.normalUserMapper;
+import com.gabe.mychat.mapper.normalUserUtilMapper;
+import com.gabe.mychat.mapper.systemMapper;
+import com.gabe.mychat.mapper.userUtilMapper;
 import com.gabe.mychat.pojo.normalUser;
 import com.gabe.mychat.pojo.normalUserExample;
 import com.gabe.mychat.pojo.user;
@@ -13,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Encoder;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.gabe.mychat.mapper.messageMapper" >
-  <resultMap id="BaseResultMap" type="com.gabe.mychat.pojo.content" >
+  <resultMap id="BaseResultMap" type="com.gabe.mychat.pojo.message" >
     <constructor >
       <idArg column="message_id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="content" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -80,7 +80,7 @@
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from content
+    from message
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,29 +91,29 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from content
+    from message
     where message_id = #{messageId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from content
+    delete from message
     where message_id = #{messageId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.gabe.mychat.pojo.messageExample" >
-    delete from content
+    delete from message
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.gabe.mychat.pojo.content" >
-    insert into content (message_id, content, message_type,
+  <insert id="insert" parameterType="com.gabe.mychat.pojo.message" >
+    insert into message (message_id, content, message_type, 
       receiver_id, sender_id, status, 
       send_date)
     values (#{messageId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{messageType,jdbcType=INTEGER}, 
       #{receiverId,jdbcType=VARCHAR}, #{senderId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{sendDate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.gabe.mychat.pojo.content" >
-    insert into content
+  <insert id="insertSelective" parameterType="com.gabe.mychat.pojo.message" >
+    insert into message
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="messageId != null" >
         message_id,
@@ -162,13 +162,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.gabe.mychat.pojo.messageExample" resultType="java.lang.Integer" >
-    select count(*) from content
+    select count(*) from message
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update content
+    update message
     <set >
       <if test="record.messageId != null" >
         message_id = #{record.messageId,jdbcType=VARCHAR},
@@ -197,7 +197,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update content
+    update message
     set message_id = #{record.messageId,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
       message_type = #{record.messageType,jdbcType=INTEGER},
@@ -209,8 +209,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gabe.mychat.pojo.content" >
-    update content
+  <update id="updateByPrimaryKeySelective" parameterType="com.gabe.mychat.pojo.message" >
+    update message
     <set >
       <if test="content != null" >
         content = #{content,jdbcType=VARCHAR},
@@ -233,8 +233,8 @@
     </set>
     where message_id = #{messageId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.gabe.mychat.pojo.content" >
-    update content
+  <update id="updateByPrimaryKey" parameterType="com.gabe.mychat.pojo.message" >
+    update message
     set content = #{content,jdbcType=VARCHAR},
       message_type = #{messageType,jdbcType=INTEGER},
       receiver_id = #{receiverId,jdbcType=VARCHAR},

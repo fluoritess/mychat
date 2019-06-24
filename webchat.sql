@@ -68,10 +68,10 @@ INSERT INTO `friends` VALUES ('123456789101', '123456789102', '2019-06-22 16:55:
 INSERT INTO `friends` VALUES ('123456789103', '123456789101', '2019-06-22 16:55:16');
 
 -- ----------------------------
--- Table structure for `content`
+-- Table structure for `message`
 -- ----------------------------
-DROP TABLE IF EXISTS `content`;
-CREATE TABLE `content` (
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message` (
   `message_id` varchar(32) NOT NULL,
   `content` varchar(255) NOT NULL,
   `message_type` int(11) DEFAULT NULL,
@@ -89,12 +89,12 @@ CREATE TABLE `content` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of content
+-- Records of message
 -- ----------------------------
-INSERT INTO `content` VALUES ('1561337915548123456789101', '我是', '3', '123456789102', '123456789101', null, '0000-00-00 00:00:00');
-INSERT INTO `content` VALUES ('1561341545756123456789101', '', '3', '123456789102', '123456789101', '0', '0000-00-00 00:00:00');
-INSERT INTO `content` VALUES ('1561342498065123456789101', 'aaa', '3', '123456789102', '123456789101', '0', '2019-06-24 02:14:58');
-INSERT INTO `content` VALUES ('21161432051', 'aaa', '3', '123456789102', '123456789101', null, '0000-00-00 00:00:00');
+INSERT INTO `message` VALUES ('1561337915548123456789101', '我是', '3', '123456789102', '123456789101', null, '0000-00-00 00:00:00');
+INSERT INTO `message` VALUES ('1561341545756123456789101', '', '3', '123456789102', '123456789101', '0', '0000-00-00 00:00:00');
+INSERT INTO `message` VALUES ('1561342498065123456789101', 'aaa', '3', '123456789102', '123456789101', '0', '2019-06-24 02:14:58');
+INSERT INTO `message` VALUES ('21161432051', 'aaa', '3', '123456789102', '123456789101', null, '0000-00-00 00:00:00');
 
 -- ----------------------------
 -- Table structure for `message_type`

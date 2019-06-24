@@ -79,6 +79,8 @@ public class ShiroConfig {
         filterUrl.put("/addfriend","anon");
         */
         filterUrl.put("/updateImg","anon");
+        filterUrl.put("/readUnreadMessage","anon");
+
         //设置拦截目录
         filterUrl.put("/**/*","loginFilter,authc");
         filterUrl.put("/houtai.html","loginFilter,authc");
