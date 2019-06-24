@@ -70,13 +70,14 @@ public class ShiroConfig {
         filterUrl.put("/login","anon");
         filterUrl.put("/imgCode","anon");
         filterUrl.put("/img/*.png","anon");
+        filterUrl.put("/telCode","anon");
     /*    filterUrl.put("/Login.html","anon");*/
         filterUrl.put("/logout","logout");
         //下面的是测试的时候放行
     /*    filterUrl.put("/selectUserByNickName","anon");
         filterUrl.put("/selectFriendInfo","anon");
         filterUrl.put("/addfriend","anon");
-        filterUrl.put("/telCode","anon");*/
+        */
         filterUrl.put("/updateImg","anon");
         //设置拦截目录
         filterUrl.put("/**/*","loginFilter,authc");

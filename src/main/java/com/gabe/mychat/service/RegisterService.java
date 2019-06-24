@@ -1,5 +1,6 @@
 package com.gabe.mychat.service;
 
+import com.gabe.mychat.pojo.normalUser;
 import com.gabe.mychat.pojo.user;
 
 /**
@@ -14,7 +15,11 @@ public interface RegisterService {
 
     public String sendTelCode(String tel);
 
+    /**
+     * @param tel 电话号码
+     * @return boolean 是否被注册
+     */
     public boolean checkRegister(String tel);
 
-    public int userRegister(user user);
+    public boolean userRegister(user user, normalUser normalUser);
 }

@@ -1,6 +1,8 @@
 package com.gabe.mychat.service.impl;
 
+import com.gabe.mychat.mapper.normalUserMapper;
 import com.gabe.mychat.mapper.userMapper;
+import com.gabe.mychat.pojo.normalUser;
 import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.pojo.userExample;
 import com.gabe.mychat.service.RegisterService;
@@ -25,6 +27,9 @@ public class RegisterServiceImpl implements RegisterService {
     @Autowired
     private userMapper userMapper;
 
+    @Autowired
+    private normalUserMapper normalUserMapper;
+
     @Override
     public String sendTelCode(String tel) {
         /*HttpClient client = new HttpClient();
@@ -36,9 +41,8 @@ public class RegisterServiceImpl implements RegisterService {
 
         StringBuilder code = new StringBuilder();
         for (int i = 0; i < 6; i++) {
-            code.append(Math.round(Math.random() * 10));
+            code.append(Math.round(Math.random() * 9));
         }
-        code.substring(0, 6);
         System.out.println("手机验证码为：" + code);
 
         /*NameValuePair[] data = {
@@ -79,10 +83,11 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public int userRegister(user user) {
+    public boolean userRegister(user user, normalUser normalUser) {
         Date date = new Date();
         String userid = String.valueOf(date.getTime()).substring(0, 12);
         user.setUserId(userid);
-        return userMapper.insertSelective(user);
+        normalUser.setUserId(userid);
+        return userMapper.insertSelective(user) == 1 && normalUserMapper.insertSelective(normalUser) == 1;
     }
 }
