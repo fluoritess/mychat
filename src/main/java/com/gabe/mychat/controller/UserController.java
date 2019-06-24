@@ -210,4 +210,10 @@ public class UserController {
             return R.error("上传失败");
         }
     }
+    @ResponseBody
+    @ArchivesLog(operationName = "获取用户信息",operationType = "用户基本操作")
+    @RequestMapping("/getUserInfo" )
+    public R updateImg(HttpSession session){
+        return R.ok().put("data",session.getAttribute("user"));
+    }
 }
