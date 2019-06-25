@@ -44,11 +44,11 @@ public class listener implements Constant {
     }
 
     @OnEvent("token")
-    public void onToken(SocketIOClient client,String userid) {
-        System.out.println(userid);
+    public void onToken(SocketIOClient client,Map message) {
+        String UserID=(String) message.get("clientuserid");
         System.out.println("onToken"+client.getSessionId().toString());
         if (null ==  clients.get(client.getSessionId().toString()) ) {
-            clients.put(userid, client);
+            clients.put(UserID, client);
         }
         System.err.println("get token Message is " + client.getSessionId());
     }
