@@ -90,6 +90,7 @@ public class UserController {
         }catch (AuthenticationException e) {//以上的父类
             return R.error("账户验证失败");
         }
+        session.setAttribute("user",ShiroUtils.getUserEntity());
         session.setAttribute("id",ShiroUtils.getUserEntity().getUserId());
         Map<String,Object> msg=new HashMap<>();
         user user=ShiroUtils.getUserEntity();
@@ -97,7 +98,6 @@ public class UserController {
         Map map1=new HashMap();
         map1=UserUtil.completeUser(user,normalUser);
         map1.remove("password");
-        session.setAttribute("user",map1);
         return R.ok().put("data",map1);
     }
 
@@ -223,13 +223,13 @@ public class UserController {
      * @param
      * @return
      */
-    @ResponseBody
+/*    @ResponseBody
     @ArchivesLog(operationName = "获取用户信息",operationType = "用户基本操作")
     @RequestMapping("/getUserInfo" )
     public R updateImg(HttpSession session){
 
         return R.ok().put("data",session.getAttribute("user"));
-    }
+    }*/
     /**
      * 更新信息
      * @param reMap
