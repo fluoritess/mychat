@@ -70,6 +70,10 @@ public class ShiroConfig {
         filterUrl.put("/login","anon");
         filterUrl.put("/imgCode","anon");
         filterUrl.put("/img/*.png","anon");
+        filterUrl.put("/js/*","anon");
+        filterUrl.put("/css/*","anon");
+        filterUrl.put("/fonts/*","anon");
+        filterUrl.put("/*.html","anon");
         filterUrl.put("/telCode","anon");
     /*    filterUrl.put("/Login.html","anon");*/
         filterUrl.put("/logout","logout");
@@ -83,7 +87,7 @@ public class ShiroConfig {
 
         //设置拦截目录
         filterUrl.put("/**/*","loginFilter,authc");
-        filterUrl.put("/houtai.html","loginFilter,authc");
+   /*     filterUrl.put("/houtai.html","loginFilter,authc");*/
 
         shiroFilter.setFilterChainDefinitionMap(filterUrl);
         return shiroFilter;

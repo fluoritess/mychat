@@ -14,6 +14,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,7 +66,7 @@ public class UserController {
      */
     @ResponseBody
     @ArchivesLog(operationName = "登录",operationType = "用户基本操作")
-    @RequestMapping("/login" )
+    @RequestMapping("/login")
     public R login(@RequestBody Map<String,String> map, HttpSession session){
         System.out.println("进入登录...");
         String username=map.get("username");
@@ -89,7 +90,6 @@ public class UserController {
         }catch (AuthenticationException e) {//以上的父类
             return R.error("账户验证失败");
         }
-        session.setAttribute("user",ShiroUtils.getUserEntity());
         session.setAttribute("id",ShiroUtils.getUserEntity().getUserId());
         Map<String,Object> msg=new HashMap<>();
         user user=ShiroUtils.getUserEntity();
@@ -97,6 +97,7 @@ public class UserController {
         Map map1=new HashMap();
         map1=UserUtil.completeUser(user,normalUser);
         map1.remove("password");
+        session.setAttribute("user",map1);
         return R.ok().put("data",map1);
     }
 
@@ -226,6 +227,7 @@ public class UserController {
     @ArchivesLog(operationName = "获取用户信息",operationType = "用户基本操作")
     @RequestMapping("/getUserInfo" )
     public R updateImg(HttpSession session){
+
         return R.ok().put("data",session.getAttribute("user"));
     }
     /**
