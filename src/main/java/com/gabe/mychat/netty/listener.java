@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -54,13 +56,19 @@ public class listener implements Constant {
     }
 
     @OnEvent("send")
-    public void updateControlStatus(SocketIOClient client, Map message) throws UnsupportedEncodingException {
+    public void updateControlStatus(SocketIOClient client, Map<String,String> message) throws UnsupportedEncodingException {
         //获取信息
         String UserID=(String) message.get("clientuserid");
         String friendID=(String)message.get("userid");
         //messages为消息内容
         String messages=(String)message.get("message");
-        Date date=(Date)message.get("date");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//注意格式化的表达式
+        Date date= null;
+        try {
+            date = format.parse(message.get("date"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         SocketIOClient client1=clients.get(UserID);
         //判断是否是同一用户
         if(client1.equals(client)){
