@@ -37,13 +37,14 @@ public class listener implements Constant {
         System.err.println("get token Message is " + client.getSessionId());
     }
 
-    @OnEvent("updateControlStatus")
-    public void updateControlStatus(SocketIOClient client, ControlStatus controlStatus) throws UnsupportedEncodingException {
-        String UserID= FormatData.webtoMysqlFormat(controlStatus);
+    @OnEvent("send")
+    public void updateControlStatus(SocketIOClient client, Map message) throws UnsupportedEncodingException {
+        String UserID=(String) message.get("clientuserid");
         SocketIOClient client1=clients.get(UserID);
         if(client1.equals(client)){
             Constant.aotoControlMap.put("Active",UserID);
-            ctx.writeAndFlush("hello");
+            client1.sendEvent("hello","xxxx");
+   /*         ctx.writeAndFlush("hello");*/
         }
     }
     @OnEvent("getNowCollectValue")
