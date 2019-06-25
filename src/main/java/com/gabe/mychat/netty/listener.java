@@ -4,20 +4,16 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.annotation.OnConnect;
 import com.corundumstudio.socketio.annotation.OnDisconnect;
 import com.corundumstudio.socketio.annotation.OnEvent;
-import com.gabe.mychat.mapper.messageUtilMapper;
 import com.gabe.mychat.mapper.normalUserUtilMapper;
 import com.gabe.mychat.pojo.message;
 import com.gabe.mychat.pojo.normalUser;
 import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.service.MsgService;
 import com.gabe.mychat.service.UserService;
+
 import com.gabe.mychat.util.Constant;
-import com.gabe.mychat.util.ControlStatus;
-import com.gabe.mychat.util.FormatData;
 import com.gabe.mychat.util.UserUtil;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.socket.DatagramPacket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

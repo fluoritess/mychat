@@ -1,11 +1,9 @@
 package com.gabe.mychat.controller;
 
-import com.gabe.mychat.mapper.normalUserMapper;
-import com.gabe.mychat.mapper.normalUserUtilMapper;
-import com.gabe.mychat.mapper.systemMapper;
-import com.gabe.mychat.mapper.userUtilMapper;
+import com.gabe.mychat.mapper.*;
 import com.gabe.mychat.pojo.normalUser;
 import com.gabe.mychat.pojo.normalUserExample;
+import com.gabe.mychat.pojo.sercurityLog;
 import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.util.*;
 import com.google.code.kaptcha.Constants;
@@ -22,13 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 /**
  * @author wsw
  * @Package com.gabe.mychat.controller
@@ -49,6 +47,8 @@ public class UserController {
     private normalUserUtilMapper normalUserUtilMapper;
     @Autowired
     private normalUserMapper normalUserMapper;
+    @Autowired
+    sercurityLogMapper sercurityLogMapper;
     /**
      * 认证异常
      * <p>
@@ -67,7 +67,7 @@ public class UserController {
     @ResponseBody
     @ArchivesLog(operationName = "登录",operationType = "用户基本操作")
     @RequestMapping("/login")
-    public R login(@RequestBody Map<String,String> map, HttpSession session){
+    public R login(@RequestBody Map<String,String> map, HttpSession session, ServletRequest request){
         System.out.println("进入登录...");
         String username=map.get("username");
         String password=map.get("password");
@@ -98,6 +98,23 @@ public class UserController {
         Map map1=new HashMap();
         map1=UserUtil.completeUser(user,normalUser);
         map1.remove("password");
+        //安全日志
+        sercurityLog sercurityLog1=new sercurityLog();
+        Date date=new Date();
+        long date1=date.getTime();
+        String log_id=ShiroUtils.getUserEntity().getUserId()+date1;
+        //设置日志id
+        sercurityLog1.setLogId(log_id);
+        //日记记录时间
+        sercurityLog1.setLoginTime(date);
+        //用户id
+        sercurityLog1.setUserId(ShiroUtils.getUserEntity().getUserId());
+        //获取ip
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+        String ip=NetworkUtil.getIpAddress(httpServletRequest);
+        //存入ip
+        sercurityLog1.setLoginAddress(ip);
+        sercurityLogMapper.insert(sercurityLog1);
         return R.ok().put("data",map1);
     }
 

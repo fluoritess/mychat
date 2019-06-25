@@ -1,5 +1,6 @@
 package com.gabe.mychat.controller;
 
+import com.gabe.mychat.mapper.messageMapper;
 import com.gabe.mychat.pojo.message;
 import com.gabe.mychat.service.MsgService;
 import com.gabe.mychat.util.ArchivesLog;
@@ -49,7 +50,6 @@ public class MsgController {
         } catch (Exception e) {
             return R.error(e.getMessage());
         }
-
     }
 
     /**
