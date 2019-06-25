@@ -14,6 +14,7 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,7 +66,7 @@ public class UserController {
      */
     @ResponseBody
     @ArchivesLog(operationName = "登录",operationType = "用户基本操作")
-    @RequestMapping("/login" )
+    @RequestMapping("/login")
     public R login(@RequestBody Map<String,String> map, HttpSession session){
         System.out.println("进入登录...");
         String username=map.get("username");
@@ -222,12 +223,13 @@ public class UserController {
      * @param
      * @return
      */
-    @ResponseBody
+/*    @ResponseBody
     @ArchivesLog(operationName = "获取用户信息",operationType = "用户基本操作")
     @RequestMapping("/getUserInfo" )
     public R updateImg(HttpSession session){
+
         return R.ok().put("data",session.getAttribute("user"));
-    }
+    }*/
     /**
      * 更新信息
      * @param reMap
