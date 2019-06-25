@@ -70,10 +70,12 @@ public class listener implements Constant {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        //
+        //用户自身
         SocketIOClient client1=clients.get(UserID);
+        //接受信息用户
+        SocketIOClient client2=clients.get(friendID);
         //判断是否是同一用户
-        if(client1.equals(client)){
+        if(client1!=null&&client1.equals(client)){
             user user=userService.selectUserById(UserID);
             normalUser normalUser= normalUserUtilMapper.selectUserById(user.getUserId());
             Map map1=new HashMap();
@@ -86,7 +88,9 @@ public class listener implements Constant {
             String message_id=date.getTime()+UserID;
             com.gabe.mychat.pojo.message message1 = new message(message_id, messages, 1, friendID, UserID, 0, date);
             msgService.addFriendMsg(message1);
-            client1.sendEvent("receive",map1);
+           if(client2!=null){
+               client2.sendEvent("receive",map1);
+           }
    /*         ctx.writeAndFlush("hello");*/
         }
 

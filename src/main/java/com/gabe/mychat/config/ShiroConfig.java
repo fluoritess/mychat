@@ -82,9 +82,9 @@ public class ShiroConfig {
         filterUrl.put("/selectFriendInfo","anon");
         filterUrl.put("/addfriend","anon");
         */
-        filterUrl.put("/updateImg","anon");
-        filterUrl.put("/readUnreadMessage","anon");
-        filterUrl.put("/selectByTime","anon");
+//        filterUrl.put("/updateImg","anon");
+//        filterUrl.put("/readUnreadMessage","anon");
+//        filterUrl.put("/selectByTime","anon");
 
         //设置拦截目录
         filterUrl.put("/**/*","loginFilter,authc");
