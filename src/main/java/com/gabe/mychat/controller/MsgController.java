@@ -1,6 +1,5 @@
 package com.gabe.mychat.controller;
 
-import com.gabe.mychat.mapper.messageUtilMapper;
 import com.gabe.mychat.pojo.message;
 import com.gabe.mychat.service.MsgService;
 import com.gabe.mychat.util.ArchivesLog;
@@ -12,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author wsw
@@ -24,8 +25,6 @@ import java.util.*;
 public class MsgController {
     @Autowired
     MsgService msgService;
-    @Autowired
-    messageUtilMapper messageUtilMapper;
 
     @ResponseBody
     @ArchivesLog(operationName = "添加好友", operationType = "互动操作")
@@ -65,30 +64,15 @@ public class MsgController {
     @RequestMapping("/selectByTime")
     public R selectByTime(@RequestBody Map<String, Object> map, HttpSession session) {
         String userId = (String) session.getAttribute("id");
+//        String userId = "123456789102";
         String friendId = (String) map.get("userid");
 
-        List<message> activeList = messageUtilMapper.selectByTime(friendId, userId);
-        List<message> passiveList = messageUtilMapper.selectByTime(userId, friendId);
-
-        PriorityQueue<message> priorityQueue = new PriorityQueue<>(new Comparator<message>() {
-            @Override
-            public int compare(message o1, message o2) {
-                if (o1.getSendDate().after(o2.getSendDate())) {
-                    return 1;
-                } else if (o1.getSendDate().equals(o2.getSendDate())) {
-                    return 0;
-                } else {
-                    return -1;
-                }
-            }
-        });
-        priorityQueue.addAll(activeList);
-        priorityQueue.addAll(passiveList);
-
-        List<message> list = new ArrayList<>(priorityQueue);
-        if(list.size() > 20){
-            list = list.subList(0, 20);
+        List<message> list = msgService.selectByTime(userId, friendId);
+        if(list != null){
+            return R.ok().put("data", list);
+        }else {
+            return R.error("查询记录失败");
         }
-        return R.ok().put("data", list);
+
     }
 }
