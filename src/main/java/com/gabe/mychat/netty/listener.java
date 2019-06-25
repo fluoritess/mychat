@@ -19,6 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class listener implements Constant {
+    private static ChannelHandlerContext ctx = null;
     //维护每个客户端的SocketIOClient
     public static Map<String, SocketIOClient> clients = new ConcurrentHashMap<>();
     @OnConnect
@@ -27,22 +28,23 @@ public class listener implements Constant {
     }
 
     @OnEvent("token")
-    public void onToken(SocketIOClient client,String s) {
-        System.out.println(s);
+    public void onToken(SocketIOClient client,String userid) {
+        System.out.println(userid);
         System.out.println("onToken"+client.getSessionId().toString());
-
         if (null ==  clients.get(client.getSessionId().toString()) ) {
-
-            clients.put(client.getSessionId().toString(), client);
+            clients.put(userid, client);
         }
         System.err.println("get token Message is " + client.getSessionId());
     }
 
     @OnEvent("updateControlStatus")
     public void updateControlStatus(SocketIOClient client, ControlStatus controlStatus) throws UnsupportedEncodingException {
-        String s= FormatData.webtoMysqlFormat(controlStatus);
-        Constant.aotoControlMap.put("Active",s);
-
+        String UserID= FormatData.webtoMysqlFormat(controlStatus);
+        SocketIOClient client1=clients.get(UserID);
+        if(client1.equals(client)){
+            Constant.aotoControlMap.put("Active",UserID);
+            ctx.writeAndFlush("hello");
+        }
     }
     @OnEvent("getNowCollectValue")
     public void getNowCollectValue(SocketIOClient client, String message)  {
