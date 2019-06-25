@@ -6,6 +6,7 @@ import com.corundumstudio.socketio.annotation.OnDisconnect;
 import com.corundumstudio.socketio.annotation.OnEvent;
 import com.gabe.mychat.util.Constant;
 import com.gabe.mychat.util.ControlStatus;
+import com.gabe.mychat.util.FormatData;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.socket.DatagramPacket;
@@ -16,12 +17,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * @author wsw
- * @Package com.gabe.mychat.netty
- * @Description:netty listener
- * @date 2019年6月25日 09:25:12
- */
 @Component
 public class listener implements Constant {
     //维护每个客户端的SocketIOClient
@@ -45,13 +40,15 @@ public class listener implements Constant {
 
     @OnEvent("updateControlStatus")
     public void updateControlStatus(SocketIOClient client, ControlStatus controlStatus) throws UnsupportedEncodingException {
-        DatagramPacket packet=null;
-        ChannelHandlerContext ctx=null;
-        System.out.println(controlStatus.getBulbactive1());
-        System.out.println(controlStatus.getUpdate().getBulbactive1());
-        if(ctx!=null&&packet!=null){
-            ctx.writeAndFlush("xxx");//向客户端发送消息
-        }
+        String s= FormatData.webtoMysqlFormat(controlStatus);
+        Constant.aotoControlMap.put("Active",s);
+
+//        System.out.println(json);
+//  String json=FormatData.webtoDianPianJi(s);
+//        String a= "###fe0b9090d82c21010001020000ff###fe0b9090d82c21010001030000ff#fe0b9090d82c21010001040000ff###";
+//        String json="A9a33#S02D#0123456789#fe0b9090d82c21010001020000ff";
+        // 由于数据报的数据是以字符数组传的形式存储的，所以、a传转数据
+
     }
     @OnEvent("getNowCollectValue")
     public void getNowCollectValue(SocketIOClient client, String message)  {
@@ -60,9 +57,41 @@ public class listener implements Constant {
     }
     @OnEvent("updateControlTypeStatus")
     public void updateControlStatus(SocketIOClient client, String message)  {
+        System.out.println(message);
         Constant.aotoControlMap.put("ControlStatus",message);
 
     }
+//    /**
+//     * 新事务
+//     * @param client 客户端
+//     * @param message 消息
+//     */
+//    @OnEvent("newAlert")
+//    public void onAlert(SocketIOClient client, SocketIOMessage message) {
+//        //send to all users
+//        Collection<List<SocketIOClient>> clientsList = clients.values();
+//        for (List<SocketIOClient> list : clientsList) {
+//            for (SocketIOClient socketIOClient : list) {
+//                socketIOClient.sendEvent("newAlert", message);
+//            }
+//        }
+//    }
+
+//    /**
+//     * 通知所有在线客户端
+//     */
+//    public void sendAllUser() {
+//        Set<Map.Entry<String,List<SocketIOClient>>> entrySet = clients.entrySet();
+//        for (Map.Entry<String, List<SocketIOClient>> entry : entrySet) {
+//            String key = entry.getKey();
+//            List<SocketIOClient> value = entry.getValue();
+//            for (SocketIOClient socketIOClient : value) {
+//                SocketIOMessage message = new SocketIOMessage();
+//                message.setMessage("send All user Msg" + key);
+//                socketIOClient.sendEvent("newAlert", message);
+//            }
+//        }
+//    }
 
     @OnDisconnect
     public void onDisconnect(SocketIOClient client) {

@@ -26,7 +26,7 @@ public class WebServer implements InitializingBean{
     public void startServer(){
         Configuration config = new Configuration();
         config.setHostname("localhost");
-        config.setPort(8088);
+        config.setPort(8086);
 
         config.setMaxFramePayloadLength(1024*1024);
         //设置最大HTTP内容长度限制
