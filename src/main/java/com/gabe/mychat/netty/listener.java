@@ -4,9 +4,17 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.annotation.OnConnect;
 import com.corundumstudio.socketio.annotation.OnDisconnect;
 import com.corundumstudio.socketio.annotation.OnEvent;
+import com.gabe.mychat.mapper.messageUtilMapper;
+import com.gabe.mychat.mapper.normalUserUtilMapper;
+import com.gabe.mychat.pojo.message;
+import com.gabe.mychat.pojo.normalUser;
+import com.gabe.mychat.pojo.user;
+import com.gabe.mychat.service.MsgService;
+import com.gabe.mychat.service.UserService;
 import com.gabe.mychat.util.Constant;
 import com.gabe.mychat.util.ControlStatus;
 import com.gabe.mychat.util.FormatData;
+import com.gabe.mychat.util.UserUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.socket.DatagramPacket;
@@ -19,7 +27,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class listener implements Constant {
-    private static ChannelHandlerContext ctx = null;
+    @Autowired
+    UserService userService;
+    @Autowired
+    normalUserUtilMapper normalUserUtilMapper;
+    @Autowired
+    MsgService msgService;
+
+    private static ChannelHandlerContext ctx = null;//这个暂时没用
+
     //维护每个客户端的SocketIOClient
     public static Map<String, SocketIOClient> clients = new ConcurrentHashMap<>();
     @OnConnect
@@ -39,13 +55,31 @@ public class listener implements Constant {
 
     @OnEvent("send")
     public void updateControlStatus(SocketIOClient client, Map message) throws UnsupportedEncodingException {
+        //获取信息
         String UserID=(String) message.get("clientuserid");
+        String friendID=(String)message.get("userid");
+        //messages为消息内容
+        String messages=(String)message.get("message");
+        Date date=(Date)message.get("date");
         SocketIOClient client1=clients.get(UserID);
+        //判断是否是同一用户
         if(client1.equals(client)){
+            user user=userService.selectUserById(UserID);
+            normalUser normalUser= normalUserUtilMapper.selectUserById(user.getUserId());
+            Map map1=new HashMap();
+            map1= UserUtil.completeUser(user,normalUser);
+            map1.remove("password");
+            map1.put("message",messages);
+            map1.put("date",date);
             Constant.aotoControlMap.put("Active",UserID);
-            client1.sendEvent("hello","xxxx");
+            //把消息存入数据库
+            String message_id=date.getTime()+UserID;
+            com.gabe.mychat.pojo.message message1 = new message(message_id, messages, 1, friendID, UserID, 0, date);
+            msgService.addFriendMsg(message1);
+            client1.sendEvent("receive",map1);
    /*         ctx.writeAndFlush("hello");*/
         }
+
     }
     @OnEvent("getNowCollectValue")
     public void getNowCollectValue(SocketIOClient client, String message)  {
