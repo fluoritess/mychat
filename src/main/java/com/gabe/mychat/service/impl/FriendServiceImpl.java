@@ -32,10 +32,10 @@ public class FriendServiceImpl implements FriendService {
             friends friends=(friends) it.next();
             Map map=new HashMap();
             String friendid=friends.getFriendId();
-            map.put("friendid",friendid);
+            map.put("userid",friendid);
             user user=userMapper.selectByPrimaryKey(friendid);
             map.put("nickname",user.getNickname());
-            map.put("friendimg",user.getImgurl());
+            map.put("imgurl",user.getImgurl());
             list1.add(map);
         }
         return list1;

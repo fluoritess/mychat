@@ -11,7 +11,6 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 public class MychatApplication {
 
     public static void main(String[] args) {
-        //Sys.
         SpringApplication.run(MychatApplication.class, args);
     }
 
