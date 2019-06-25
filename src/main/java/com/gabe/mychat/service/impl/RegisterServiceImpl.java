@@ -30,21 +30,30 @@ public class RegisterServiceImpl implements RegisterService {
     @Autowired
     private normalUserMapper normalUserMapper;
 
+    /**
+     * 发送手机验证码
+     *
+     * @param tel user's tel
+     * @return String code
+     */
     @Override
     public String sendTelCode(String tel) {
+        // 建立连接
         /*HttpClient client = new HttpClient();
         PostMethod post = new PostMethod("http://gbk.sms.webchinese.cn");
         post.addRequestHeader(
                 "Content-Type",
                 "application/x-www-form-urlencoded;charset=gbk");*/
-        //头文件中转码
+        // 头文件中转码
 
+        // 生成6位验证码
         StringBuilder code = new StringBuilder();
         for (int i = 0; i < 6; i++) {
             code.append(Math.round(Math.random() * 9));
         }
         System.out.println("手机验证码为：" + code);
 
+        // 调用接口进行发送验证码
         /*NameValuePair[] data = {
                 new NameValuePair("Uid", "phf449540929"),
                 new NameValuePair("Key", "d41d8cd98f00b204e980"),
@@ -70,24 +79,42 @@ public class RegisterServiceImpl implements RegisterService {
         }
 
         post.releaseConnection();*/
+        // 返回验证码
         return code.toString();
     }
 
+    /**
+     * 检查手机号是否已被注册
+     *
+     * @param tel user's tel
+     * @return boolean is tel been register
+     */
     @Override
     public boolean checkRegister(String tel) {
+        // 进行查询
         userExample userExample = new userExample();
         com.gabe.mychat.pojo.userExample.Criteria criteria = userExample.createCriteria();
         criteria.andTelEqualTo(tel);
         List<user> list = userMapper.selectByExample(userExample);
+        // 但list为null或size为0时返回true
         return list == null || list.size() == 0;
     }
 
+    /**
+     * 用户注册
+     *
+     * @param user       user
+     * @param normalUser normalUser
+     * @return boolean is register successfully
+     */
     @Override
     public boolean userRegister(user user, normalUser normalUser) {
+        // 获取系统当前时间并转换为String型用户id
         Date date = new Date();
         String userid = String.valueOf(date.getTime()).substring(0, 12);
         user.setUserId(userid);
         normalUser.setUserId(userid);
+        // 当且仅当user与normalUser表都插入成功时返回true
         return userMapper.insertSelective(user) == 1 && normalUserMapper.insertSelective(normalUser) == 1;
     }
 }

@@ -14,5 +14,11 @@ import java.util.Queue;
  */
 public interface ReadService {
 
+    /**
+     * 选择用户未读信息
+     *
+     * @param userid user's id
+     * @return Queue<LastMessage> the queue of the information about the senders and what he send
+     */
     public Queue<LastMessage> selectUnreadMessage(String userid);
 }

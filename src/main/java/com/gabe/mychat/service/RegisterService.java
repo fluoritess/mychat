@@ -13,13 +13,28 @@ import com.gabe.mychat.pojo.user;
  */
 public interface RegisterService {
 
-    public String sendTelCode(String tel);
+    /**
+     * 发送手机验证码
+     *
+     * @param tel user's tel
+     * @return String code
+     */
+    String sendTelCode(String tel);
 
     /**
-     * @param tel 电话号码
-     * @return boolean 是否被注册
+     * 检查手机号是否被注册
+     *
+     * @param tel user's tel
+     * @return boolean is the tel registered
      */
-    public boolean checkRegister(String tel);
+    boolean checkRegister(String tel);
 
-    public boolean userRegister(user user, normalUser normalUser);
+    /**
+     * 用户注册
+     *
+     * @param user       user
+     * @param normalUser normalUser
+     * @return boolean did register successfully
+     */
+    boolean userRegister(user user, normalUser normalUser);
 }

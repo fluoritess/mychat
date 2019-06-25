@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -45,22 +44,27 @@ public class RegisterContoller {
         String tel = map.get("tel");
         System.out.println("手机号为：" + tel);
         if (tel.length() != 11) {
+            // 判断手机号长度是否正确
             return R.error("手机号格式不正确");
         } else {
             for (char c : tel.toCharArray()) {
+                // 判断手机号是否全为数字
                 if (!Character.isDigit(c)) {
                     return R.error("手机号格式不正确");
                 }
             }
         }
         if (!registerService.checkRegister(tel)) {
+            // 检验手机号是否已被注册
             return R.error("该手机号已被注册");
         }
+        // 发送手机验证码
         String code = registerService.sendTelCode(tel);
-        if(code != null){
+        if (code != null) {
+            // 如果顺利发送手机验证码，则将验证码存在Shiro中
             ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, code);
             return R.ok();
-        }else {
+        } else {
             return R.error("发送手机验证码失败");
         }
     }
@@ -77,15 +81,18 @@ public class RegisterContoller {
     @RequestMapping("/register")
     public R register(@RequestBody Map<String, String> map, HttpSession session) {
         System.out.println("进入注册...");
+        // 将所有的字段取出来
         String tel = map.get("tel");
         String code = map.get("code");
         String username = map.get("username");
         String pass = map.get("pass");
         String password = map.get("password");
+        // 从Shiro里面取出之前存的手机验证码
         String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
         if (kaptcha == null || !kaptcha.equalsIgnoreCase(code)) {
             return R.error("手机验证码不正确");
         }
+        // 判断手机号格式是否正确
         if (tel.length() != 11) {
             return R.error("手机号格式不正确");
         } else {
@@ -95,19 +102,23 @@ public class RegisterContoller {
                 }
             }
         }
+        // 判断两次输入密码是否相同
         if (!pass.equals(password)) {
             return R.error("两次输入密码不同");
         }
+        // 判断手机号是否已被注册
         if (!registerService.checkRegister(tel)) {
             return R.error("该手机号已被注册");
         }
+        // 注册需要有两个表
+        // user and normalUser
         boolean res = registerService.userRegister(
                 new user(null, null, username, null, tel, password),
                 new normalUser(null, null, null, null));
-        Map<String, Object> msg = new HashMap<>(2);
-        if(res){
+        // 根据返回值控制返回结果
+        if (res) {
             return R.ok();
-        }else {
+        } else {
             return R.error("注册失败");
         }
     }

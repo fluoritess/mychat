@@ -26,12 +26,19 @@ public class ReadController {
     @Autowired
     ReadService readService;
 
+    /**
+     * 查询好友发送未读取信息
+     *
+     * @param session session
+     * @return R
+     */
     @ResponseBody
-    @ArchivesLog(operationName = "查询好友发送未读取信息", operationType = "用户基本操作")
+    @ArchivesLog(operationName = "查询好友发送未读取信息", operationType = "查询操作")
     @RequestMapping("/readUnreadMessage")
     public R selectUnreadMessage(HttpSession session) {
-//        String userId = (String) session.getAttribute("id");
-        String userId = "123456789102";
+        // 从session中获取用户id
+        String userId = (String) session.getAttribute("id");
+        // 进行查询，返回值为一个消息队列
         Queue<LastMessage> messageQueue = readService.selectUnreadMessage(userId);
         return R.ok().put("data", messageQueue);
     }
