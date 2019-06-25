@@ -39,9 +39,18 @@ public class MsgServiceImpl implements MsgService {
      */
     @Override
     public List<message> selectByTime(String userId, String friendId) {
-        // 分别查找A发给B，B发给A的各前20条信息
+        // 分别查找A发给B，B发给A的所有信息
         List<message> activeList = messageUtilMapper.selectByTime(friendId, userId);
         List<message> passiveList = messageUtilMapper.selectByTime(userId, friendId);
+        // 通过循环将每个message的status变为1
+        for(message message : activeList){
+            message.setStatus(1);
+            messageMapper.updateByPrimaryKey(message);
+        }
+        for(message message : passiveList){
+            message.setStatus(1);
+            messageMapper.updateByPrimaryKey(message);
+        }
         // 新建权值队列，重写比较方法
         PriorityQueue<message> priorityQueue = new PriorityQueue<>((o1, o2) -> {
             if (o1.getSendDate().after(o2.getSendDate())) {
@@ -52,7 +61,7 @@ public class MsgServiceImpl implements MsgService {
                 return -1;
             }
         });
-        // 将查找到的数据全部压入权值队列，此时队列的size最大为40
+        // 将查找到的数据全部压入权值队列
         priorityQueue.addAll(activeList);
         priorityQueue.addAll(passiveList);
         // 将priorityqueue中的数据转入list，并截取前20条数据
