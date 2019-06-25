@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author wsw
@@ -28,46 +26,69 @@ public class MsgController {
     MsgService msgService;
     @Autowired
     messageUtilMapper messageUtilMapper;
+
     @ResponseBody
-    @ArchivesLog(operationName = "添加好友",operationType = "互动操作")
+    @ArchivesLog(operationName = "添加好友", operationType = "互动操作")
     @RequestMapping("/addfriend")
-    public R addFriend(@RequestBody Map<String, Object> map , HttpSession session){
-        String user_id=(String)session.getAttribute("id");
-        String friend_id=(String)map.get("adduserid");
-        String msg=(String)map.get("msg");
-        int message_type=3;
-        Date date=new Date();
-        long date_time=date.getTime();
-      /*  int date_time_int=(int)date_time;*/
-        String message_id=date_time+ user_id;
-        int status=0;
-        message message=new message(message_id,msg,message_type,friend_id,user_id,status,date);
+    public R addFriend(@RequestBody Map<String, Object> map, HttpSession session) {
+        String user_id = (String) session.getAttribute("id");
+        String friend_id = (String) map.get("adduserid");
+        String msg = (String) map.get("msg");
+        int message_type = 3;
+        Date date = new Date();
+        long date_time = date.getTime();
+        /*  int date_time_int=(int)date_time;*/
+        String message_id = date_time + user_id;
+        int status = 0;
+        message message = new message(message_id, msg, message_type, friend_id, user_id, status, date);
         try {
-            int i=msgService.addFriendMsg(message);
-            if(i!=1){
+            int i = msgService.addFriendMsg(message);
+            if (i != 1) {
                 return R.error("消息发送失败");
             }
             return R.ok("消息发送成功");
-        }
-        catch (Exception e){
-            return  R.error(e.getMessage());
+        } catch (Exception e) {
+            return R.error(e.getMessage());
         }
 
     }
+
     /**
-     * 查询信息
-     * @param file
-     * @return
+     * 查询当前用户与选择好友的最近20条记录
+     *
+     * @param map     json
+     * @param session session
+     * @return R
      */
     @ResponseBody
-    @ArchivesLog(operationName = "查询当前用户与选择好友的最近20条记录",operationType = "查询操作")
+    @ArchivesLog(operationName = "查询当前用户与选择好友的最近20条记录", operationType = "查询操作")
     @RequestMapping("/selectByTime")
-    public R selectByTime(@RequestBody Map<String, Object> map , HttpSession session){
-        String user_id=(String)session.getAttribute("id");
-        String friend_id=(String)session.getAttribute("userid");
-        List<message> list=messageUtilMapper.selectByTime(friend_id,user_id);
-        List<message> list_=messageUtilMapper.selectByTime(user_id,friend_id);
-        list.addAll(list_);
-        return R.ok().put("data",list);
+    public R selectByTime(@RequestBody Map<String, Object> map, HttpSession session) {
+        String userId = (String) session.getAttribute("id");
+        String friendId = (String) map.get("userid");
+
+        List<message> activeList = messageUtilMapper.selectByTime(friendId, userId);
+        List<message> passiveList = messageUtilMapper.selectByTime(userId, friendId);
+
+        PriorityQueue<message> priorityQueue = new PriorityQueue<>(new Comparator<message>() {
+            @Override
+            public int compare(message o1, message o2) {
+                if (o1.getSendDate().after(o2.getSendDate())) {
+                    return 1;
+                } else if (o1.getSendDate().equals(o2.getSendDate())) {
+                    return 0;
+                } else {
+                    return -1;
+                }
+            }
+        });
+        priorityQueue.addAll(activeList);
+        priorityQueue.addAll(passiveList);
+
+        List<message> list = new ArrayList<>(priorityQueue);
+        if(list.size() > 20){
+            list = list.subList(0, 20);
+        }
+        return R.ok().put("data", list);
     }
 }

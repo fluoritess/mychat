@@ -25,6 +25,7 @@
         select
         <include refid="Base_Column_List" />
         from message
-        where sender_id = #{senderId,jdbcType=VARCHAR} And receiver_id=#{receiverId,jdbcType=VARCHAR}And send_date ORDER BY send_date DESC LIMIT 10
+        where sender_id = #{senderId,jdbcType=VARCHAR} And receiver_id=#{receiverId,jdbcType=VARCHAR}And send_date
+        ORDER BY send_date DESC LIMIT 20
     </select>
 </mapper>
