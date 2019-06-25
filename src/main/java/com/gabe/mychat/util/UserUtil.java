@@ -18,6 +18,7 @@ public class UserUtil {
         Map map=new HashMap();
         map.put("userid",user.getUserId());
         map.put("nickname",user.getNickname());
+        map.put("name",user.getName());
         map.put("imgurl",user.getImgurl());
         map.put("gender",normalUser.getGender());
         map.put("address",normalUser.getAddress());
