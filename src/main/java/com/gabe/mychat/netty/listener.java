@@ -11,6 +11,7 @@ import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.service.MsgService;
 import com.gabe.mychat.service.UserService;
 
+import com.gabe.mychat.util.BeanUtil;
 import com.gabe.mychat.util.Constant;
 import com.gabe.mychat.util.UserUtil;
 import io.netty.channel.ChannelHandlerContext;
@@ -91,9 +92,41 @@ public class listener implements Constant {
         }
 
     }
-    @OnEvent("getNowCollectValue")
-    public void getNowCollectValue(SocketIOClient client, String message)  {
-        System.out.println(message);
+    @OnEvent("addfriend")
+    public void getNowCollectValue(SocketIOClient client, Map<String,String> message)  {
+        //获取信息
+        String UserID=(String) message.get("clientuserid");
+        String friendID=(String)message.get("userid");
+        //messages为消息内容
+        String messages=(String)message.get("message");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//注意格式化的表达式
+        Date date= null;
+        try {
+            date = format.parse(message.get("date"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //用户自身
+        SocketIOClient client1=clients.get(UserID);
+        //接受信息用户
+        SocketIOClient client2=clients.get(friendID);
+        //判断是否是同一用户
+        if(client1!=null&&client1.equals(client)){
+            user user=userService.selectUserById(UserID);
+            Map map1=new HashMap();
+            try {
+                map1=BeanUtil.getValueMap(user);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            map1.remove("password");
+            map1.put("message",messages);
+            map1.put("date",date);
+            if(client2!=null){
+                client2.sendEvent("receive",map1);
+            }
+            /*         ctx.writeAndFlush("hello");*/
+        }
 
     }
     @OnEvent("updateControlTypeStatus")
