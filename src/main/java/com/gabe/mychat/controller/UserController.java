@@ -12,7 +12,6 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -90,14 +89,25 @@ public class UserController {
         }catch (AuthenticationException e) {//以上的父类
             return R.error("账户验证失败");
         }
+        //判斷是否是管理员
+        int role=Integer.parseInt(map.get("role"));
+
         session.setAttribute("user",ShiroUtils.getUserEntity());
         session.setAttribute("id",ShiroUtils.getUserEntity().getUserId());
-        Map<String,Object> msg=new HashMap<>();
-        user user=ShiroUtils.getUserEntity();
-        normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
-        Map map1=new HashMap();
-        map1=UserUtil.completeUser(user,normalUser);
-        map1.remove("password");
+        Map map1 = new HashMap();
+        if(ShiroUtils.getUserEntity().getRole()==role){
+                if(role==1){
+                    map1.put("nickname",ShiroUtils.getUserEntity().getNickname());
+                }
+                else {
+                Map<String, Object> msg = new HashMap<>();
+                user user = ShiroUtils.getUserEntity();
+                normalUser normalUser = normalUserUtilMapper.selectUserById(user.getUserId());
+                map1 = UserUtil.completeUser(user, normalUser);
+                map1.remove("password");
+            }
+        }
+
         //安全日志
         sercurityLog sercurityLog1=new sercurityLog();
         Date date=new Date();

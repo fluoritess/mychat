@@ -12,8 +12,8 @@
         </constructor>
     </resultMap>
     <sql id="Base_Column_List" >
-    user_id, name, nickname, imgurl, tel, password
-     </sql>
+    user_id, name, nickname, imgurl, tel, password, role
+  </sql>
     <select id="selectUserByNickName" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
         <include refid="Base_Column_List" />

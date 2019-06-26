@@ -26,7 +26,7 @@ import java.util.Queue;
 public class ReadServiceImpl implements ReadService {
 
     @Autowired
-    private userMapper userMapper;
+    private com.gabe.mychat.mapper.userMapper userMapper;
 
     @Autowired
     private messageMapper messageMapper;

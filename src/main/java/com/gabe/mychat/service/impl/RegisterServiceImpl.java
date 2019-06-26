@@ -25,7 +25,7 @@ import java.util.List;
 public class RegisterServiceImpl implements RegisterService {
 
     @Autowired
-    private userMapper userMapper;
+    private com.gabe.mychat.mapper.userMapper userMapper;
 
     @Autowired
     private normalUserMapper normalUserMapper;

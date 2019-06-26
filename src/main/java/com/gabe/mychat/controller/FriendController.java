@@ -1,12 +1,11 @@
 package com.gabe.mychat.controller;
 
         import com.gabe.mychat.mapper.normalUserUtilMapper;
-        import com.gabe.mychat.mapper.userMapper;
         import com.gabe.mychat.mapper.userUtilMapper;
 import com.gabe.mychat.pojo.friends;
 import com.gabe.mychat.pojo.normalUser;
-import com.gabe.mychat.pojo.user;
-import com.gabe.mychat.service.FriendService;
+        import com.gabe.mychat.pojo.user;
+        import com.gabe.mychat.service.FriendService;
 import com.gabe.mychat.util.ArchivesLog;
 import com.gabe.mychat.util.NumberUtil;
 import com.gabe.mychat.util.R;

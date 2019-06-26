@@ -13,13 +13,16 @@ public class user {
 
     private String password;
 
-    public user(String userId, String name, String nickname, String imgurl, String tel, String password) {
+    private Integer role;
+
+    public user(String userId, String name, String nickname, String imgurl, String tel, String password, Integer role) {
         this.userId = userId;
         this.name = name;
         this.nickname = nickname;
         this.imgurl = imgurl;
         this.tel = tel;
         this.password = password;
+        this.role = role;
     }
 
     public user() {
@@ -72,5 +75,13 @@ public class user {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setRole(Integer role) {
+        this.role = role;
     }
 }
