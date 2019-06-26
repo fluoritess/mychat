@@ -1,7 +1,6 @@
 package com.gabe.mychat.service.impl;
 
 import com.gabe.mychat.mapper.messageMapper;
-import com.gabe.mychat.mapper.userMapper;
 import com.gabe.mychat.pojo.message;
 import com.gabe.mychat.pojo.messageExample;
 import com.gabe.mychat.pojo.user;

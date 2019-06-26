@@ -15,7 +15,9 @@ public class user {
 
     private Integer role;
 
-    public user(String userId, String name, String nickname, String imgurl, String tel, String password, Integer role) {
+    private Integer status;
+
+    public user(String userId, String name, String nickname, String imgurl, String tel, String password, Integer role, Integer status) {
         this.userId = userId;
         this.name = name;
         this.nickname = nickname;
@@ -23,6 +25,7 @@ public class user {
         this.tel = tel;
         this.password = password;
         this.role = role;
+        this.status = status;
     }
 
     public user() {
@@ -83,5 +86,13 @@ public class user {
 
     public void setRole(Integer role) {
         this.role = role;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

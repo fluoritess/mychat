@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2019-06-26 11:28:49
+Date: 2019-06-26 16:21:38
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -171,6 +171,7 @@ CREATE TABLE `sercurity_log` (
 INSERT INTO `sercurity_log` VALUES ('1234567891011561460969633', '123456789101', '2019-06-25 11:09:30', '0:0:0:0:0:0:0:1');
 INSERT INTO `sercurity_log` VALUES ('1234567891011561461255426', '123456789101', '2019-06-25 11:14:15', '0:0:0:0:0:0:0:1');
 INSERT INTO `sercurity_log` VALUES ('1234567891011561518055104', '123456789101', '2019-06-26 03:00:55', '10.13.220.187');
+INSERT INTO `sercurity_log` VALUES ('1234567891011561521088341', '123456789101', '2019-06-26 03:51:28', '10.13.220.187');
 
 -- ----------------------------
 -- Table structure for `system`
@@ -198,13 +199,14 @@ CREATE TABLE `user` (
   `tel` varchar(16) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `role` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('123456789101', '123', 'shan', '/img/123456789101.png', null, '123', '0');
-INSERT INTO `user` VALUES ('123456789102', 'xxx', 'wen', '/img/user.png', null, '123', '0');
-INSERT INTO `user` VALUES ('123456789103', 'mmm', '12345678910w', '/img/user.png', null, '123', '0');
-INSERT INTO `user` VALUES ('156151810268', null, 'xiao', '/img/user.png', '17883697078', '123xiao', '0');
+INSERT INTO `user` VALUES ('123456789101', '123', 'shan', '/img/123456789101.png', null, '123', '0', '0');
+INSERT INTO `user` VALUES ('123456789102', 'xxx', 'wen', '/img/user.png', null, '123', '0', '0');
+INSERT INTO `user` VALUES ('123456789103', 'mmm', '12345678910w', '/img/user.png', null, '123', '0', '0');
+INSERT INTO `user` VALUES ('156151810268', null, 'xiao', '/img/user.png', '17883697078', '123xiao', '0', '0');

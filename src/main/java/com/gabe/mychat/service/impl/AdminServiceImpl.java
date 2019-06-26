@@ -4,6 +4,7 @@ import com.gabe.mychat.mapper.normalUserMapper;
 import com.gabe.mychat.mapper.userMapper;
 import com.gabe.mychat.pojo.normalUser;
 import com.gabe.mychat.pojo.normalUserExample;
+
 import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.pojo.userExample;
 import com.gabe.mychat.service.AdminService;
@@ -29,7 +30,7 @@ import java.util.Map;
 public class AdminServiceImpl implements AdminService {
 
     @Autowired
-    userMapper userMapper;
+    com.gabe.mychat.mapper.userMapper userMapper;
 
     @Autowired
     normalUserMapper normalUserMapper;

@@ -100,14 +100,18 @@ public class UserController {
                     map1.put("nickname",ShiroUtils.getUserEntity().getNickname());
                 }
                 else {
-                Map<String, Object> msg = new HashMap<>();
-                user user = ShiroUtils.getUserEntity();
-                normalUser normalUser = normalUserUtilMapper.selectUserById(user.getUserId());
-                map1 = UserUtil.completeUser(user, normalUser);
-                map1.remove("password");
+                    if(ShiroUtils.getUserEntity().getStatus()!=0){
+                        Map<String, Object> msg = new HashMap<>();
+                        user user = ShiroUtils.getUserEntity();
+                        normalUser normalUser = normalUserUtilMapper.selectUserById(user.getUserId());
+                        map1 = UserUtil.completeUser(user, normalUser);
+                        map1.remove("password");
+                    }
+                    else {
+                        return R.error("账户验已被冻结");
+                    }
             }
         }
-
 
         //安全日志
         sercurityLog sercurityLog1=new sercurityLog();

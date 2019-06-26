@@ -114,10 +114,10 @@
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
         </table>
-        <table tableName="role" domainObjectName="role"
+       <!-- <table tableName="role" domainObjectName="role"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
-        </table>
+        </table>-->
     </context>
 </generatorConfiguration>
