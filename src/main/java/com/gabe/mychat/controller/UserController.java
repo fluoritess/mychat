@@ -100,7 +100,7 @@ public class UserController {
                     map1.put("nickname",ShiroUtils.getUserEntity().getNickname());
                 }
                 else {
-                    if(ShiroUtils.getUserEntity().getStatus()!=0){
+                    if(ShiroUtils.getUserEntity().getStatus()==0){
                         Map<String, Object> msg = new HashMap<>();
                         user user = ShiroUtils.getUserEntity();
                         normalUser normalUser = normalUserUtilMapper.selectUserById(user.getUserId());
@@ -108,7 +108,7 @@ public class UserController {
                         map1.remove("password");
                     }
                     else {
-                        return R.error("账户验已被冻结");
+                        return R.error("账户已被冻结");
                     }
             }
         }
