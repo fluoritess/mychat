@@ -273,12 +273,14 @@ public class UserController {
     public R updateUserInfo(@RequestBody Map<String,Object> reMap,HttpSession session){
         String name=(String)reMap.get("name");
         String nickname=(String)reMap.get("nickname");
+        String gender=(String)reMap.get("gender");
         int age=(int)reMap.get("age");
         String address=(String)reMap.get("address");
         user user=(user)session.getAttribute("user");
         normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
         user.setName(name);
         user.setNickname(nickname);
+        normalUser.setGender(gender);
         normalUser.setAddress(address);
         normalUser.setAge(age);
         normalUserExample normalUserExample=new normalUserExample();
