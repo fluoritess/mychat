@@ -1,6 +1,8 @@
 package com.gabe.mychat.controller;
 
+import com.gabe.mychat.mapper.friendsMapper;
 import com.gabe.mychat.mapper.messageMapper;
+import com.gabe.mychat.pojo.friends;
 import com.gabe.mychat.pojo.message;
 import com.gabe.mychat.service.MsgService;
 import com.gabe.mychat.util.ArchivesLog;
@@ -26,7 +28,8 @@ import java.util.Map;
 public class MsgController {
     @Autowired
     MsgService msgService;
-
+    @Autowired
+    friendsMapper friendsMapper;
     @ResponseBody
     @ArchivesLog(operationName = "添加好友", operationType = "互动操作")
     @RequestMapping("/addfriend")
@@ -42,14 +45,20 @@ public class MsgController {
         int status = 0;
         message message = new message(message_id, msg, message_type, friend_id, user_id, status, date);
         try {
+            //消息表中添加消息
             int i = msgService.addFriendMsg(message);
             if (i != 1) {
                 return R.error("消息发送失败");
             }
+            //好友表中添加好友
+            friends friend=new friends(user_id,friend_id,date);
+            friendsMapper.insert(friend);
             return R.ok("消息发送成功");
         } catch (Exception e) {
             return R.error(e.getMessage());
         }
+
+
     }
 
     /**

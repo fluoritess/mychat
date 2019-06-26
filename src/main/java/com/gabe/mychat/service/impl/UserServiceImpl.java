@@ -1,11 +1,12 @@
 package com.gabe.mychat.service.impl;
 
-import com.gabe.mychat.mapper.userMapper;
 import com.gabe.mychat.mapper.userUtilMapper;
 import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -15,7 +16,7 @@ public class UserServiceImpl implements UserService {
     com.gabe.mychat.mapper.userMapper userMapper;
 
     @Override
-    public user selectUserByNickName(String nickname) {
+    public List<user> selectUserByNickName(String nickname) {
         return userUtilMapper.selectUserByNickName(nickname);
     }
 

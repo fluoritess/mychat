@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2019-06-24 16:06:35
+Date: 2019-06-26 11:28:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -132,7 +132,24 @@ CREATE TABLE `normal_user` (
 -- ----------------------------
 INSERT INTO `normal_user` VALUES ('123456789102', 's', 'dsadasdasdsa', '321');
 INSERT INTO `normal_user` VALUES ('123456789103', 'm', 'dsadasd', null);
-INSERT INTO `normal_user` VALUES ('123456789101', 'ss', 'dsad', null);
+INSERT INTO `normal_user` VALUES ('123456789101', 'm', '北京市-北京市-东城区', '1');
+INSERT INTO `normal_user` VALUES ('156151810268', null, null, null);
+
+-- ----------------------------
+-- Table structure for `role`
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
+  `role_id` int(11) NOT NULL,
+  `role_name` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of role
+-- ----------------------------
+INSERT INTO `role` VALUES ('0', '普通用户');
+INSERT INTO `role` VALUES ('1', '管理员');
 
 -- ----------------------------
 -- Table structure for `sercurity_log`
@@ -151,6 +168,9 @@ CREATE TABLE `sercurity_log` (
 -- ----------------------------
 -- Records of sercurity_log
 -- ----------------------------
+INSERT INTO `sercurity_log` VALUES ('1234567891011561460969633', '123456789101', '2019-06-25 11:09:30', '0:0:0:0:0:0:0:1');
+INSERT INTO `sercurity_log` VALUES ('1234567891011561461255426', '123456789101', '2019-06-25 11:14:15', '0:0:0:0:0:0:0:1');
+INSERT INTO `sercurity_log` VALUES ('1234567891011561518055104', '123456789101', '2019-06-26 03:00:55', '10.13.220.187');
 
 -- ----------------------------
 -- Table structure for `system`
@@ -177,12 +197,14 @@ CREATE TABLE `user` (
   `imgurl` varchar(255) DEFAULT '/img/user.png',
   `tel` varchar(16) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
+  `role` int(11) NOT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('123456789101', 'sss', 'shan', '/img/user.png', null, '123');
-INSERT INTO `user` VALUES ('123456789102', 'xxx', 'wen', '/img/user.png', null, '123');
-INSERT INTO `user` VALUES ('123456789103', 'mmm', '12345678910w', '/img/user.png', null, '123');
+INSERT INTO `user` VALUES ('123456789101', '123', 'shan', '/img/123456789101.png', null, '123', '0');
+INSERT INTO `user` VALUES ('123456789102', 'xxx', 'wen', '/img/user.png', null, '123', '0');
+INSERT INTO `user` VALUES ('123456789103', 'mmm', '12345678910w', '/img/user.png', null, '123', '0');
+INSERT INTO `user` VALUES ('156151810268', null, 'xiao', '/img/user.png', '17883697078', '123xiao', '0');

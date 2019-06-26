@@ -113,7 +113,7 @@ public class RegisterContoller {
         // 注册需要有两个表
         // user and normalUser
         boolean res = registerService.userRegister(
-                new user(null, null, username, null, tel, password),
+                new user(null, null, username, null, tel, password,0),
                 new normalUser(null, null, null, null));
         // 根据返回值控制返回结果
         if (res) {

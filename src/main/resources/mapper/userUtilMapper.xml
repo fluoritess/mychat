@@ -9,11 +9,12 @@
             <arg column="imgurl" jdbcType="VARCHAR" javaType="java.lang.String" />
             <arg column="tel" jdbcType="VARCHAR" javaType="java.lang.String" />
             <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="role" jdbcType="INTEGER" javaType="java.lang.Integer" />
         </constructor>
     </resultMap>
     <sql id="Base_Column_List" >
-    user_id, name, nickname, imgurl, tel, password
-     </sql>
+    user_id, name, nickname, imgurl, tel, password, role
+  </sql>
     <select id="selectUserByNickName" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select
         <include refid="Base_Column_List" />

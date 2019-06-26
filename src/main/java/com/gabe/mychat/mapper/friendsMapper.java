@@ -3,8 +3,10 @@ package com.gabe.mychat.mapper;
 import com.gabe.mychat.pojo.friends;
 import com.gabe.mychat.pojo.friendsExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+@Mapper
 public interface friendsMapper {
     int countByExample(friendsExample example);
 
