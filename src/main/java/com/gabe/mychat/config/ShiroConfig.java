@@ -84,8 +84,8 @@ public class ShiroConfig {
         */
 //        filterUrl.put("/updateImg","anon");
 //        filterUrl.put("/readUnreadMessage","anon");
-        filterUrl.put("/selectByTime","anon");
-        filterUrl.put("/selectAllUser","anon");
+//        filterUrl.put("/selectByTime","anon");
+//        filterUrl.put("/selectAllUser","anon");
         filterUrl.put("/getUserInformation","anon");
 
 

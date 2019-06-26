@@ -33,7 +33,7 @@ public class ShiroLoginFilter extends AdviceFilter {
             } else {//不是ajax进行重定向处理
                 System.out.println("登录拦截器");
                 System.out.print(httpServletRequest.getRequestURI());
-                httpServletResponse.sendRedirect("/MYCHAT/#/login");//未登录重定向到这里
+//                httpServletResponse.sendRedirect("/MYCHAT/#/login");//未登录重定向到这里
                 return false;
             }
         }
