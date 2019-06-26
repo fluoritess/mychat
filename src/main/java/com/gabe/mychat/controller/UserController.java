@@ -184,10 +184,10 @@ public class UserController {
                //接收参数
                 String nickname=(String)reMap.get("value");
                 //获取用户自身
-                String user_id=(String) session.getAttribute("user_id");
+                String user_id=(String) session.getAttribute("id");
                 user userself=userMapper.selectByPrimaryKey(user_id);
                 //判断是否为用户自身
-                String username=userself.getName();
+                String username=userself.getNickname();
                 if(username.equals(nickname)){
                     return R.ok();
                 }
@@ -218,7 +218,12 @@ public class UserController {
                     }
                     //长度为12且为数字，则是id查询
                     else {
+
                         user user = userMapper.selectByPrimaryKey(nickname);
+                        //判断是否是同一用户
+                        if(username.equals(user.getNickname())){
+                            return R.ok();
+                        }
                         normalUser normalUser = normalUserUtilMapper.selectUserById(user.getUserId());
                         Map map = new HashMap();
                         map = UserUtil.completeUser(user, normalUser);
