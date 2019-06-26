@@ -5,6 +5,7 @@ import com.gabe.mychat.util.ArchivesLog;
 import com.gabe.mychat.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,12 +46,13 @@ public class AdminController {
 
     @ResponseBody
     @ArchivesLog(operationName = "删除用户",operationType = "删除操作")
-    @RequestMapping("/deleteUser")
-    public R deleteUser(){
-        Map<String, Object> map = new HashMap<>();
-        map.put("userNumber", adminService.getUserNumber());
-        map.put("userAddress", adminService.getUserAddress());
-        map.put("userGender", adminService.getUserGender());
-        return R.ok();
+    @RequestMapping("/prohibitUser")
+    public R prohibitUser(@RequestBody Map<String, Object> map){
+        String userId = (String) map.get("userId");
+        if(adminService.prohibitUser(userId)){
+            return R.ok();
+        }else {
+            return R.error("禁用用户失败");
+        }
     }
 }
