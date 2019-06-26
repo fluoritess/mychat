@@ -68,22 +68,27 @@ public class FriendController {
         //长度为12且不全为数字，则是昵称查询
         if(NumberUtil.getNumberFromString(nickname).length()!=12){
             //获取好友的id
-            nickname=userUtilMapper.selectUserByNickName(nickname).getUserId();
-            List<friends> list=friendService.selectFriendById(id);
-            Iterator it=list.iterator();
-            while(it.hasNext()){
-                friends friends=(friends) it.next();
-                String friendId=friends.getFriendId();
-                if(friendId.equals(nickname)){
-                    user user=userMapper.selectByPrimaryKey(nickname);
-                    normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
-                    Map map=new HashMap();
-                    map= UserUtil.completeUser(user,normalUser);
-                    map.remove("gender");
-                    map.remove("address");
-                    map.remove("age");
-                    list_.add(map);
-                    return R.ok().put("data",list_);
+            List users=userUtilMapper.selectUserByNickName(nickname);
+            Iterator it1=users.iterator();
+            while(it1.hasNext()){
+                user user=(user)it1.next();
+                nickname=user.getUserId();
+                List<friends> list=friendService.selectFriendById(id);
+                Iterator it=list.iterator();
+                while(it.hasNext()){
+                    friends friends=(friends) it.next();
+                    String friendId=friends.getFriendId();
+                    if(friendId.equals(nickname)){
+                        user user2=userMapper.selectByPrimaryKey(nickname);
+                        normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
+                        Map map=new HashMap();
+                        map= UserUtil.completeUser(user2,normalUser);
+                        map.remove("gender");
+                        map.remove("address");
+                        map.remove("age");
+                        list_.add(map);
+                        return R.ok().put("data",list_);
+                    }
                 }
             }
         }

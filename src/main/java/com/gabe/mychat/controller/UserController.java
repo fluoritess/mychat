@@ -191,11 +191,15 @@ public class UserController {
                 }else {*/
                     //长度为12且不全为数字，则是昵称查询
                     if(NumberUtil.getNumberFromString(nickname).length()!=12){
-                        user user=userUtilMapper.selectUserByNickName(nickname);
-                        normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
-                        Map map=new HashMap();
-                        map= UserUtil.completeUser(user,normalUser);
-                        list.add(map);
+                        List<user> user=userUtilMapper.selectUserByNickName(nickname);
+                        Iterator it=user.listIterator();
+                        while(it.hasNext()){
+                            user user1=(user)it.next();
+                            normalUser normalUser=normalUserUtilMapper.selectUserById(user1.getUserId());
+                            Map map=new HashMap();
+                            map= UserUtil.completeUser(user1,normalUser);
+                            list.add(map);
+                        }
                         return R.ok().put("data",list);
                     }
                     //长度为12且为数字，则是id查询

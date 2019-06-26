@@ -9,6 +9,7 @@
             <arg column="imgurl" jdbcType="VARCHAR" javaType="java.lang.String" />
             <arg column="tel" jdbcType="VARCHAR" javaType="java.lang.String" />
             <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="role" jdbcType="INTEGER" javaType="java.lang.Integer" />
         </constructor>
     </resultMap>
     <sql id="Base_Column_List" >
