@@ -76,7 +76,7 @@ public class ShiroConfig {
         filterUrl.put("/*.html","anon");
         filterUrl.put("/telCode","anon");
     /*    filterUrl.put("/Login.html","anon");*/
-        filterUrl.put("/logout","logout");
+//        filterUrl.put("/logout","logout");
         //下面的是测试的时候放行
     /*    filterUrl.put("/selectUserByNickName","anon");
         filterUrl.put("/selectFriendInfo","anon");

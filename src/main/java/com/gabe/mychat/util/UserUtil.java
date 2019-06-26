@@ -16,7 +16,7 @@ public class UserUtil {
     //用户信息补全
     public static Map completeUser(user user, normalUser normalUser){
         Map map=new HashMap();
-        map.put("userid",user.getUserId());
+        map.put("userId",user.getUserId());
         map.put("nickname",user.getNickname());
         map.put("name",user.getName());
         map.put("imgurl",user.getImgurl());

@@ -31,7 +31,7 @@ public class FriendServiceImpl implements FriendService {
             friends friends=(friends) it.next();
             Map map=new HashMap();
             String friendid=friends.getFriendId();
-            map.put("userid",friendid);
+            map.put("userId",friendid);
             user user=userMapper.selectByPrimaryKey(friendid);
             map.put("nickname",user.getNickname());
             map.put("imgurl",user.getImgurl());
