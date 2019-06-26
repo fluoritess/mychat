@@ -108,6 +108,7 @@ public class UserController {
             }
         }
 
+
         //安全日志
         sercurityLog sercurityLog1=new sercurityLog();
         Date date=new Date();
