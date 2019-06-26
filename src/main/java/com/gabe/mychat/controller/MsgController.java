@@ -52,7 +52,9 @@ public class MsgController {
             }
             //好友表中添加好友
             friends friend=new friends(user_id,friend_id,date);
+            friends friend1=new friends(friend_id,user_id,date);
             friendsMapper.insert(friend);
+            friendsMapper.insert(friend1);
             return R.ok("消息发送成功");
         } catch (Exception e) {
             return R.error(e.getMessage());
