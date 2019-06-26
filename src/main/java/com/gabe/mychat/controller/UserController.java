@@ -1,10 +1,7 @@
 package com.gabe.mychat.controller;
 
 import com.gabe.mychat.mapper.*;
-import com.gabe.mychat.pojo.normalUser;
-import com.gabe.mychat.pojo.normalUserExample;
-import com.gabe.mychat.pojo.sercurityLog;
-import com.gabe.mychat.pojo.user;
+import com.gabe.mychat.pojo.*;
 import com.gabe.mychat.util.*;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
@@ -48,6 +45,8 @@ public class UserController {
     private normalUserMapper normalUserMapper;
     @Autowired
     sercurityLogMapper sercurityLogMapper;
+    @Autowired
+    friendsUtilsMapper friendsUtilsMapper;
     /**
      * 认证异常
      * <p>
@@ -181,40 +180,66 @@ public class UserController {
     @ResponseBody
     @ArchivesLog(operationType = "查询信息", operationName = "根据用户昵称或id查询用户")
     @RequestMapping(value = "/selectUserByNickName")
-    public Map<String,Object> selectUserByNickName(@RequestBody Map<String,Object> reMap) {
+    public Map<String,Object> selectUserByNickName(@RequestBody Map<String,Object> reMap,HttpSession session) {
                //接收参数
                 String nickname=(String)reMap.get("value");
-                List list=new ArrayList();
-        /*        //判断长度是否是12位，如果不是则为昵称查询
-                if(nickname.length()!=12){
-                    user user=userUtilMapper.selectUserByNickName(nickname);
-                    normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
-                    Map map=new HashMap();
-                    map= UserUtil.completeUser(user,normalUser);
-                    return R.ok().put("data",map);
-                }else {*/
+                //获取用户自身
+                String user_id=(String) session.getAttribute("id");
+                user userself=userMapper.selectByPrimaryKey(user_id);
+                //判断是否为用户自身
+                String username=userself.getNickname();
+                if(username.equals(nickname)){
+                    return R.ok();
+                }
+                //如果不是用户自身
+                else {
+                    List list = new ArrayList();
                     //长度为12且不全为数字，则是昵称查询
-                    if(NumberUtil.getNumberFromString(nickname).length()!=12){
-                        List<user> user=userUtilMapper.selectUserByNickName(nickname);
-                        Iterator it=user.listIterator();
-                        while(it.hasNext()){
-                            user user1=(user)it.next();
-                            normalUser normalUser=normalUserUtilMapper.selectUserById(user1.getUserId());
-                            Map map=new HashMap();
-                            map= UserUtil.completeUser(user1,normalUser);
+                    if (NumberUtil.getNumberFromString(nickname).length() != 12) {
+                        List<user> user = userUtilMapper.selectUserByNickName(nickname);
+                        Iterator it = user.listIterator();
+                        while (it.hasNext()) {
+                            user user1 = (user) it.next();
+                            normalUser normalUser = normalUserUtilMapper.selectUserById(user1.getUserId());
+                            Map map = new HashMap();
+                            map = UserUtil.completeUser(user1, normalUser);
+                            //判断是否是好友
+                            List<friends> friendsList=friendsUtilsMapper.selectByUserId(userself.getUserId());
+                            Iterator friendit=friendsList.iterator();
+                            while(friendit.hasNext()){
+                                friends friends=(friends) friendit.next();
+                                if(friends.getFriendId().equals(user1.getUserId())){
+                                    map.put("isfriend",true);
+                                }
+                            }
                             list.add(map);
                         }
-                        return R.ok().put("data",list);
+                        return R.ok().put("data", list);
                     }
                     //长度为12且为数字，则是id查询
                     else {
-                        user user=userMapper.selectByPrimaryKey(nickname);
-                        normalUser normalUser=normalUserUtilMapper.selectUserById(user.getUserId());
-                        Map map=new HashMap();
-                        map= UserUtil.completeUser(user,normalUser);
+
+                        user user = userMapper.selectByPrimaryKey(nickname);
+                        //判断是否是同一用户
+                        if(username.equals(user.getNickname())){
+                            return R.ok();
+                        }
+                        normalUser normalUser = normalUserUtilMapper.selectUserById(user.getUserId());
+                        Map map = new HashMap();
+                        map = UserUtil.completeUser(user, normalUser);
+                        //判断是否是好友
+                        List<friends> friendsList=friendsUtilsMapper.selectByUserId(userself.getUserId());
+                        Iterator friendit=friendsList.iterator();
+                        while(friendit.hasNext()){
+                            friends friends=(friends) friendit.next();
+                            if(friends.getFriendId().equals(user.getUserId())){
+                                map.put("isfriend",true);
+                            }
+                        }
                         list.add(map);
-                        return R.ok().put("data",list);
+                        return R.ok().put("data", list);
                     }
+                }
              /*   }*/
     }
     /**

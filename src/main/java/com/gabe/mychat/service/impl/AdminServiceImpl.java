@@ -1,10 +1,8 @@
 package com.gabe.mychat.service.impl;
 
 import com.gabe.mychat.mapper.normalUserMapper;
-import com.gabe.mychat.mapper.userMapper;
 import com.gabe.mychat.pojo.normalUser;
 import com.gabe.mychat.pojo.normalUserExample;
-
 import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.pojo.userExample;
 import com.gabe.mychat.service.AdminService;
@@ -102,5 +100,12 @@ public class AdminServiceImpl implements AdminService {
             }
         }
         return map;
+    }
+
+    @Override
+    public boolean prohibitUser(String userId) {
+        user user = userMapper.selectByPrimaryKey(userId);
+        user.setStatus(1);
+        return userMapper.updateByPrimaryKey(user) != 0;
     }
 }
