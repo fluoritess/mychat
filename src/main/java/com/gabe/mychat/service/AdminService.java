@@ -25,4 +25,6 @@ public interface AdminService {
     Map<Gender, Integer> getUserGender();
 
     boolean prohibitUser(String userId);
+
+    boolean releaseUser(String userId);
 }

@@ -55,4 +55,16 @@ public class AdminController {
             return R.error("禁用用户失败");
         }
     }
+
+    @ResponseBody
+    @ArchivesLog(operationName = "解禁用户",operationType = "恢复操作")
+    @RequestMapping("/releaseUser")
+    public R releaseUser(@RequestBody Map<String, Object> map){
+        String userId = (String) map.get("userId");
+        if(adminService.releaseUser(userId)){
+            return R.ok();
+        }else {
+            return R.error("解禁用户失败");
+        }
+    }
 }

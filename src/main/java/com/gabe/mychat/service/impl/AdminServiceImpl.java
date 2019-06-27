@@ -121,4 +121,11 @@ public class AdminServiceImpl implements AdminService {
         user.setStatus(1);
         return userMapper.updateByPrimaryKey(user) != 0;
     }
+
+    @Override
+    public boolean releaseUser(String userId) {
+        user user = userMapper.selectByPrimaryKey(userId);
+        user.setStatus(0);
+        return userMapper.updateByPrimaryKey(user) != 0;
+    }
 }
