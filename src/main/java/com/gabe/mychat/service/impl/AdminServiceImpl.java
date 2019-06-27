@@ -35,7 +35,7 @@ public class AdminServiceImpl implements AdminService {
     normalUserMapper normalUserMapper;
 
     @Override
-    @Cacheable(value ="findAllUser")
+    /*@Cacheable(value ="findAllUser")*/
     public List<PerfectUser> findAllUser(int status) {
         userExample userExample = new userExample();
         if (status != 2) {
@@ -128,7 +128,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    @CachePut(value ="findAllUser")
+   /* @CachePut(value ="findAllUser")*/
     public boolean prohibitUser(String userId) {
         user user = userMapper.selectByPrimaryKey(userId);
         user.setStatus(1);
@@ -136,7 +136,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    @CachePut(value ="findAllUser")
+   /* @CachePut(value ="findAllUser")*/
     public boolean releaseUser(String userId) {
         user user = userMapper.selectByPrimaryKey(userId);
         user.setStatus(0);
