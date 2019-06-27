@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.Queue;
+import java.util.PriorityQueue;
 
 /**
  * description:
@@ -38,8 +38,9 @@ public class ReadController {
     public R selectUnreadMessage(HttpSession session) {
         // 从session中获取用户id
         String userId = (String) session.getAttribute("id");
+//        String userId = "123456789102";
         // 进行查询，返回值为一个消息队列
-        Queue<LastMessage> messageQueue = readService.selectUnreadMessage(userId);
+        PriorityQueue<LastMessage> messageQueue = readService.selectUnreadMessage(userId);
         return R.ok().put("data", messageQueue);
     }
 

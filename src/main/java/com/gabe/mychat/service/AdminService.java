@@ -20,7 +20,7 @@ public interface AdminService {
 
     int getUserNumber();
 
-    Map<String, Integer> getUserAddress();
+    List<Map<String, String>> getUserAddress();
 
     Map<Gender, Integer> getUserGender();
 

@@ -2,7 +2,7 @@ package com.gabe.mychat.service;
 
 import com.gabe.mychat.util.LastMessage;
 
-import java.util.Queue;
+import java.util.PriorityQueue;
 
 /**
  * description:
@@ -20,5 +20,5 @@ public interface ReadService {
      * @param userid user's id
      * @return Queue<LastMessage> the queue of the information about the senders and what he send
      */
-    public Queue<LastMessage> selectUnreadMessage(String userid);
+    public PriorityQueue<LastMessage> selectUnreadMessage(String userid);
 }

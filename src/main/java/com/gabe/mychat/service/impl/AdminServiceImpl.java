@@ -58,20 +58,33 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Map<String, Integer> getUserAddress() {
+    public List<Map<String, String>> getUserAddress() {
         normalUserExample normalUserExample = new normalUserExample();
         List<normalUser> normalUserList = normalUserMapper.selectByExample(normalUserExample);
-        Map<String, Integer> map = new HashMap<>();
+        List<Map<String, String>> list = new ArrayList<>();
         for (normalUser normalUser : normalUserList) {
             String address = normalUser.getAddress();
             address = address == null ? "null" : address.split("-")[0];
-            if (map.containsKey(address)) {
-                map.put(address, map.get(address) + 1);
-            } else {
-                map.put(address, 1);
+
+            boolean flag = false;
+            for (Map<String, String> map : list) {
+                if (map.get("name").equals(address)) {
+                    map.put("number", String.valueOf(Integer.parseInt(map.get("number")) + 1));
+                    flag = true;
+                    break;
+                }
             }
+            if (flag){
+                continue;
+            }
+
+            Map<String, String> map = new HashMap<>();
+            map.put("name", address);
+            map.put("number", String.valueOf(1));
+            list.add(map);
         }
-        return map;
+
+        return list;
     }
 
     @Override
@@ -81,7 +94,7 @@ public class AdminServiceImpl implements AdminService {
         Map<Gender, Integer> map = new HashMap<>();
         for (normalUser normalUser : normalUserList) {
             Gender gender = Gender.NULL;
-            if(normalUser.getGender() != null){
+            if (normalUser.getGender() != null) {
                 switch (normalUser.getGender()) {
                     case "男":
                         gender = Gender.Man;
