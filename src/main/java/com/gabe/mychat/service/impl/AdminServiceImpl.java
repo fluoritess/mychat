@@ -8,6 +8,7 @@ import com.gabe.mychat.pojo.userExample;
 import com.gabe.mychat.service.AdminService;
 import com.gabe.mychat.util.PerfectUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
