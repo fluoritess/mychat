@@ -9,6 +9,7 @@ import com.gabe.mychat.service.AdminService;
 import com.gabe.mychat.util.Gender;
 import com.gabe.mychat.util.PerfectUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -134,6 +135,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @CachePut(value ="findAllUser")
     public boolean prohibitUser(String userId) {
         user user = userMapper.selectByPrimaryKey(userId);
         user.setStatus(1);
@@ -141,6 +143,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @CachePut(value ="findAllUser")
     public boolean releaseUser(String userId) {
         user user = userMapper.selectByPrimaryKey(userId);
         user.setStatus(0);
