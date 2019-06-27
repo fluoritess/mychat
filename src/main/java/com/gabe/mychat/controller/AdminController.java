@@ -37,7 +37,7 @@ public class AdminController {
         Map<String, Object> reMap = new HashMap<>();
         List<PerfectUser> list = adminService.findAllUser(status);
         int current = Integer.parseInt(map.get("current").toString());
-        int pageSize = Integer.parseInt(map.get("pageSize").toString());
+        int pageSize = Integer.parseInt(map.get("pagesize").toString());
         int total = list.size();
         int pageNum = total / pageSize;
         if (total % pageSize > 0) {
