@@ -14,7 +14,7 @@
         </constructor>
     </resultMap>
     <sql id="Base_Column_List" >
-    user_id, name, nickname, imgurl, tel, password, role
+    user_id, name, nickname, imgurl, tel, password, role, status
   </sql>
     <select id="selectUserByNickName" resultMap="BaseResultMap" parameterType="java.lang.String" >
         select

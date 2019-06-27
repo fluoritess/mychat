@@ -45,7 +45,7 @@ public class listener implements Constant {
     @OnEvent("token")
     public void onToken(SocketIOClient client,Map message) {
 
-        String UserID=(String) message.get("clientuserid");
+        String UserID=(String) message.get("senderId");
         System.out.println("onToken"+client.getSessionId().toString());
         if (null ==  clients.get(client.getSessionId().toString()) ) {
             clients.put(UserID, client);
@@ -56,14 +56,14 @@ public class listener implements Constant {
     @OnEvent("send")
     public void updateControlStatus(SocketIOClient client, Map<String,String> message) throws UnsupportedEncodingException {
         //获取信息
-        String UserID=(String) message.get("clientuserid");
-        String friendID=(String)message.get("userid");
+        String UserID=(String) message.get("senderId");
+        String friendID=(String)message.get("receiverId");
         //messages为消息内容
-        String messages=(String)message.get("message");
+        String messages=(String)message.get("content");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//注意格式化的表达式
         Date date= null;
         try {
-            date = format.parse(message.get("date"));
+            date = format.parse(message.get("sendDate"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -78,8 +78,10 @@ public class listener implements Constant {
             Map map1=new HashMap();
             map1= UserUtil.completeUser(user,normalUser);
             map1.remove("password");
-            map1.put("message",messages);
-            map1.put("date",date);
+            map1.put("content",messages);
+            map1.put("sendDate",date);
+            map1.put("receiverId",friendID);
+            map1.put("senderId",UserID);
             Constant.aotoControlMap.put("Active",UserID);
             //把消息存入数据库
             String message_id=date.getTime()+UserID;
@@ -95,14 +97,14 @@ public class listener implements Constant {
     @OnEvent("addfriend")
     public void getNowCollectValue(SocketIOClient client, Map<String,String> message)  {
         //获取信息
-        String UserID=(String) message.get("clientuserid");
-        String friendID=(String)message.get("userid");
+        String UserID=(String) message.get("senderId");
+        String friendID=(String)message.get("receiverId");
         //messages为消息内容
-        String messages=(String)message.get("message");
+        String messages=(String)message.get("content");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//注意格式化的表达式
         Date date= null;
         try {
-            date = format.parse(message.get("date"));
+            date = format.parse(message.get("sendDate"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -119,9 +121,9 @@ public class listener implements Constant {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-            map1.remove("password");
-            map1.put("message",messages);
-            map1.put("date",date);
+            map1.put("content",messages);
+            map1.put("sendDate",date);
+            map1.put("receiverId",friendID);
             if(client2!=null){
                 client2.sendEvent("receive",map1);
             }

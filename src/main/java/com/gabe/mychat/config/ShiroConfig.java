@@ -76,16 +76,22 @@ public class ShiroConfig {
         filterUrl.put("/*.html","anon");
         filterUrl.put("/telCode","anon");
     /*    filterUrl.put("/Login.html","anon");*/
-        filterUrl.put("/logout","logout");
+//        filterUrl.put("/logout","logout");
         //下面的是测试的时候放行
     /*    filterUrl.put("/selectUserByNickName","anon");
         filterUrl.put("/selectFriendInfo","anon");
         filterUrl.put("/addfriend","anon");
         */
 //        filterUrl.put("/updateImg","anon");
+<<<<<<< HEAD
         filterUrl.put("/readUnreadMessage","anon");
         filterUrl.put("/selectByTime","anon");
         filterUrl.put("/selectAllUser","anon");
+=======
+//        filterUrl.put("/readUnreadMessage","anon");
+//        filterUrl.put("/selectByTime","anon");
+//        filterUrl.put("/selectAllUser","anon");
+>>>>>>> 6e9a45a0d6565fcee176647af79d77156b3b916d
         filterUrl.put("/getUserInformation","anon");
         filterUrl.put("/prohibitUser","anon");
 

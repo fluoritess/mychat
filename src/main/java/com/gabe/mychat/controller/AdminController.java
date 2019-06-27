@@ -45,7 +45,7 @@ public class AdminController {
     }
 
     @ResponseBody
-    @ArchivesLog(operationName = "删除用户",operationType = "删除操作")
+    @ArchivesLog(operationName = "禁用用户",operationType = "删除操作")
     @RequestMapping("/prohibitUser")
     public R prohibitUser(@RequestBody Map<String, Object> map){
         String userId = (String) map.get("userId");
