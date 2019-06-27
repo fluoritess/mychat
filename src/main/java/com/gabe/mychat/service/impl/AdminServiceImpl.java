@@ -8,7 +8,6 @@ import com.gabe.mychat.pojo.userExample;
 import com.gabe.mychat.service.AdminService;
 import com.gabe.mychat.util.PerfectUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -58,6 +57,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public int getUserNumber() {
         userExample userExample = new userExample();
+        userExample.createCriteria().andRoleEqualTo(0);
         return userMapper.selectByExample(userExample).size();
     }
 
