@@ -59,6 +59,9 @@ public class AdminServiceImpl implements AdminService {
             }
             redisUtil.lSetlist("quarterlist",perfectUserList,1);
         }
+        else{
+            return quarterlist;
+        }
 
         return perfectUserList;
     }
