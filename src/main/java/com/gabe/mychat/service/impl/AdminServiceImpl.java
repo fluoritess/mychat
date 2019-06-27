@@ -34,7 +34,7 @@ public class AdminServiceImpl implements AdminService {
     normalUserMapper normalUserMapper;
 
     @Override
-   /* @Cacheable(value ="findAllUser")*/
+    @Cacheable("perfectUserList")
     public List<PerfectUser> findAllUser(int status) {
         userExample userExample = new userExample();
         if (status != 2) {

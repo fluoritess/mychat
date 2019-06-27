@@ -57,7 +57,7 @@ public class RedisConfig {
     public CacheManager cacheManager(RedisConnectionFactory redisConnectionFactory) {
         return new RedisCacheManager(
                 RedisCacheWriter.nonLockingRedisCacheWriter(redisConnectionFactory),
-                this.getRedisCacheConfigurationWithTtl(120), // 默认策略，未配置的 key 会使用这个
+                this.getRedisCacheConfigurationWithTtl(1), // 默认策略，未配置的 key 会使用这个
                 this.getRedisCacheConfigurationMap() // 指定 key 策略
         );
     }
