@@ -36,6 +36,11 @@ public class AdminController {
         int status = Integer.parseInt(map.get("selectvalue").toString());
         Map<String, Object> reMap = new HashMap<>();
         List<PerfectUser> list = adminService.findAllUser(status);
+        if (list.size() == 0){
+            reMap.put("total", 0);
+            reMap.put("list", list);
+            return R.ok().put("data", reMap);
+        }
         int current = Integer.parseInt(map.get("current").toString());
         int pageSize = Integer.parseInt(map.get("pagesize").toString());
         int total = list.size();
