@@ -7,6 +7,7 @@ import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.pojo.userExample;
 import com.gabe.mychat.service.AdminService;
 import com.gabe.mychat.util.PerfectUser;
+import com.gabe.mychat.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -34,6 +35,8 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     normalUserMapper normalUserMapper;
 
+    @Autowired
+    RedisUtil redisUtil;
     @Override
     /*@Cacheable(value ="findAllUser")*/
     public List<PerfectUser> findAllUser(int status) {

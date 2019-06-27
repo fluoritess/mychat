@@ -111,7 +111,9 @@ public class UserController {
                     }
             }
         }
-
+        else{
+            return R.error("权限不对");
+        }
         //安全日志
         sercurityLog sercurityLog1=new sercurityLog();
         Date date=new Date();
