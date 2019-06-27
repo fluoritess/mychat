@@ -18,7 +18,7 @@ public class PerfectUser {
     private String nickname;
     private String imgurl;
     private String tel;
-    private String password;
+//    private String password;
     private String gender;
     private String address;
     private Integer age;
@@ -30,7 +30,7 @@ public class PerfectUser {
         this.nickname = user.getNickname();
         this.imgurl = user.getImgurl();
         this.tel = user.getTel();
-        this.password = user.getPassword();
+//        this.password = user.getPassword();
         this.gender = normalUser.getGender();
         this.address = normalUser.getAddress();
         this.age = normalUser.getAge();
@@ -77,13 +77,13 @@ public class PerfectUser {
         this.tel = tel;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
     public String getGender() {
         return gender;
