@@ -36,7 +36,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<PerfectUser> findAllUser(int status) {
         userExample userExample = new userExample();
-        if (status != 2){
+        if (status != 2) {
             userExample.createCriteria().andStatusEqualTo(status);
         }
         List<user> userList = userMapper.selectByExample(userExample);
@@ -77,7 +77,7 @@ public class AdminServiceImpl implements AdminService {
                     break;
                 }
             }
-            if (flag){
+            if (flag) {
                 continue;
             }
 
@@ -91,10 +91,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Map<Gender, Integer> getUserGender() {
+    public List<Map<String, String>> getUserGender() {
         normalUserExample normalUserExample = new normalUserExample();
         List<normalUser> normalUserList = normalUserMapper.selectByExample(normalUserExample);
-        Map<Gender, Integer> map = new HashMap<>();
+        List<Map<String, String>> list = new ArrayList<>();
+
         for (normalUser normalUser : normalUserList) {
             Gender gender = Gender.NULL;
             if (normalUser.getGender() != null) {
@@ -109,13 +110,25 @@ public class AdminServiceImpl implements AdminService {
                         break;
                 }
             }
-            if (map.containsKey(gender)) {
-                map.put(gender, map.get(gender) + 1);
-            } else {
-                map.put(gender, 1);
+
+            boolean flag = false;
+            for (Map<String, String> map : list) {
+                if (map.get("name").equals(gender.toString())) {
+                    map.put("number", String.valueOf(Integer.parseInt(map.get("number")) + 1));
+                    flag = true;
+                    break;
+                }
             }
+            if (flag) {
+                continue;
+            }
+
+            Map<String, String> map = new HashMap<>();
+            map.put("name", gender.toString());
+            map.put("number", String.valueOf(1));
+            list.add(map);
         }
-        return map;
+        return list;
     }
 
     @Override

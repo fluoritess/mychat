@@ -1,6 +1,5 @@
 package com.gabe.mychat.service;
 
-import com.gabe.mychat.util.Gender;
 import com.gabe.mychat.util.PerfectUser;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public interface AdminService {
 
     List<Map<String, String>> getUserAddress();
 
-    Map<Gender, Integer> getUserGender();
+    List<Map<String, String>> getUserGender();
 
     boolean prohibitUser(String userId);
 
