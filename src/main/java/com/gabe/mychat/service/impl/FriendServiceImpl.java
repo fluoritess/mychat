@@ -19,14 +19,14 @@ public class FriendServiceImpl implements FriendService {
     @Autowired
     UserService UserService;
     @Override
-    @Cacheable(value ="selectFriendById")
+  /*  @Cacheable(value ="selectFriendById")*/
     public  List<friends> selectFriendById(String userid) {
         List<friends> list=friendsUtilsMapper.selectByUserId(userid);
         return list;
     }
 
     @Override
-    @Cacheable(value = "getFriendsInfo")
+/*    @Cacheable(value = "getFriendsInfo")*/
     public List<Map> getFriendsInfo(List<friends> list) {
         List<Map> list1=new ArrayList();
         Iterator it=list.iterator();
