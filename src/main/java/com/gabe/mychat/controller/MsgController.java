@@ -1,7 +1,6 @@
 package com.gabe.mychat.controller;
 
 import com.gabe.mychat.mapper.friendsMapper;
-import com.gabe.mychat.mapper.messageMapper;
 import com.gabe.mychat.pojo.friends;
 import com.gabe.mychat.pojo.message;
 import com.gabe.mychat.service.MsgService;
@@ -74,8 +73,8 @@ public class MsgController {
     @ArchivesLog(operationName = "查询当前用户与选择好友的最近20条记录", operationType = "查询操作")
     @RequestMapping("/selectByTime")
     public R selectByTime(@RequestBody Map<String, Object> map, HttpSession session) {
-        String userId = (String) session.getAttribute("id");
-//        String userId = "123456789102";
+//        String userId = (String) session.getAttribute("id");
+        String userId = "123456789102";
         String friendId = (String) map.get("userid");
 
         List<message> list = msgService.selectByTime(userId, friendId);

@@ -2,12 +2,11 @@ package com.gabe.mychat.service.impl;
 
 import com.gabe.mychat.pojo.message;
 import com.gabe.mychat.service.MsgService;
+import com.gabe.mychat.util.QuickSort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 /**
  * description:
@@ -52,28 +51,25 @@ public class MsgServiceImpl implements MsgService {
             messageMapper.updateByPrimaryKey(message);
         }
         // 新建权值队列，重写比较方法
-        PriorityQueue<message> priorityQueue = new PriorityQueue<>((o1, o2) -> {
-            if (o1.getSendDate().after(o2.getSendDate())) {
-                return 1;
-            } else if (o1.getSendDate().equals(o2.getSendDate())) {
-                return 0;
-            } else {
-                return -1;
-            }
-        });
-        // 将查找到的数据全部压入权值队列
-        priorityQueue.addAll(activeList);
-        priorityQueue.addAll(passiveList);
+
+        message[] messages = new message[activeList.size() + passiveList.size()];
+        int index = 0;
         for(message message : activeList){
-            priorityQueue.offer(message);
+            messages[index++] = message;
         }
         for(message message : passiveList){
-            priorityQueue.offer(message);
+            messages[index++] = message;
         }
+        QuickSort.sort(messages, 0, messages.length - 1);
         // 将priorityqueue中的数据转入list，并截取前20条数据
-        List<message> list = new ArrayList<>(priorityQueue);
-        if (list.size() > 20) {
-            list = list.subList(0, 20);
+        List<message> list = new ArrayList<>();
+
+        if (messages.length > 20) {
+            for (int i = 0; i< 20; i++){
+                list.add(messages[i]);
+            }
+        }else {
+            list.addAll(Arrays.asList(messages));
         }
         return list;
     }
