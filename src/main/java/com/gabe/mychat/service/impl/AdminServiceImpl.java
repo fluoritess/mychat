@@ -34,8 +34,11 @@ public class AdminServiceImpl implements AdminService {
     normalUserMapper normalUserMapper;
 
     @Override
-    public List<PerfectUser> findAllUser() {
+    public List<PerfectUser> findAllUser(int status) {
         userExample userExample = new userExample();
+        if (status != 2){
+            userExample.createCriteria().andStatusEqualTo(status);
+        }
         List<user> userList = userMapper.selectByExample(userExample);
         normalUserExample normalUserExample = new normalUserExample();
         List<normalUser> normalUserList = normalUserMapper.selectByExample(normalUserExample);

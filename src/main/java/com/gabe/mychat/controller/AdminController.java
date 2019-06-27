@@ -29,8 +29,9 @@ public class AdminController {
     @ResponseBody
     @ArchivesLog(operationName = "查询全部用户",operationType = "查询操作")
     @RequestMapping("/selectAllUser")
-    public R selectAllUser(){
-        return R.ok().put("data", adminService.findAllUser());
+    public R selectAllUser(@RequestBody Map<String, Object> map){
+        int status = Integer.parseInt(map.get("selectvalue").toString());
+        return R.ok().put("data", adminService.findAllUser(status));
     }
 
     @ResponseBody

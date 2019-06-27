@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public interface AdminService {
 
-    List<PerfectUser> findAllUser();
+    List<PerfectUser> findAllUser(int status);
 
     int getUserNumber();
 
