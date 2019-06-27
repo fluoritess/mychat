@@ -6,6 +6,7 @@ import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.service.FriendService;
 import com.gabe.mychat.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -18,12 +19,14 @@ public class FriendServiceImpl implements FriendService {
     @Autowired
     UserService UserService;
     @Override
+    @Cacheable(value ="selectFriendById")
     public  List<friends> selectFriendById(String userid) {
         List<friends> list=friendsUtilsMapper.selectByUserId(userid);
         return list;
     }
 
     @Override
+    @Cacheable(value = "getFriendsInfo")
     public List<Map> getFriendsInfo(List<friends> list) {
         List<Map> list1=new ArrayList();
         Iterator it=list.iterator();

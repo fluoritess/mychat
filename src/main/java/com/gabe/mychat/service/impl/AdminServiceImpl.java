@@ -9,6 +9,7 @@ import com.gabe.mychat.service.AdminService;
 import com.gabe.mychat.util.Gender;
 import com.gabe.mychat.util.PerfectUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class AdminServiceImpl implements AdminService {
     normalUserMapper normalUserMapper;
 
     @Override
+    @Cacheable(value ="findAllUser")
     public List<PerfectUser> findAllUser(int status) {
         userExample userExample = new userExample();
         if (status != 2) {
