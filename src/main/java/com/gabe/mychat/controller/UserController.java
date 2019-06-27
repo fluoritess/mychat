@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Encoder;
@@ -253,7 +254,7 @@ public class UserController {
      */
     @ResponseBody
     @ArchivesLog(operationName = "更改头像",operationType = "用户基本操作")
-    @RequestMapping("/updateImg" )
+    @RequestMapping("/updateImg2" )
     public R updateImg(@RequestBody MultipartFile file,HttpSession session){
         String id=(String)session.getAttribute("id");
         if (!file.isEmpty()) {
@@ -282,6 +283,58 @@ public class UserController {
         } else {
             return R.error("上传失败");
         }
+    }
+    /**
+     * 更新信息
+     * @param file
+     * @return
+     */
+    @ResponseBody
+    @ArchivesLog(operationName = "更改头像",operationType = "用户基本操作")
+    @RequestMapping("/updateImg" )
+    public R updateImg(@RequestBody MultipartFile file,HttpSession session, HttpServletRequest request){
+        String id=(String)session.getAttribute("id");
+        user user=(user)session.getAttribute("user");
+        //目前这里是写死的本地硬盘路径
+        String path = "D:/img";
+ /*       logger.info("path:" + path);*/
+        //获取文件名称
+        String fileName = file.getOriginalFilename();
+        //获取文件名后缀
+        Calendar currTime = Calendar.getInstance();
+        String time = String.valueOf(currTime.get(Calendar.YEAR))+String.valueOf((currTime.get(Calendar.MONTH)+1));
+        //获取文件名后缀
+        String suffix = fileName.substring(file.getOriginalFilename().lastIndexOf("."));
+        suffix = suffix.toLowerCase();
+        if(suffix.equals(".jpg") || suffix.equals(".jpeg") || suffix.equals(".png")/* || suffix.equals(".gif")*/){
+          /*  fileName = UUID.randomUUID().toString()+suffix;*/
+            File targetFile = new File(path, id+suffix);
+            if(!targetFile.getParentFile().exists()){    //注意，判断父级路径是否存在
+                targetFile.getParentFile().mkdirs();
+            }
+            long size = 0;
+            //保存
+            try {
+                file.transferTo(targetFile);
+                size = file.getSize();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return R.error("上传失败！");
+            }
+            //项目url，这里可以使用常量或者去数据字典获取相应的url前缀；
+
+            //文件获取路径
+            String fileUrl = "/img/" + id+suffix;
+            user.setImgurl(fileUrl);
+            userMapper.updateByPrimaryKeySelective(user);
+            user.setImgurl(fileUrl);
+            session.setAttribute("user",user);
+     /*       logger.info("fileUrl:" + fileUrl);
+   */         return R.ok().put("fileUrl", fileUrl);
+        }else{
+            return R.error("图片格式有误，请上传.jpg、.png、.jpeg格式的文件");
+        }
+
     }
     /**
      * 查询信息

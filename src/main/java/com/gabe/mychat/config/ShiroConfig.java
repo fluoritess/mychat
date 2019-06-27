@@ -55,6 +55,7 @@ public class ShiroConfig {
         //设置安全管理
         shiroFilter.setSecurityManager(securityManager);
         shiroFilter.setLoginUrl("/");
+        shiroFilter.setLoginUrl("/admin");
         shiroFilter.setSuccessUrl("/");
         shiroFilter.setUnauthorizedUrl("/");
         //自定义拦截器
@@ -83,13 +84,13 @@ public class ShiroConfig {
         filterUrl.put("/addfriend","anon");
         */
 //        filterUrl.put("/updateImg","anon");
-        filterUrl.put("/releaseUser","anon");
+//        filterUrl.put("/releaseUser","anon");
 
-        filterUrl.put("/readUnreadMessage","anon");
-        filterUrl.put("/selectByTime","anon");
-        filterUrl.put("/selectAllUser","anon");
-        filterUrl.put("/getUserInformation","anon");
-        filterUrl.put("/prohibitUser","anon");
+//        filterUrl.put("/readUnreadMessage","anon");
+//        filterUrl.put("/selectByTime","anon");
+//        filterUrl.put("/selectAllUser","anon");
+//        filterUrl.put("/getUserInformation","anon");
+//        filterUrl.put("/prohibitUser","anon");
 
 
 

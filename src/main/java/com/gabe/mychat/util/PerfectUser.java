@@ -36,7 +36,8 @@ public class PerfectUser {
         this.age = normalUser.getAge();
         this.status = user.getStatus();
     }
-
+    public PerfectUser() {
+    }
     public String getUserId() {
         return userId;
     }
