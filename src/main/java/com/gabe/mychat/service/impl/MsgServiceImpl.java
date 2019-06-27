@@ -64,6 +64,12 @@ public class MsgServiceImpl implements MsgService {
         // 将查找到的数据全部压入权值队列
         priorityQueue.addAll(activeList);
         priorityQueue.addAll(passiveList);
+        for(message message : activeList){
+            priorityQueue.offer(message);
+        }
+        for(message message : passiveList){
+            priorityQueue.offer(message);
+        }
         // 将priorityqueue中的数据转入list，并截取前20条数据
         List<message> list = new ArrayList<>(priorityQueue);
         if (list.size() > 20) {
