@@ -176,6 +176,8 @@ public class UserController {
      * 查询信息
      * @param reMap
      * @return
+     * @Description:查询用户信息。要求:1.不能查询到自身。2.长度为12且为全为数字则是id查询，否则是昵称查询。
+     * @Description:3.查询到的用户如果已经是该用户的好友则将其标记。
      */
     @ResponseBody
     @ArchivesLog(operationType = "查询信息", operationName = "根据用户昵称或id查询用户")
