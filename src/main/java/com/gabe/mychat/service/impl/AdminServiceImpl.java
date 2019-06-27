@@ -6,7 +6,6 @@ import com.gabe.mychat.pojo.normalUserExample;
 import com.gabe.mychat.pojo.user;
 import com.gabe.mychat.pojo.userExample;
 import com.gabe.mychat.service.AdminService;
-import com.gabe.mychat.util.Gender;
 import com.gabe.mychat.util.PerfectUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
@@ -100,23 +99,17 @@ public class AdminServiceImpl implements AdminService {
         List<Map<String, String>> list = new ArrayList<>();
 
         for (normalUser normalUser : normalUserList) {
-            Gender gender = Gender.NULL;
+            String gender = "null";
             if (normalUser.getGender() != null) {
-                switch (normalUser.getGender()) {
-                    case "男":
-                        gender = Gender.Man;
-                        break;
-                    case "女":
-                        gender = Gender.WOMAN;
-                        break;
-                    default:
-                        break;
-                }
+                gender = normalUser.getGender();
+            }
+            if("null".equals(gender)){
+                continue;
             }
 
             boolean flag = false;
             for (Map<String, String> map : list) {
-                if (map.get("name").equals(gender.toString())) {
+                if (map.get("name").equals(gender)) {
                     map.put("number", String.valueOf(Integer.parseInt(map.get("number")) + 1));
                     flag = true;
                     break;
@@ -127,7 +120,7 @@ public class AdminServiceImpl implements AdminService {
             }
 
             Map<String, String> map = new HashMap<>();
-            map.put("name", gender.toString());
+            map.put("name", gender);
             map.put("number", String.valueOf(1));
             list.add(map);
         }
