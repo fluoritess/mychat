@@ -65,7 +65,7 @@ public class MsgServiceImpl implements MsgService {
         List<message> list = new ArrayList<>();
 
         if (messages.length > 20) {
-            for (int i = 0; i< 20; i++){
+            for (int i = messages.length-20; i < messages.length ; i++){
                 list.add(messages[i]);
             }
         }else {

@@ -70,7 +70,7 @@ public class ShiroConfig {
         filterUrl.put("/sendCode","anon");
         filterUrl.put("/login","anon");
         filterUrl.put("/imgCode","anon");
-        filterUrl.put("/img/*.png","anon");
+        filterUrl.put("/img/*","anon");
         filterUrl.put("/js/*","anon");
         filterUrl.put("/css/*","anon");
         filterUrl.put("/fonts/*","anon");

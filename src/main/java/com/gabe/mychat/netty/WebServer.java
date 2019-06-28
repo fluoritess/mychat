@@ -25,7 +25,7 @@ public class WebServer implements InitializingBean{
 
     public void startServer(){
         Configuration config = new Configuration();
-        config.setHostname("localhost");
+        config.setHostname("0.0.0.0");
         config.setPort(8086);
 
         config.setMaxFramePayloadLength(1024*1024);
