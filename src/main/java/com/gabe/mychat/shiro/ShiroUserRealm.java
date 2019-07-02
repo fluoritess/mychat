@@ -26,10 +26,7 @@ public class ShiroUserRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         System.out.println("授权...");
-
         user user = (user) principals.getPrimaryPrincipal();
-
-
         //用户权限列表
         Set<String> permsSet = new HashSet<>();
         permsSet.add("admin");
@@ -38,7 +35,6 @@ public class ShiroUserRealm extends AuthorizingRealm {
         info.setStringPermissions(permsSet);
         return info;
     }
-
     /**
      * 认证
      * @param token
@@ -61,7 +57,6 @@ public class ShiroUserRealm extends AuthorizingRealm {
                 targetuser=user;
             }
         }
-      /*  user targetuser=new user(1,"shan","123",1);*/
         //用户不存在
         if(targetuser==null){
             throw new UnknownAccountException("用户名或者密码错误！");
@@ -70,7 +65,6 @@ public class ShiroUserRealm extends AuthorizingRealm {
         if(!passwordInput.equals(targetuser.getPassword())){
             throw new IncorrectCredentialsException("用户名或者密码错误！");
         }
-
         System.out.println("用户登陆成功!");
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(targetuser, targetuser.getPassword(), getName());
         return info;

@@ -21,13 +21,10 @@ import org.springframework.stereotype.Service;
 public class WebServer implements InitializingBean{
     @Autowired
     private listener listeners;
-
-
     public void startServer(){
         Configuration config = new Configuration();
         config.setHostname("0.0.0.0");
         config.setPort(8086);
-
         config.setMaxFramePayloadLength(1024*1024);
         //设置最大HTTP内容长度限制
         config.setMaxHttpContentLength(1024 * 1024);
@@ -43,7 +40,6 @@ public class WebServer implements InitializingBean{
         server.start();
 
     }
-
     @Override
     public void afterPropertiesSet() throws Exception {
         this.startServer();
