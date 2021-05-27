@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import sun.misc.BASE64Encoder;
-
+//import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -152,7 +152,7 @@ public class UserController {
         //保存到shiro session（注意：如果没有securityManager配置，则暂时无法工作，测试时先注释掉）
         ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, text);
         //转base64
-        BASE64Encoder encoder = new BASE64Encoder();
+//        BASE64Encoder encoder = new BASE64Encoder();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();//io流
         try {
             ImageIO.write(image, "png", baos);//写入流中
@@ -160,7 +160,8 @@ public class UserController {
             e.printStackTrace();
         }
         byte[] bytes = baos.toByteArray();//转换成字节
-        String png_base64 =  encoder.encodeBuffer(bytes).trim();//转换成base64串
+//        String png_base64 =  encoder.encodeBuffer(bytes).trim();//转换成base64串
+        String png_base64 =  Base64.encodeBase64String(bytes).trim();//转换成base64串
         //删除 \r\n
         png_base64 = "data:image/jpeg;base64,"+png_base64.replaceAll("\n", "").replaceAll("\r", "");
         return R.ok().put("data",png_base64);
